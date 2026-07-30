@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"] - Minhee Sports</title>
+    <!-- Google Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- File CSS dùng chung -->
+    <link rel="stylesheet" href="/css/_Layout.css">
+    @RenderSection("Styles", required: false)
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-top container">
+            <!-- Logo -->
+            <div class="logo">
+                <a href="/TrangChu/TrangChu">
+                    <img src="/images/logo.png" alt="ShoeStore Logo" class="logo-img">
+                </a>
+            </div>
+
+            <!-- Cụm Tìm Kiếm Live Search -->
+            <div class="search-box-wrapper">
+                <div class="search-box">
+                    <input type="text" id="searchInput" placeholder="Tìm kiếm sản phẩm..." autocomplete="off">
+                    <button type="button" id="searchBtn">
+                        <span class="material-icons-outlined">search</span>
+                    </button>
+                </div>
+
+                <!-- Popup Gợi Ý Tìm Kiếm -->
+                <div id="searchResultsPopup" class="search-results-popup" style="display: none;">
+                    <div class="search-popup-header">KẾT QUẢ TÌM KIẾM</div>
+                    <div class="search-popup-sub-header">
+                        <span class="sub-label">SẢN PHẨM</span>
+                        <a href="#" id="viewAllSearchLink" class="view-all-link">Xem tất cả <span id="totalSearchCount">0</span> sản phẩm</a>
+                    </div>
+                    <div id="searchItemsList" class="search-items-list"></div>
+                </div>
+            </div>
+
+            <!-- Actions Header -->
+            <div class="header-actions">
+                <div class="user-dropdown">
+                    <a href="#" class="action-item user-btn">
+                        <span class="material-icons-outlined">account_circle</span>
+                        <span>Tài khoản</span>
+                        <span class="material-icons-outlined arrow-icon">arrow_drop_down</span>
+                    </a>
+                    <div class="dropdown-menu">
+                        <a href="/User/Profile" class="dropdown-item">
+                            <span class="material-icons-outlined">person</span> Thông tin cá nhân
+                        </a>
+                        <a href="/User/Orders" class="dropdown-item">
+                            <span class="material-icons-outlined">shopping_bag</span> Đơn hàng của tôi
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="/Account/Logout" class="dropdown-item logout-item">
+                            <span class="material-icons-outlined">logout</span> Đăng xuất
+                        </a>
+                    </div>
+                </div>
+
+                <a href="/GioHang" class="action-item cart-btn">
+                    <span class="material-icons-outlined">shopping_cart</span>
+                    <span>Giỏ hàng</span>
+                    <span class="cart-badge">0</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Main Navigation Menu -->
+        <nav class="main-nav">
+            <div class="container nav-list">
+                <a href="/TrangChu/TrangChu" class="nav-item">Trang chủ</a>
+                <a href="/DanhMuc/DanhSach?id=HotSale" class="nav-item highlight">
+                    <span class="material-icons-outlined">local_fire_department</span> HOT SALE
+                </a>
+                <a href="/DanhMuc/DanhSach?id=BeTrai" class="nav-item">Giày bé trai</a>
+                <a href="/DanhMuc/DanhSach?id=BeGai" class="nav-item">Giày bé gái</a>
+                <a href="/DanhMuc/DanhSach?id=BongRo" class="nav-item">Giày bóng rổ</a>
+                <a href="/DanhMuc/DanhSach?id=Sandal" class="nav-item">Sandal cho bé</a>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Nội dung thay đổi của từng View sẽ nhúng vào đây -->
+    <main class="main-content container">
+        @RenderBody()
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="footer">
+        <div class="container footer-grid">
+            <div class="footer-col">
+                <h4>GIỚI THIỆU</h4>
+                <p>CÔNG TY TNHH MINHEE SPORTS VIỆT NAM</p>
+                <p><span class="material-icons-outlined">place</span> Địa chỉ: số nhà 6 Ngõ 197 Trần Phú, Văn Quán, quận Hà Đông, Thành phố Hà Nội</p>
+                <p><span class="material-icons-outlined">phone</span> 0358187791</p>
+                <p><span class="material-icons-outlined">email</span> nguyentheminh03022004@gmail.com</p>
+            </div>
+            <div class="footer-col">
+                <h4>CHÍNH SÁCH</h4>
+                <ul>
+                    <li><a href="#">Chính sách đổi trả hàng/bảo hành</a></li>
+                    <li><a href="#">Hướng dẫn thanh toán</a></li>
+                    <li><a href="#">Chính sách bảo mật</a></li>
+                    <li><a href="#">Chính sách vận chuyển</a></li>
+                    <li><a href="#">Chính sách kiểm hàng</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>HỖ TRỢ KHÁCH HÀNG</h4>
+                <ul>
+                    <li><a href="#">Giới thiệu</a></li>
+                    <li><a href="#">Chính sách dịch vụ</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>LIÊN HỆ</h4>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/minh.nonglanh" target="_blank" class="social-icon-btn"><img src="/images/2023_Facebook_icon.svg.webp" alt="Facebook" class="social-img"></a>
+                    <a href="https://www.instagram.com/helloiamminh/" target="_blank" class="social-icon-btn"><img src="/images/Instagram_icon.png" alt="Instagram" class="social-img"></a>
+                    <a href="https://x.com/TheMinh03022004" target="_blank" class="social-icon-btn"><img src="/images/images.png" alt="Twitter" class="social-img"></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- File JS dùng chung -->
+    <script src="/js/_Layout.js"></script>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

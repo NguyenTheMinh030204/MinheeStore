@@ -1,0 +1,80 @@
+﻿@model IEnumerable<ShoeStore.Models.Giay>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Kết quả tìm kiếm";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/css/TrangChu.css">
+    <link rel="stylesheet" href="/css/TimKiem.css">
+}
+
+<!-- 1. Thanh tiến trình (Breadcrumb) -->
+<div class="breadcrumb-bar">
+    <a href="/TrangChu/TrangChu">Trang chủ</a>
+    <span class="separator">/</span>
+    <span class="current">Kết quả tìm kiếm</span>
+</div>
+
+<!-- Tiêu đề & Thông số tìm kiếm -->
+<div class="search-title-header">
+    <h2>KẾT QUẢ TÌM KIẾM SẢN PHẨM</h2>
+    <p class="search-meta">Tìm thấy <strong>@ViewBag.TotalItems</strong> sản phẩm phù hợp cho từ khóa "<strong>@ViewBag.TuKhoa</strong>"</p>
+</div>
+
+<!-- 2. Danh sách sản phẩm (Lưới 4 cột) -->
+<section class="product-results-section">
+    @if (Model != null && Model.Any())
+    {
+        <div class="product-grid grid-4">
+            @foreach (var item in Model)
+            {
+                <div class="product-card">
+                    <div class="card-img">
+                        <img src="@item.AnhChinh" alt="@item.TenGiay">
+                    </div>
+                    <h3 class="product-title">@item.TenGiay</h3>
+                    <div class="price-box">
+                        <span class="price-current">@item.GiaBan.ToString("N0") VNĐ</span>
+                        @if (item.GiaCu.HasValue)
+                        {
+                            <span class="price-old">@item.GiaCu.Value.ToString("N0") VNĐ</span>
+                        }
+                    </div>
+                    <button class="btn-add-cart" data-id="@item.MaGiay">
+                        <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
+                    </button>
+                </div>
+            }
+        </div>
+
+        <!-- 3. Phân trang (Nếu trên 20 sản phẩm) -->
+        @if (ViewBag.TotalPages > 1)
+        {
+            <div class="pagination">
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <a href="/TimKiem/KetQua?search=@ViewBag.TuKhoa&page=@i"
+                           class="page-num @(i == ViewBag.CurrentPage ? "active" : "")">
+                        @i
+                    </a>
+                }
+            </div>
+        }
+    }
+    else
+    {
+        <!-- Màn hình trống khi không tìm thấy kết quả -->
+        <div class="no-data-box">
+            <span class="material-icons-outlined no-data-icon">search_off</span>
+            <h3>Rất tiếc, không tìm thấy sản phẩm nào!</h3>
+            <p>Vui lòng thử lại với từ khóa khác (Ví dụ: Giày bé trai, Sandal...)</p>
+            <a href="/TrangChu/TrangChu" class="btn-back-home">Quay về trang chủ</a>
+        </div>
+    }
+</section>
+
+@section Scripts {
+    <script src="/js/TimKiem.js"></script>
+}

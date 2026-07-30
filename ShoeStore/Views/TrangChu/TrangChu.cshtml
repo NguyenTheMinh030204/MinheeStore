@@ -1,0 +1,194 @@
+﻿@model IEnumerable<ShoeStore.Models.Giay>
+
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "Trang Chủ";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/css/TrangChu.css">
+}
+
+<!-- Hero Banner Section -->
+<section class="hero-banner">
+    <div class="banner-slider">
+        <div class="slide active">
+            <img src="/images/banner/banner1.png" alt="Sandal Cho Bé" class="banner-img">
+        </div>
+        <div class="slide">
+            <img src="/images/banner/banner2.png" alt="Bộ Sưu Tập Mới" class="banner-img">
+        </div>
+    </div>
+    <div class="banner-dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+    </div>
+</section>
+
+<!-- 1. HOT SALE SECTION -->
+<section id="hot-sale" class="section-box hot-sale-section">
+    <h2 class="section-title text-gold">
+        <span class="material-icons-outlined">local_fire_department</span> HOT SALE
+    </h2>
+    <div class="carousel-container">
+        <div class="product-grid grid-4">
+            @if (Model != null && Model.Any(p => p.LaHotSale))
+            {
+                foreach (var item in Model.Where(p => p.LaHotSale).Take(4))
+                {
+                    <div class="product-card">
+                        <div class="card-img">
+                            <img src="@item.AnhChinh" alt="@item.TenGiay">
+                        </div>
+                        <h3 class="product-title">@item.TenGiay</h3>
+                        <div class="price-box">
+                            <span class="price-current">@item.GiaBan.ToString("N0") VNĐ</span>
+                            @if (item.GiaCu.HasValue)
+                            {
+                                <span class="price-old">@item.GiaCu.Value.ToString("N0") VNĐ</span>
+                            }
+                        </div>
+                        <button class="btn-add-cart" data-id="@item.MaGiay">
+                            <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
+                        </button>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+    <div class="view-more-wrapper">
+        <button class="btn-view-more" onclick="location.href='/DanhMuc/DanhSach?id=HotSale'">Xem tất cả &gt;&gt;</button>
+    </div>
+</section>
+
+<!-- 2. GIÀY CHO BÉ TRAI -->
+<section id="be-trai" class="section-box category-section">
+    <h2 class="section-title">GIÀY CHO BÉ TRAI</h2>
+    <div class="product-grid grid-4">
+        @if (Model != null && Model.Any(p => p.MaDanhMuc == "BeTrai"))
+        {
+            foreach (var item in Model.Where(p => p.MaDanhMuc == "BeTrai").Take(4))
+            {
+                <div class="product-card">
+                    <div class="card-img">
+                        <img src="@item.AnhChinh" alt="@item.TenGiay">
+                    </div>
+                    <h3 class="product-title">@item.TenGiay</h3>
+                    <div class="price-box">
+                        <span class="price-current">@item.GiaBan.ToString("N0") VNĐ</span>
+                        @if (item.GiaCu.HasValue)
+                        {
+                            <span class="price-old">@item.GiaCu.Value.ToString("N0") VNĐ</span>
+                        }
+                    </div>
+                    <button class="btn-add-cart" data-id="@item.MaGiay">
+                        <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
+                    </button>
+                </div>
+            }
+        }
+    </div>
+    <div class="view-more-wrapper">
+        <button class="btn-view-more" onclick="location.href='/DanhMuc/DanhSach?id=BeTrai'">Xem tất cả &gt;&gt;</button>
+    </div>
+</section>
+
+<!-- 3. GIÀY CHO BÉ GÁI -->
+<section id="be-gai" class="section-box category-section">
+    <h2 class="section-title">GIÀY CHO BÉ GÁI</h2>
+    <div class="product-grid grid-4">
+        @if (Model != null && Model.Any(p => p.MaDanhMuc == "BeGai"))
+        {
+            foreach (var item in Model.Where(p => p.MaDanhMuc == "BeGai").Take(4))
+            {
+                <div class="product-card">
+                    <div class="card-img">
+                        <img src="@item.AnhChinh" alt="@item.TenGiay">
+                    </div>
+                    <h3 class="product-title">@item.TenGiay</h3>
+                    <div class="price-box">
+                        <span class="price-current">@item.GiaBan.ToString("N0") VNĐ</span>
+                        @if (item.GiaCu.HasValue)
+                        {
+                            <span class="price-old">@item.GiaCu.Value.ToString("N0") VNĐ</span>
+                        }
+                    </div>
+                    <button class="btn-add-cart" data-id="@item.MaGiay">
+                        <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
+                    </button>
+                </div>
+            }
+        }
+    </div>
+    <div class="view-more-wrapper">
+        <button class="btn-view-more" onclick="location.href='/DanhMuc/DanhSach?id=BeGai'">Xem tất cả &gt;&gt;</button>
+    </div>
+</section>
+
+<!-- 4. GIÀY BÓNG RỔ -->
+<section id="bong-ro" class="section-box category-section">
+    <h2 class="section-title">GIÀY BÓNG RỔ</h2>
+    <div class="product-grid grid-4">
+        @if (Model != null && Model.Any(p => p.MaDanhMuc == "BongRo"))
+        {
+            foreach (var item in Model.Where(p => p.MaDanhMuc == "BongRo").Take(4))
+            {
+                <div class="product-card">
+                    <div class="card-img">
+                        <img src="@item.AnhChinh" alt="@item.TenGiay">
+                    </div>
+                    <h3 class="product-title">@item.TenGiay</h3>
+                    <div class="price-box">
+                        <span class="price-current">@item.GiaBan.ToString("N0") VNĐ</span>
+                        @if (item.GiaCu.HasValue)
+                        {
+                            <span class="price-old">@item.GiaCu.Value.ToString("N0") VNĐ</span>
+                        }
+                    </div>
+                    <button class="btn-add-cart" data-id="@item.MaGiay">
+                        <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
+                    </button>
+                </div>
+            }
+        }
+    </div>
+    <div class="view-more-wrapper">
+        <button class="btn-view-more" onclick="location.href='/DanhMuc/DanhSach?id=BongRo'">Xem tất cả &gt;&gt;</button>
+    </div>
+</section>
+
+<!-- 5. SANDAL CHO BÉ -->
+<section id="sandal" class="section-box category-section">
+    <h2 class="section-title">SANDAL CHO BÉ</h2>
+    <div class="product-grid grid-4">
+        @if (Model != null && Model.Any(p => p.MaDanhMuc == "Sandal"))
+        {
+            foreach (var item in Model.Where(p => p.MaDanhMuc == "Sandal").Take(4))
+            {
+                <div class="product-card">
+                    <div class="card-img">
+                        <img src="@item.AnhChinh" alt="@item.TenGiay">
+                    </div>
+                    <h3 class="product-title">@item.TenGiay</h3>
+                    <div class="price-box">
+                        <span class="price-current">@item.GiaBan.ToString("N0") VNĐ</span>
+                        @if (item.GiaCu.HasValue)
+                        {
+                            <span class="price-old">@item.GiaCu.Value.ToString("N0") VNĐ</span>
+                        }
+                    </div>
+                    <button class="btn-add-cart" data-id="@item.MaGiay">
+                        <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
+                    </button>
+                </div>
+            }
+        }
+    </div>
+    <div class="view-more-wrapper">
+        <button class="btn-view-more" onclick="location.href='/DanhMuc/DanhSach?id=Sandal'">Xem tất cả &gt;&gt;</button>
+    </div>
+</section>
+
+@section Scripts {
+    <script src="/js/TrangChu.js"></script>
+}

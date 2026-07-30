@@ -1,0 +1,185 @@
+﻿@model IEnumerable<ShoeStore.Models.Giay>
+@using System.Collections.Generic;
+
+@{
+    Layout = "_Layout";
+    
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int totalPages = ViewBag.TotalPages ?? 1;
+    string currentSort = ViewBag.CurrentSort as string ?? "";
+    string currentMaDanhMuc = ViewBag.CurrentMaDanhMuc as string ?? "";
+    string tenDanhMuc = ViewBag.TenDanhMuc as string ?? "TẤT CẢ SẢN PHẨM";
+    
+    ViewData["Title"] = tenDanhMuc;
+
+    var selectedPrices = ViewBag.SelectedPrices as List<string> ?? new List<string>();
+    var selectedSizes = ViewBag.SelectedSizes as List<int> ?? new List<int>();
+
+    // Nối tham số id danh mục vào Query String
+    string idQuery = !string.IsNullOrEmpty(currentMaDanhMuc) ? $"id={currentMaDanhMuc}" : "";
+    string priceQueries = string.Join("", selectedPrices.Select(p => $"&price={p}"));
+    string sizeQueries = string.Join("", selectedSizes.Select(s => $"&size={s}"));
+    string filterQuery = $"{priceQueries}{sizeQueries}";
+    string sortQuery = !string.IsNullOrEmpty(currentSort) ? $"&sort={currentSort}" : "";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="/css/TrangChu.css">
+    <link rel="stylesheet" href="/css/DanhMuc.css">
+}
+
+<!-- Hero Banner Section -->
+<section class="hero-banner">
+    <div class="banner-slider">
+        <div class="slide active">
+            <img src="/images/banner/banner1.png" alt="Sandal Cho Bé" class="banner-img">
+        </div>
+        <div class="slide">
+            <img src="/images/banner/banner2.png" alt="Bộ Sưu Tập Mới" class="banner-img">
+        </div>
+    </div>
+    <div class="banner-dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+    </div>
+</section>
+
+<!-- Top Bar: Breadcrumb & Sort Dropdown -->
+<div class="page-top-bar">
+    <nav class="breadcrumb">
+        <a href="/TrangChu/TrangChu">Trang chủ</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">@tenDanhMuc.ToUpper()</span>
+    </nav>
+
+    <div class="sort-wrapper">
+        <label for="sortSelect" class="sort-label">Sắp xếp theo:</label>
+        <select id="sortSelect" class="sort-dropdown" onchange="location = this.value;">
+            <option value="/DanhMuc/DanhSach?@idQuery&page=1@filterQuery" @(currentSort == "" ? "selected" : "")>Mặc định</option>
+            <option value="/DanhMuc/DanhSach?@idQuery&page=1&sort=price-asc@filterQuery" @(currentSort == "price-asc" ? "selected" : "")>Giá tăng dần</option>
+            <option value="/DanhMuc/DanhSach?@idQuery&page=1&sort=price-desc@filterQuery" @(currentSort == "price-desc" ? "selected" : "")>Giá giảm dần</option>
+            <option value="/DanhMuc/DanhSach?@idQuery&page=1&sort=name-asc@filterQuery" @(currentSort == "name-asc" ? "selected" : "")>Tên A-Z</option>
+            <option value="/DanhMuc/DanhSach?@idQuery&page=1&sort=name-desc@filterQuery" @(currentSort == "name-desc" ? "selected" : "")>Tên Z-A</option>
+        </select>
+    </div>
+</div>
+
+<div class="hotsale-layout-grid">
+
+    <!-- Sidebar Bộ Lọc -->
+    <aside class="filter-sidebar">
+        <form action="/DanhMuc/DanhSach" method="get">
+            <input type="hidden" name="id" value="@currentMaDanhMuc" />
+            <input type="hidden" name="sort" value="@currentSort" />
+            
+            <!-- Lọc Giá -->
+            <div class="filter-box">
+                <h3 class="filter-title">
+                    <span class="material-icons-outlined">filter_alt</span> LỌC THEO GIÁ
+                </h3>
+                <div class="filter-group">
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="price" value="0-500" @(selectedPrices.Contains("0-500") ? "checked" : "")>
+                        <span class="checkmark"></span> Dưới 500.000 VNĐ
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="price" value="500-1000" @(selectedPrices.Contains("500-1000") ? "checked" : "")>
+                        <span class="checkmark"></span> 500.000đ - 1.000.000 VNĐ
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="price" value="1000-2000" @(selectedPrices.Contains("1000-2000") ? "checked" : "")>
+                        <span class="checkmark"></span> 1.000.000đ - 2.000.000 VNĐ
+                    </label>
+                    <label class="checkbox-item">
+                        <input type="checkbox" name="price" value="2000-up" @(selectedPrices.Contains("2000-up") ? "checked" : "")>
+                        <span class="checkmark"></span> Trên 2.000.000 VNĐ
+                    </label>
+                </div>
+            </div>
+
+            <!-- Lọc Size (33 -> 41) -->
+            <div class="filter-box">
+                <h3 class="filter-title">
+                    <span class="material-icons-outlined">straighten</span> LỌC THEO SIZE GIÀY
+                </h3>
+                <div class="filter-group size-grid">
+                    @for (int sz = 33; sz <= 41; sz++)
+                    {
+                        bool isChecked = selectedSizes.Contains(sz);
+                        <label class="checkbox-item size-box">
+                            <input type="checkbox" name="size" value="@sz" @(isChecked ? "checked='checked'" : "")>
+                            <span class="size-label">@sz</span>
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <button type="submit" class="btn-apply-filter">Áp dụng lọc</button>
+        </form>
+    </aside>
+
+    <!-- Lưới Sản Phẩm -->
+    <section class="products-container">
+        <div class="product-grid hotsale-3col-grid">
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <div class="product-card">
+                        <div class="card-img">
+                            <img src="@item.AnhChinh" alt="@item.TenGiay">
+                        </div>
+                        <h3 class="product-title">@item.TenGiay</h3>
+                        <div class="price-box">
+                            <span class="price-current">@item.GiaBan.ToString("N0") VNĐ</span>
+                            @if (item.GiaCu.HasValue)
+                            {
+                                <span class="price-old">@item.GiaCu.Value.ToString("N0") VNĐ</span>
+                            }
+                        </div>
+                        <button class="btn-add-cart" data-id="@item.MaGiay">
+                            <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
+                        </button>
+                    </div>
+                }
+            }
+            else
+            {
+                <div class="no-products" style="grid-column: span 3; text-align: center; padding: 40px 0;">
+                    <p>Hiện chưa có sản phẩm nào phù hợp với bộ lọc trong danh mục này.</p>
+                </div>
+            }
+        </div>
+
+        <!-- Phân Trang Động -->
+        @if (totalPages >= 1)
+        {
+            <div class="pagination-wrapper">
+                <ul class="pagination">
+                    <!-- Nút Lùi Trang -->
+                    <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
+                        <a href="/DanhMuc/DanhSach?@idQuery&page=@(currentPage - 1)@sortQuery@filterQuery" class="page-link">&laquo;</a>
+                    </li>
+
+                    <!-- Các Nút Số Trang -->
+                    @for (int i = 1; i <= totalPages; i++)
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a href="/DanhMuc/DanhSach?@idQuery&page=@i@sortQuery@filterQuery" class="page-link">@i</a>
+                        </li>
+                    }
+
+                    <!-- Nút Sang Trang -->
+                    <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
+                        <a href="/DanhMuc/DanhSach?@idQuery&page=@(currentPage + 1)@sortQuery@filterQuery" class="page-link">&raquo;</a>
+                    </li>
+                </ul>
+            </div>
+        }
+    </section>
+
+</div>
+
+@section Scripts {
+    <script src="/js/TrangChu.js"></script>
+}
