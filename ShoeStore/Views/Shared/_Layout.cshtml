@@ -47,20 +47,35 @@
                 <div class="user-dropdown">
                     <a href="#" class="action-item user-btn">
                         <span class="material-icons-outlined">account_circle</span>
-                        <span>Tài khoản</span>
+                        <span>@(User.Identity?.IsAuthenticated == true ? (User.Identity.Name ?? "Tài khoản") : "Tài khoản")</span>
                         <span class="material-icons-outlined arrow-icon">arrow_drop_down</span>
                     </a>
+                    
                     <div class="dropdown-menu">
-                        <a href="/User/Profile" class="dropdown-item">
-                            <span class="material-icons-outlined">person</span> Thông tin cá nhân
-                        </a>
-                        <a href="/User/Orders" class="dropdown-item">
-                            <span class="material-icons-outlined">shopping_bag</span> Đơn hàng của tôi
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="/Account/Logout" class="dropdown-item logout-item">
-                            <span class="material-icons-outlined">logout</span> Đăng xuất
-                        </a>
+                        @if (User.Identity?.IsAuthenticated == true)
+                        {
+                            <!-- Đã đăng nhập -->
+                            <a href="/TaiKhoan/Index" class="dropdown-item">
+                                <span class="material-icons-outlined">person</span> Thông tin cá nhân
+                            </a>
+                            <a href="/DonHang/LichSu" class="dropdown-item">
+                                <span class="material-icons-outlined">shopping_bag</span> Đơn hàng của tôi
+                            </a>
+                            <div class="dropdown-divider"></div>
+                            <a href="/TaiKhoan/DangXuat" class="dropdown-item logout-item">
+                                <span class="material-icons-outlined">logout</span> Đăng xuất
+                            </a>
+                        }
+                        else
+                        {
+                            <!-- Chưa đăng nhập -->
+                            <a href="/TaiKhoan/DangNhap" class="dropdown-item">
+                                <span class="material-icons-outlined">login</span> Đăng nhập
+                            </a>
+                            <a href="/TaiKhoan/DangKy" class="dropdown-item">
+                                <span class="material-icons-outlined">person_add</span> Đăng ký tài khoản
+                            </a>
+                        }
                     </div>
                 </div>
 

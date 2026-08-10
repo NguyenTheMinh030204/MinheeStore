@@ -22,6 +22,7 @@
 
 	<ItemGroup>
 		<Folder Include="wwwroot\images\banner\" />
+		<Folder Include="wwwroot\images\avatars\" />
 		<Folder Include="wwwroot\images\shoes\" />
 	</ItemGroup>
 

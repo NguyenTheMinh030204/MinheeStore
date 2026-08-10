@@ -1,0 +1,309 @@
+﻿:root {
+    --primary-dark: #021156;
+    --primary-blue: #203EDB;
+    --secondary-gold: #FCB90D;
+    --secondary-gold-hover: #e0a300;
+    --bg-white: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* Background ảnh giày thể thao phủ mờ màu tối */
+body.auth-page {
+    min-height: 100vh;
+    background: linear-gradient(135deg, rgba(2, 17, 86, 0.88), rgba(8, 28, 116, 0.88)), url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1920&auto=format&fit=crop') no-repeat center center fixed;
+    background-size: cover;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 15px;
+    color: var(--bg-white);
+}
+
+.auth-container {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    position: relative;
+}
+
+    .auth-container.register-container {
+        max-width: 480px;
+    }
+
+/* Nút quay lại (Top Left Arrow) - Đã đẩy sát lề trái hơn */
+.btn-back {
+    position: absolute;
+    top: -10px;
+    left: -20px; /* Đẩy lùi sang trái 20px */
+    color: var(--bg-white);
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    transition: background 0.2s;
+}
+
+    .btn-back:hover {
+        background: rgba(255, 255, 255, 0.15);
+    }
+
+    .btn-back .material-icons-outlined {
+        font-size: 26px;
+    }
+
+/* Vòng tròn Logo trắng */
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+/* Vòng tròn chứa Logo */
+.logo-circle {
+    width: 160px;
+    height: 160px;
+    background-color: var(--bg-white);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    padding: 0; /* Bỏ padding khoảng trống lề */
+    overflow: hidden;
+}
+
+    /* Ảnh logo bên trong - Đẩy to tràn rộng ra */
+    .logo-circle img {
+        width: 90%; /* Tăng chiều rộng lên 90% */
+        height: 90%; /* Tăng chiều cao lên 90% */
+        max-width: 90%;
+        max-height: 90%;
+        object-fit: contain; /* Giữ nguyên tỉ lệ hình ảnh không bị méo */
+        transform: scale(1.2); /* Phóng to nhẹ logo lên 1.2 lần */
+    }
+
+/* Tiêu đề trang */
+.auth-title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: 800;
+    letter-spacing: 1px;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+}
+
+/* Form Groups & Inputs */
+.form-group {
+    margin-bottom: 18px;
+}
+
+    .form-group label {
+        display: block;
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 6px;
+        color: #E2E8F0;
+    }
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.form-control {
+    width: 100%;
+    padding: 12px 20px;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #1E293B;
+    background-color: var(--bg-white);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+    .form-control::placeholder {
+        color: #94A3B8;
+    }
+
+/* Icon mắt ẩn/hiện mật khẩu */
+.toggle-password {
+    position: absolute;
+    right: 16px;
+    cursor: pointer;
+    color: var(--primary-dark);
+    display: flex;
+    align-items: center;
+    user-select: none;
+}
+
+/* Tải ảnh Avatar (Đăng ký) */
+.avatar-picker {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.avatar-circle-btn {
+    width: 90px;
+    height: 90px;
+    border-radius: 50%;
+    background-color: #CBD5E1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 3px solid var(--bg-white);
+    overflow: hidden;
+    transition: transform 0.2s;
+}
+
+    .avatar-circle-btn:hover {
+        transform: scale(1.05);
+    }
+
+    .avatar-circle-btn img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .avatar-circle-btn .material-icons-outlined {
+        font-size: 36px;
+        color: #64748B;
+    }
+
+/* Cụm Email + Nút Lấy OTP */
+.email-otp-group {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+    .email-otp-group .form-control {
+        flex: 1;
+    }
+
+.btn-get-otp {
+    background-color: var(--secondary-gold);
+    color: var(--primary-dark);
+    border: none;
+    padding: 12px 18px;
+    border-radius: 20px;
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.2s;
+}
+
+    .btn-get-otp:hover {
+        background-color: var(--secondary-gold-hover);
+    }
+
+/* Các ô nhập OTP (6 ô) */
+.otp-boxes {
+    display: flex;
+    gap: 10px;
+    justify-content: space-between;
+}
+
+.otp-input {
+    width: 15%;
+    height: 48px;
+    text-align: center;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+    font-size: 20px;
+    font-weight: 800;
+    color: var(--primary-dark);
+    background-color: var(--bg-white);
+}
+
+/* Radio Chọn Giới Tính */
+.gender-group {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    padding: 4px 0;
+}
+
+.gender-option {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+    .gender-option input[type="radio"] {
+        accent-color: var(--secondary-gold);
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+
+/* Nút Submit Vàng */
+.btn-auth-submit {
+    width: 100%;
+    max-width: 220px;
+    margin: 25px auto 0;
+    display: block;
+    padding: 12px 20px;
+    background-color: var(--secondary-gold);
+    color: var(--primary-dark);
+    border: none;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 800;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 15px rgba(252, 185, 13, 0.3);
+}
+
+    .btn-auth-submit:hover {
+        background-color: var(--secondary-gold-hover);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(252, 185, 13, 0.4);
+    }
+
+/* Link Chuyển trang dưới cùng */
+.auth-footer-link {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 14px;
+}
+
+    .auth-footer-link a {
+        color: var(--secondary-gold);
+        text-decoration: none;
+        font-weight: 700;
+    }
+
+        .auth-footer-link a:hover {
+            text-decoration: underline;
+        }
+
+.alert-danger-box {
+    background: rgba(229, 62, 62, 0.2);
+    border: 1px solid #E53E3E;
+    color: #FF8A8A;
+    padding: 10px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    text-align: center;
+    margin-bottom: 15px;
+}

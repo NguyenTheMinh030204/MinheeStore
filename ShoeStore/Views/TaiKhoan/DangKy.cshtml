@@ -1,0 +1,135 @@
+﻿@model ShoeStore.Models.NguoiDung
+@{
+    Layout = null;
+    string otpCode = ViewBag.OtpCode as string ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký tài khoản - Minhee Sports</title>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- File CSS Auth -->
+    <link rel="stylesheet" href="/css/TaiKhoan.css">
+</head>
+<body class="auth-page">
+
+    <div class="auth-container register-container">
+
+        <!-- Nút Mũi tên quay lại -->
+        <a href="/TaiKhoan/DangNhap" class="btn-back" title="Quay lại Đăng nhập">
+            <span class="material-icons-outlined">arrow_back</span>
+        </a>
+
+        <!-- Vòng tròn Logo -->
+        <div class="logo-wrapper">
+            <div class="logo-circle">
+                <img src="/images/logo.png" alt="Minhee Shop Logo">
+            </div>
+        </div>
+
+        <h2 class="auth-title">ĐĂNG KÝ</h2>
+
+        <!-- Thông báo lỗi nếu có -->
+        @if (ViewBag.Loi != null)
+        {
+            <div class="alert-danger-box">@ViewBag.Loi</div>
+        }
+
+        <form action="/TaiKhoan/DangKy" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <!-- Tải ảnh Đại diện (Avatar Placeholder) -->
+            <div class="avatar-picker">
+                <input type="file" id="avatarFile" name="AnhDaiDien" accept="image/*" hidden>
+                <label for="avatarFile" class="avatar-circle-btn" id="avatarPreviewLabel">
+                    @if (!string.IsNullOrEmpty(Model?.AnhDaiDien))
+                    {
+                        <img src="@Model.AnhDaiDien" alt="Avatar Preview">
+                    }
+                    else
+                    {
+                        <span class="material-icons-outlined">photo_camera</span>
+                    }
+                </label>
+            </div>
+
+            <!-- Họ và tên -->
+            <div class="form-group">
+                <label>Họ và tên</label>
+                <input type="text" name="HoTen" class="form-control" value="@Model?.HoTen" placeholder="Nguyễn Văn A" required>
+            </div>
+
+            <!-- E-mail + Nút Lấy OTP -->
+            <div class="form-group">
+                <label>E-mail</label>
+                <div class="email-otp-group">
+                    <input type="email" id="regEmail" name="Email" class="form-control" value="@Model?.Email" placeholder="nguyenvana@gmail.com" required>
+                    <button type="button" id="btnSendOtp" class="btn-get-otp">Lấy OTP</button>
+                </div>
+            </div>
+
+            <!-- 6 Ô nhập OTP -->
+            <div class="form-group">
+                <label>OTP:</label>
+                <div class="otp-boxes">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 1 ? otpCode[0].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 2 ? otpCode[1].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 3 ? otpCode[2].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 4 ? otpCode[3].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 5 ? otpCode[5].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 6 ? otpCode[5].ToString() : "")">
+                </div>
+                <!-- Input ẩn để lưu chuỗi OTP hoàn chỉnh submit về Controller -->
+                <input type="hidden" name="OtpCode" id="fullOtpCode" value="@otpCode">
+            </div>
+
+            <!-- Số điện thoại -->
+            <div class="form-group">
+                <label>Số điện thoại</label>
+                <input type="tel" name="SoDienThoai" class="form-control" value="@Model?.SoDienThoai" placeholder="0123456789" required>
+            </div>
+
+            <!-- Ngày sinh -->
+            <div class="form-group">
+                <label>Ngày sinh</label>
+                <input type="date" name="NgaySinh" class="form-control" value="@(Model?.NgaySinh?.ToString("yyyy-MM-dd"))" required>
+            </div>
+
+            <!-- Địa chỉ -->
+            <div class="form-group">
+                <label>Địa chỉ</label>
+                <input type="text" name="DiaChi" class="form-control" value="@Model?.DiaChi" placeholder="Số nhà (nếu có), thôn/đường phố, xã, tỉnh/thành phố" required>
+            </div>
+
+            <!-- Mật khẩu -->
+            <div class="form-group">
+                <label>Mật khẩu</label>
+                <div class="input-wrapper">
+                    <input type="password" id="regPassword" name="MatKhau" class="form-control" value="@Model?.MatKhau" required>
+                    <span class="material-icons-outlined toggle-password" data-target="regPassword">visibility</span>
+                </div>
+            </div>
+
+            <!-- Nhập lại mật khẩu -->
+            <div class="form-group">
+                <label>Nhập lại mật khẩu</label>
+                <div class="input-wrapper">
+                    <input type="password" id="confirmPassword" name="XacNhanMatKhau" class="form-control" value="@ViewBag.XacNhanMatKhau" required>
+                    <span class="material-icons-outlined toggle-password" data-target="confirmPassword">visibility</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-auth-submit">ĐĂNG KÝ</button>
+
+        </form>
+
+    </div>
+
+    <!-- File JS Auth -->
+    <script src="/js/TaiKhoan.js"></script>
+</body>
+</html>

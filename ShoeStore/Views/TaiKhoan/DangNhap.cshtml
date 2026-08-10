@@ -1,0 +1,67 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng nhập - Minhee Sports</title>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- File CSS Auth -->
+    <link rel="stylesheet" href="/css/TaiKhoan.css">
+</head>
+<body class="auth-page">
+
+    <div class="auth-container">
+        
+        <!-- Vòng tròn Logo Trắng -->
+        <div class="logo-wrapper">
+            <div class="logo-circle">
+                <img src="/images/logo.png" alt="Minhee Shop Logo">
+            </div>
+        </div>
+
+        <h2 class="auth-title">ĐĂNG NHẬP</h2>
+
+        <!-- Thông báo lỗi nếu có -->
+        @if (ViewBag.Loi != null)
+        {
+            <div class="alert-danger-box">@ViewBag.Loi</div>
+        }
+
+        <form action="/TaiKhoan/DangNhap" method="post">
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <div class="input-wrapper">
+                    <!-- Đã thêm value="@ViewBag.Email" để giữ lại email khi đăng nhập lỗi -->
+                    <input type="email" id="email" name="Email" class="form-control" value="@ViewBag.Email" required placeholder="Nhập địa chỉ email...">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="password">Mật khẩu</label>
+                <div class="input-wrapper">
+                    <input type="password" id="password" name="MatKhau" class="form-control" required placeholder="Nhập mật khẩu...">
+                    <span class="material-icons-outlined toggle-password" data-target="password">visibility</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-auth-submit">ĐĂNG NHẬP</button>
+        </form>
+
+        <div class="auth-footer-link">
+            <span>Bạn chưa có tài khoản? </span>
+            <a href="/TaiKhoan/DangKy">Đăng ký ngay</a>
+        </div>
+
+    </div>
+
+    <!-- File JS Auth -->
+    <script src="/js/TaiKhoan.js"></script>
+</body>
+</html>
