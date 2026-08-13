@@ -33,7 +33,7 @@
 
         <h2 class="auth-title">ĐĂNG KÝ</h2>
 
-        <!-- Thông báo lỗi nếu có -->
+        <!-- Thông báo lỗi nếu có từ Server -->
         @if (ViewBag.Loi != null)
         {
             <div class="alert-danger-box">@ViewBag.Loi</div>
@@ -80,10 +80,14 @@
                     <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 2 ? otpCode[1].ToString() : "")">
                     <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 3 ? otpCode[2].ToString() : "")">
                     <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 4 ? otpCode[3].ToString() : "")">
-                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 5 ? otpCode[5].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 5 ? otpCode[4].ToString() : "")">
                     <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 6 ? otpCode[5].ToString() : "")">
                 </div>
-                <!-- Input ẩn để lưu chuỗi OTP hoàn chỉnh submit về Controller -->
+
+                <!-- Thẻ hiển thị dòng trạng thái OTP Live (Đúng/Sai) từ JS -->
+                <small id="otpStatusMsg" style="display: block; margin-top: 6px; font-weight: 600; font-size: 12px;"></small>
+
+                <!-- Input ẩn lưu chuỗi OTP hoàn chỉnh submit về Controller -->
                 <input type="hidden" name="OtpCode" id="fullOtpCode" value="@otpCode">
             </div>
 
@@ -109,7 +113,7 @@
             <div class="form-group">
                 <label>Mật khẩu</label>
                 <div class="input-wrapper">
-                    <input type="password" id="regPassword" name="MatKhau" class="form-control" value="@Model?.MatKhau" required>
+                    <input type="password" id="regPassword" name="MatKhau" class="form-control" autocomplete="new-password" required placeholder="Nhập mật khẩu...">
                     <span class="material-icons-outlined toggle-password" data-target="regPassword">visibility</span>
                 </div>
             </div>
@@ -118,7 +122,7 @@
             <div class="form-group">
                 <label>Nhập lại mật khẩu</label>
                 <div class="input-wrapper">
-                    <input type="password" id="confirmPassword" name="XacNhanMatKhau" class="form-control" value="@ViewBag.XacNhanMatKhau" required>
+                    <input type="password" id="confirmPassword" name="XacNhanMatKhau" class="form-control" autocomplete="new-password" required placeholder="Xác nhận lại mật khẩu...">
                     <span class="material-icons-outlined toggle-password" data-target="confirmPassword">visibility</span>
                 </div>
             </div>

@@ -23,10 +23,19 @@
     });
 
     // ==========================================
-    // 2. TỰ ĐỘNG NHẢY 6 Ô NHẬP MÃ OTP
+    // 2. TỰ ĐỘNG NHẢY 6 Ô OTP & CHECK LIVE TỰ ĐỘNG (DÙNG CHUNG)
     // ==========================================
     const otpInputs = document.querySelectorAll('.otp-input');
     const fullOtpInput = document.getElementById('fullOtpCode');
+    const otpStatusMsg = document.getElementById('otpStatusMsg');
+
+    function getActiveEmail() {
+        const regEmail = document.getElementById('regEmail');
+        const resetEmail = document.getElementById('resetEmail');
+        if (regEmail && regEmail.value.trim() !== '') return regEmail.value.trim();
+        if (resetEmail && resetEmail.value.trim() !== '') return resetEmail.value.trim();
+        return '';
+    }
 
     if (otpInputs.length > 0) {
         otpInputs.forEach((input, index) => {
@@ -34,7 +43,6 @@
             input.addEventListener('input', (e) => {
                 const val = e.target.value;
 
-                // Chỉ cho nhập số
                 if (!/^\d*$/.test(val)) {
                     e.target.value = '';
                     return;
@@ -44,7 +52,7 @@
                     otpInputs[index + 1].focus();
                 }
 
-                updateFullOtp();
+                updateFullOtpAndCheck();
             });
 
             input.addEventListener('keydown', (e) => {
@@ -54,41 +62,82 @@
             });
         });
 
-        function updateFullOtp() {
+        updateFullOtpAndCheck();
+
+        function updateFullOtpAndCheck() {
             let otpStr = '';
             otpInputs.forEach(inp => otpStr += inp.value);
             if (fullOtpInput) fullOtpInput.value = otpStr;
+
+            if (otpStr.length === 6) {
+                const email = getActiveEmail();
+
+                if (!email) {
+                    if (otpStatusMsg) {
+                        otpStatusMsg.style.color = '#FF8A8A';
+                        otpStatusMsg.textContent = 'Vui lòng nhập Email trước khi kiểm tra OTP!';
+                    }
+                    return;
+                }
+
+                if (otpStatusMsg) {
+                    otpStatusMsg.style.color = '#FCB90D';
+                    otpStatusMsg.textContent = 'Đang kiểm tra mã OTP...';
+                }
+
+                fetch(`/TaiKhoan/KiemTraOTP?email=${encodeURIComponent(email)}&otpCode=${encodeURIComponent(otpStr)}`, {
+                    method: 'POST'
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        if (otpStatusMsg) {
+                            if (data.success) {
+                                otpStatusMsg.style.color = '#10B981';
+                                otpStatusMsg.textContent = '✓ ' + (data.message || 'Mã OTP chính xác!');
+                            } else {
+                                otpStatusMsg.style.color = '#FF8A8A';
+                                otpStatusMsg.textContent = '✕ ' + (data.message || 'Mã OTP không chính xác!');
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Lỗi kiểm tra OTP:', err);
+                        if (otpStatusMsg) {
+                            otpStatusMsg.style.color = '#FF8A8A';
+                            otpStatusMsg.textContent = 'Lỗi kết nối kiểm tra OTP!';
+                        }
+                    });
+            } else {
+                if (otpStatusMsg) otpStatusMsg.textContent = '';
+            }
         }
     }
 
     // ==========================================
-    // 3. XỬ LÝ NÚT LẤY OTP VÀ ĐẾM NGƯỢC (GỬI EMAIL THẬT)
+    // 3. XỬ LÝ NÚT LẤY OTP TRANG ĐĂNG KÝ
     // ==========================================
     const btnSendOtp = document.getElementById('btnSendOtp');
-    const regEmail = document.getElementById('regEmail');
+    const regEmailInput = document.getElementById('regEmail');
 
     if (btnSendOtp) {
         btnSendOtp.addEventListener('click', () => {
-            const email = regEmail ? regEmail.value.trim() : '';
+            const email = regEmailInput ? regEmailInput.value.trim() : '';
             if (!email) {
                 alert('Vui lòng nhập địa chỉ Email trước khi lấy mã OTP!');
-                if (regEmail) regEmail.focus();
+                if (regEmailInput) regEmailInput.focus();
                 return;
             }
 
-            // Vô hiệu hóa nút trong lúc gửi Mail
             btnSendOtp.disabled = true;
             btnSendOtp.style.opacity = '0.6';
             btnSendOtp.textContent = 'Đang gửi...';
 
-            // Gọi API /TaiKhoan/GuiOTP trong TaiKhoanController
             fetch(`/TaiKhoan/GuiOTP?email=${encodeURIComponent(email)}`, { method: 'POST' })
                 .then(res => res.json())
                 .then(data => {
                     if (data.success) {
                         alert(data.message || 'Mã OTP đã được gửi về Email của bạn!');
 
-                        // Đếm ngược 60s
                         let countdown = 60;
                         const timer = setInterval(() => {
                             btnSendOtp.textContent = `Thử lại (${countdown}s)`;
@@ -102,7 +151,6 @@
                             }
                         }, 1000);
                     } else {
-                        // Trường hợp Email đã đăng ký hoặc không hợp lệ
                         alert(data.message || 'Lỗi gửi mã OTP!');
                         btnSendOtp.disabled = false;
                         btnSendOtp.style.opacity = '1';
@@ -120,7 +168,7 @@
     }
 
     // ==========================================
-    // 4. PREVIEW ANH DAI DIEN
+    // 4. PREVIEW ANH DAI DIEN TRANG DANG KY
     // ==========================================
     const avatarFile = document.getElementById('avatarFile');
     const avatarLabel = document.getElementById('avatarPreviewLabel');
@@ -137,4 +185,108 @@
             }
         });
     }
+
+    // ==========================================
+    // 5. XỬ LÝ NÚT LẤY OTP TRANG QUÊN MẬT KHẨU
+    // ==========================================
+    const btnSendOtpReset = document.getElementById('btnSendOtpReset');
+    const resetEmailInput = document.getElementById('resetEmail');
+
+    if (btnSendOtpReset) {
+        btnSendOtpReset.addEventListener('click', () => {
+            const email = resetEmailInput ? resetEmailInput.value.trim() : '';
+            if (!email) {
+                alert('Vui lòng nhập Email trước khi lấy mã OTP!');
+                if (resetEmailInput) resetEmailInput.focus();
+                return;
+            }
+
+            btnSendOtpReset.disabled = true;
+            btnSendOtpReset.style.opacity = '0.6';
+            btnSendOtpReset.textContent = 'Đang gửi...';
+
+            fetch(`/TaiKhoan/GuiOTPQuenMatKhau?email=${encodeURIComponent(email)}`, { method: 'POST' })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message || 'Mã OTP đã được gửi về Email của bạn!');
+
+                        let countdown = 60;
+                        const timer = setInterval(() => {
+                            btnSendOtpReset.textContent = `Thử lại (${countdown}s)`;
+                            countdown--;
+
+                            if (countdown < 0) {
+                                clearInterval(timer);
+                                btnSendOtpReset.disabled = false;
+                                btnSendOtpReset.style.opacity = '1';
+                                btnSendOtpReset.textContent = 'Lấy OTP';
+                            }
+                        }, 1000);
+                    } else {
+                        alert(data.message || 'Lỗi gửi mã OTP!');
+                        btnSendOtpReset.disabled = false;
+                        btnSendOtpReset.style.opacity = '1';
+                        btnSendOtpReset.textContent = 'Lấy OTP';
+                    }
+                })
+                .catch(err => {
+                    console.error('Lỗi kết nối:', err);
+                    alert('Không thể kết nối đến máy chủ!');
+                    btnSendOtpReset.disabled = false;
+                    btnSendOtpReset.style.opacity = '1';
+                    btnSendOtpReset.textContent = 'Lấy OTP';
+                });
+        });
+    }
+
+    // ==========================================
+    // 6. XỬ LÝ TRANG THÔNG TIN CÁ NHÂN (PROFILE)
+    // ==========================================
+    const btnToggleProfile = document.getElementById('btnToggleProfile');
+    const editableFields = document.querySelectorAll('.editable-field');
+    const inputAvatar = document.getElementById('inputAvatar');
+    const avatarEditBadge = document.getElementById('avatarEditBadge');
+    const profileForm = document.getElementById('profileForm');
+    const avatarPreview = document.getElementById('avatarPreview');
+
+    if (btnToggleProfile) {
+        let isEditing = false; // Trạng thái chỉnh sửa
+
+        btnToggleProfile.addEventListener('click', () => {
+            if (!isEditing) {
+                // MỞ KHÓA CÁC TRƯỜNG DỮ LIỆU
+                isEditing = true;
+
+                editableFields.forEach(field => field.disabled = false);
+                if (inputAvatar) inputAvatar.disabled = false;
+                if (avatarEditBadge) avatarEditBadge.style.display = 'flex';
+
+                // ĐỔI NÚT SỬA -> XÁC NHẬN CẬP NHẬT
+                btnToggleProfile.textContent = 'XÁC NHẬN CẬP NHẬT';
+                btnToggleProfile.classList.remove('btn-edit-mode');
+                btnToggleProfile.classList.add('btn-save-mode');
+
+                if (editableFields.length > 0) editableFields[0].focus();
+            } else {
+                // XÁC NHẬN -> SUBMIT FORM VỀ SERVER
+                if (profileForm) profileForm.submit();
+            }
+        });
+    }
+
+    // Preview Avatar mới trên trang Thông tin cá nhân
+    if (inputAvatar && avatarPreview) {
+        inputAvatar.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    avatarPreview.src = event.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
 });

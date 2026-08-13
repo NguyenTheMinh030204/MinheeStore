@@ -1,0 +1,91 @@
+﻿@model ShoeStore.Models.NguoiDung
+@{
+    ViewData["Title"] = "Thông tin cá nhân - Minhee Sports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!-- Material Icons để hiển thị icon camera -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<!-- File CSS riêng cho giao diện khung thông tin -->
+<link rel="stylesheet" href="/css/ThongTinCaNhan.css">
+
+<div class="container py-4">
+
+    <!-- Thanh tiến trình (Breadcrumb Custom) -->
+    <ul class="custom-breadcrumb">
+        <li>
+            <a href="/TrangChu/TrangChu">Trang chủ</a>
+        </li>
+        <li>
+            <span>THÔNG TIN CÁ NHÂN</span>
+        </li>
+    </ul>
+
+    <div class="profile-card">
+
+        <h3 class="profile-title">THÔNG TIN CÁ NHÂN</h3>
+
+        <!-- Thông báo cập nhật thành công -->
+        @if (TempData["ThongBaoSuccess"] != null)
+        {
+            <div class="alert-success-box">
+                @TempData["ThongBaoSuccess"]
+            </div>
+        }
+
+        <form id="profileForm" action="/TaiKhoan/CapNhatThongTin" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+
+            <!-- Ảnh Đại diện + Icon Bấm chọn ảnh mới -->
+            <div class="profile-avatar-wrapper">
+                <img id="avatarPreview" src="@(string.IsNullOrEmpty(Model?.AnhDaiDien) ? "/images/logo.png" : Model.AnhDaiDien)" alt="Avatar" class="profile-avatar">
+                
+                <input type="file" id="inputAvatar" name="AnhDaiDienMoi" accept="image/*" hidden disabled>
+                <label for="inputAvatar" class="avatar-edit-badge" id="avatarEditBadge" title="Đổi ảnh đại diện">
+                    <span class="material-icons-outlined">photo_camera</span>
+                </label>
+            </div>
+
+            <!-- Email (Luôn hiển thị, không cho sửa) -->
+            <div class="profile-group">
+                <label>Email liên hệ</label>
+                <input type="email" class="profile-input" value="@Model?.Email" readonly style="background-color: #EDF2F7; cursor: not-allowed; color: #4A5568; font-weight: 600;">
+            </div>
+
+            <div class="row">
+                <!-- Họ và tên -->
+                <div class="col-md-6 profile-group">
+                    <label>Họ và tên</label>
+                    <input type="text" name="HoTen" class="profile-input editable-field" value="@Model?.HoTen" required disabled>
+                </div>
+
+                <!-- Số điện thoại -->
+                <div class="col-md-6 profile-group">
+                    <label>Số điện thoại</label>
+                    <input type="tel" name="SoDienThoai" class="profile-input editable-field" value="@Model?.SoDienThoai" required disabled>
+                </div>
+            </div>
+
+            <!-- Ngày sinh -->
+            <div class="profile-group">
+                <label>Ngày sinh</label>
+                <input type="date" name="NgaySinh" class="profile-input editable-field" value="@(Model?.NgaySinh?.ToString("yyyy-MM-dd"))" required disabled>
+            </div>
+
+            <!-- Địa chỉ -->
+            <div class="profile-group">
+                <label>Địa chỉ nhận hàng</label>
+                <input type="text" name="DiaChi" class="profile-input editable-field" value="@Model?.DiaChi" required disabled>
+            </div>
+
+            <!-- Nút bấm SỬA THÔNG TIN <-> XÁC NHẬN CẬP NHẬT -->
+            <button type="button" id="btnToggleProfile" class="btn-profile-action btn-edit-mode">SỬA THÔNG TIN</button>
+
+        </form>
+
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/js/TaiKhoan.js"></script>
+}

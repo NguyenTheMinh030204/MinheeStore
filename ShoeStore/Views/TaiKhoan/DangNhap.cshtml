@@ -26,29 +26,43 @@
 
         <h2 class="auth-title">ĐĂNG NHẬP</h2>
 
-        <!-- Thông báo lỗi nếu có -->
+        <!-- Thông báo Đổi mật khẩu thành công -->
+        @if (TempData["ThongBaoSuccess"] != null)
+        {
+            <div style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10B981; color: #10B981; padding: 10px 16px; border-radius: 20px; font-size: 13px; text-align: center; margin-bottom: 15px;">
+                @TempData["ThongBaoSuccess"]
+            </div>
+        }
+
+        <!-- Thông báo lỗi đăng nhập nếu có -->
         @if (ViewBag.Loi != null)
         {
             <div class="alert-danger-box">@ViewBag.Loi</div>
         }
 
-        <form action="/TaiKhoan/DangNhap" method="post">
+        <!-- Thêm autocomplete="off" để ngăn trình duyệt tự điền tài khoản cũ -->
+        <form action="/TaiKhoan/DangNhap" method="post" autocomplete="off">
             @Html.AntiForgeryToken()
 
             <div class="form-group">
                 <label for="email">E-mail</label>
                 <div class="input-wrapper">
-                    <!-- Đã thêm value="@ViewBag.Email" để giữ lại email khi đăng nhập lỗi -->
-                    <input type="email" id="email" name="Email" class="form-control" value="@ViewBag.Email" required placeholder="Nhập địa chỉ email...">
+                    <input type="email" id="email" name="Email" class="form-control" value="@ViewBag.Email" autocomplete="off" required placeholder="Nhập địa chỉ email...">
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="password">Mật khẩu</label>
                 <div class="input-wrapper">
-                    <input type="password" id="password" name="MatKhau" class="form-control" required placeholder="Nhập mật khẩu...">
+                    <!-- Tuyệt đối không để value ở ô password và dùng autocomplete="current-password" hoặc "new-password" -->
+                    <input type="password" id="password" name="MatKhau" class="form-control" autocomplete="new-password" required placeholder="Nhập mật khẩu...">
                     <span class="material-icons-outlined toggle-password" data-target="password">visibility</span>
                 </div>
+            </div>
+
+            <!-- Nút Quên mật khẩu nằm góc phải -->
+            <div style="text-align: right; margin-top: -8px; margin-bottom: 18px;">
+                <a href="/TaiKhoan/QuenMatKhau" style="color: var(--secondary-gold); text-decoration: none; font-size: 13px; font-weight: 600;">Quên mật khẩu?</a>
             </div>
 
             <button type="submit" class="btn-auth-submit">ĐĂNG NHẬP</button>

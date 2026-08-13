@@ -1,0 +1,251 @@
+﻿@model ShoeStore.Models.Giay
+@{
+    ViewData["Title"] = Model.TenGiay + " - Minhee Sports";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var dsLienQuan = ViewBag.SanPhamLienQuan as List<ShoeStore.Models.Giay> ?? new List<ShoeStore.Models.Giay>();
+    int tongTonKho = Model.BienTheGiay?.Sum(b => b.SoLuongTon) ?? 0;
+}
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link rel="stylesheet" href="/css/ChiTietSanPham.css">
+<link rel="stylesheet" href="/css/TrangChu.css" />
+
+<div class="detail-page-container">
+
+    <!-- Hero Banner Section -->
+    <section class="hero-banner">
+        <div class="banner-slider">
+            <div class="slide active">
+                <img src="/images/banner/banner1.png" alt="Sandal Cho Bé" class="banner-img">
+            </div>
+            <div class="slide">
+                <img src="/images/banner/banner2.png" alt="Bộ Sưu Tập Mới" class="banner-img">
+            </div>
+        </div>
+        <div class="banner-dots">
+            <span class="dot active" data-index="0"></span>
+            <span class="dot" data-index="1"></span>
+        </div>
+    </section>
+
+    <!-- Thanh tiến trình (Breadcrumb) -->
+    <div class="site-breadcrumb">
+        <a href="javascript:history.back()" class="btn-back-link" title="Quay lại">
+            <span class="material-icons-outlined">chevron_left</span>
+        </a>
+        <a href="/DanhMuc/DanhSach?id=@Model.MaDanhMuc" class="category-link">
+            @(Model.DanhMuc?.TenDanhMuc ?? "Giày thể thao")
+        </a>
+        <span class="separator">/</span>
+        <span class="current-page">@Model.TenGiay</span>
+    </div>
+
+    <!-- KHUNG CHI TIẾT SẢN PHẨM CHÍNH -->
+    <div class="product-detail-card">
+        <div class="detail-grid-layout">
+
+            <!-- CỘT TRÁI: BỘ ẢNH SẢN PHẨM -->
+            <div class="detail-left-col">
+                <div class="main-image-box">
+                    <img id="mainImage" src="@Model.AnhChinh" alt="@Model.TenGiay">
+                </div>
+
+                <!-- Thumbnail Ảnh Phụ -->
+                <div class="thumbnail-strip">
+                    <div class="thumb-item active" onclick="changeImage(this, '@Model.AnhChinh')">
+                        <img src="@Model.AnhChinh" alt="Main Thumb">
+                    </div>
+
+                    @if (Model.AnhGiay != null && Model.AnhGiay.Any())
+                    {
+                        foreach (var anh in Model.AnhGiay)
+                        {
+                            <div class="thumb-item" onclick="changeImage(this, '@anh.DuongDanAnh')">
+                                <img src="@anh.DuongDanAnh" alt="Sub Thumb">
+                            </div>
+                        }
+                    }
+                </div>
+            </div>
+
+            <!-- CỘT PHẢI: THÔNG TIN SẢN PHẨM -->
+            <div class="detail-right-col">
+                <h2 class="detail-product-title">@Model.TenGiay</h2>
+
+                <!-- Status Badge -->
+                <div class="status-badge-wrapper">
+                    @if (tongTonKho > 0)
+                    {
+                        <span class="badge-stock">CÒN HÀNG</span>
+                    }
+                    else
+                    {
+                        <span class="badge-stock out-of-stock">HẾT HÀNG</span>
+                    }
+
+                    @if (Model.LaHotSale)
+                    {
+                        <span class="badge-hotsale">🔥 HOT SALE</span>
+                    }
+                </div>
+
+                <!-- Meta Info -->
+                <div class="product-meta">
+                    <p><span>Loại:</span> <strong>@(Model.DanhMuc?.TenDanhMuc ?? Model.MaDanhMuc)</strong></p>
+                    <p><span>MSP:</span> <strong>@Model.MaGiay</strong></p>
+                </div>
+
+                <!-- Giá -->
+                <div class="product-price-box">
+                    <span class="current-price">@Model.GiaBan.ToString("N0") VNĐ</span>
+                    @if (Model.GiaCu.HasValue && Model.GiaCu > Model.GiaBan)
+                    {
+                        <span class="old-price">@Model.GiaCu.Value.ToString("N0") VNĐ</span>
+                    }
+                </div>
+
+                <!-- Box Khuyến Mãi -->
+                <div class="promo-box">
+                    <div class="promo-header">
+                        <span class="material-icons-outlined text-primary">card_giftcard</span>
+                        <span>KHUYẾN MÃI - ƯU ĐÃI</span>
+                    </div>
+                    
+                    @if (!string.IsNullOrWhiteSpace(Model.KhuyenMaiUuDai))
+                    {
+                        <ul class="promo-list">
+                            @foreach (var line in Model.KhuyenMaiUuDai.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+                            {
+                                <li>@line</li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="no-promo-text">Hiện chưa có chương trình khuyến mãi - ưu đãi nào.</p>
+                    }
+                </div>
+
+                <!-- CHỌN SIZE (Chạy từ 33 đến 41) -->
+                <div class="size-selection-box">
+                    <div class="size-header">
+                        <label>Chọn size:</label>
+                        <a href="javascript:void(0)" class="size-guide-link" onclick="openSizeModal()">
+                            <span class="material-icons-outlined">straighten</span> Hướng dẫn chọn size
+                        </a>
+                    </div>
+                    
+                    <div class="size-options">
+                        @{
+                            bool hasFirstActive = false;
+                        }
+
+                        @for (int sz = 33; sz <= 41; sz++)
+                        {
+                            var bienThe = Model.BienTheGiay?.FirstOrDefault(b => b.KichCo == sz);
+                            bool isAvailable = bienThe != null && bienThe.SoLuongTon > 0;
+                            int tonKho = bienThe?.SoLuongTon ?? 0;
+
+                            string activeClass = "";
+                            if (isAvailable && !hasFirstActive)
+                            {
+                                activeClass = "active";
+                                hasFirstActive = true;
+                            }
+
+                            <button type="button"
+                                    class="btn-size @activeClass @(!isAvailable ? "disabled" : "")"
+                                    data-size="@sz"
+                                    data-stock="@tonKho"
+                                @(!isAvailable ? "disabled='disabled'" : "")>
+                                @sz
+                            </button>
+                        }
+                    </div>
+                </div>
+
+                <!-- Chọn Số Lượng -->
+                <div class="quantity-box">
+                    <label>Số lượng:</label>
+                    <div class="quantity-counter">
+                        <button type="button" class="btn-qty btn-minus" onclick="updateQty(-1)">-</button>
+                        <input type="text" id="inputQuantity" value="1" readonly>
+                        <button type="button" class="btn-qty btn-plus" onclick="updateQty(1)">+</button>
+                    </div>
+                </div>
+
+                <!-- Nút Hành Động Chi Tiết -->
+                <div class="action-buttons">
+                    <button type="button" class="btn-detail-add-cart" onclick="addToCart('@Model.MaGiay')" @(tongTonKho <= 0 ? "disabled" : "")>Thêm vào giỏ hàng</button>
+                    <button type="button" class="btn-buy-now" onclick="buyNow('@Model.MaGiay')" @(tongTonKho <= 0 ? "disabled" : "")>MUA NGAY</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- MÔ TẢ SẢN PHẨM -->
+    <div class="description-card">
+        <h4 class="description-title">MÔ TẢ SẢN PHẨM</h4>
+        <div class="description-content">
+            @if (!string.IsNullOrEmpty(Model.MoTa))
+            {
+                @Html.Raw(Model.MoTa)
+            }
+            else
+            {
+                <p>Thông tin mô tả sản phẩm đang được cập nhật...</p>
+            }
+        </div>
+    </div>
+
+    <!-- SẢN PHẨM LIÊN QUAN -->
+    @if (dsLienQuan.Any())
+    {
+        <div class="related-products-section">
+            <h4 class="section-title">SẢN PHẨM LIÊN QUAN</h4>
+            <div class="product-grid grid-4">
+                @foreach (var giay in dsLienQuan)
+                {
+                    <div class="product-card" onclick="location.href='/Giay/ChiTiet?id=@giay.MaGiay'" style="cursor: pointer;">
+                        <div class="card-img">
+                            <img src="@giay.AnhChinh" alt="@giay.TenGiay">
+                        </div>
+                        <h3 class="product-title">@giay.TenGiay</h3>
+                        <div class="price-box">
+                            <span class="price-current">@giay.GiaBan.ToString("N0") VNĐ</span>
+                            @if (giay.GiaCu.HasValue && giay.GiaCu > giay.GiaBan)
+                            {
+                                <span class="price-old">@giay.GiaCu.Value.ToString("N0") VNĐ</span>
+                            }
+                        </div>
+                        <button type="button" class="btn-add-cart" onclick="event.stopPropagation(); addToCart('@giay.MaGiay');">
+                            <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+</div>
+
+<!-- POPUP MODAL HƯỚNG DẪN CHỌN SIZE GIÀY (DÙNG /images/size.jpg) -->
+<div id="sizeGuideModal" class="size-guide-modal-overlay" onclick="closeSizeModal()">
+    <div class="size-guide-modal-box" onclick="event.stopPropagation();">
+        <div class="size-guide-modal-header">
+            <h5 class="m-0 fw-bold d-flex align-items-center gap-2">
+                <span class="material-icons-outlined">straighten</span> BẢNG HƯỚNG DẪN CHỌN SIZE GIÀY
+            </h5>
+            <span class="btn-close-modal" onclick="closeSizeModal()">&times;</span>
+        </div>
+        <div class="size-guide-modal-body">
+            <img src="/images/size.jpg" alt="Bảng hướng dẫn chọn size giày Minhee Sports">
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="/js/TrangChu.js"></script>
+    <script src="/js/ChiTietSanPham.js"></script>
+}

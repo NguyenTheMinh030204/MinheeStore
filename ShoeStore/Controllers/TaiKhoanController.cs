@@ -42,7 +42,7 @@ namespace ShoeStore.Controllers
         // ==========================================
         [Authorize]
         [HttpGet]
-        public IActionResult Index()
+        public IActionResult ThongTinCaNhan()
         {
             // Lấy Email người dùng đã lưu trong JWT Claims
             string? email = User.FindFirst(ClaimTypes.Email)?.Value;
@@ -53,7 +53,54 @@ namespace ShoeStore.Controllers
                 return RedirectToAction("DangNhap");
             }
 
-            return View(user);
+            return View(user); // Trả về Views/TaiKhoan/ThongTinCaNhan.cshtml
+        }
+
+        // API CẬP NHẬT THÔNG TIN CÁ NHÂN
+        [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CapNhatThongTin(NguoiDung model, IFormFile? AnhDaiDienMoi)
+        {
+            string? email = User.FindFirst(ClaimTypes.Email)?.Value;
+            var user = _db.NguoiDung.FirstOrDefault(u => u.Email == email);
+
+            if (user == null)
+            {
+                return RedirectToAction("DangNhap");
+            }
+
+            // Cập nhật thông tin được phép sửa
+            user.HoTen = model.HoTen;
+            user.SoDienThoai = model.SoDienThoai;
+            user.NgaySinh = model.NgaySinh;
+            user.DiaChi = model.DiaChi;
+
+            // Xử lý upload Avatar mới (nếu chọn)
+            if (AnhDaiDienMoi != null && AnhDaiDienMoi.Length > 0)
+            {
+                string uploadsFolder = Path.Combine(_env.WebRootPath, "images", "avatars");
+                if (!Directory.Exists(uploadsFolder))
+                {
+                    Directory.CreateDirectory(uploadsFolder);
+                }
+
+                string uniqueFileName = Guid.NewGuid().ToString().Substring(0, 8) + "_" + Path.GetFileName(AnhDaiDienMoi.FileName);
+                string filePath = Path.Combine(uploadsFolder, uniqueFileName);
+
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await AnhDaiDienMoi.CopyToAsync(fileStream);
+                }
+
+                user.AnhDaiDien = "/images/avatars/" + uniqueFileName;
+            }
+
+            _db.NguoiDung.Update(user);
+            await _db.SaveChangesAsync();
+
+            TempData["ThongBaoSuccess"] = "Cập nhật thông tin cá nhân thành công!";
+            return RedirectToAction("ThongTinCaNhan");
         }
 
         // ==========================================
@@ -115,7 +162,7 @@ namespace ShoeStore.Controllers
             return View();
         }
 
-        // API AJAX GỬI OTP VỀ EMAIL THẬT
+        // API AJAX GỬI OTP VỀ EMAIL THẬT (TRANG ĐĂNG KÝ)
         [HttpPost]
         public async Task<IActionResult> GuiOTP([FromQuery] string email)
         {
@@ -132,7 +179,7 @@ namespace ShoeStore.Controllers
 
             try
             {
-                // 1. Sinh ngẫu nhiên mã OTP 6 chữ số (ví dụ: 683920)
+                // 1. Sinh ngẫu nhiên mã OTP 6 chữ số
                 string otpCode = Random.Shared.Next(100000, 999999).ToString();
 
                 // 2. Lưu OTP vào IMemoryCache trong vòng 5 phút (Key = OTP_email)
@@ -150,11 +197,33 @@ namespace ShoeStore.Controllers
             }
         }
 
+        // API AJAX Check nhanh OTP trực tiếp khi vừa gõ xong 6 số (Dùng chung cho Đăng ký & Quên mật khẩu)
+        [HttpPost]
+        public IActionResult KiemTraOTP([FromQuery] string email, [FromQuery] string otpCode)
+        {
+            if (string.IsNullOrWhiteSpace(email) || string.IsNullOrWhiteSpace(otpCode))
+            {
+                return Json(new { success = false, message = "Dữ liệu không hợp lệ!" });
+            }
+
+            string cleanEmail = email.Trim().ToLower();
+            string keyReg = $"OTP_{cleanEmail}";
+            string keyReset = $"OTP_RESET_{cleanEmail}";
+
+            // Lấy OTP đang lưu trong MemoryCache ra so sánh (Hỗ trợ cả Đăng ký và Quên mật khẩu)
+            if ((_cache.TryGetValue(keyReg, out string? validOtpReg) && validOtpReg == otpCode) ||
+                (_cache.TryGetValue(keyReset, out string? validOtpReset) && validOtpReset == otpCode))
+            {
+                return Json(new { success = true, message = "Mã OTP hợp lệ!" });
+            }
+
+            return Json(new { success = false, message = "Mã OTP không chính xác hoặc đã hết hạn!" });
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DangKy(NguoiDung model, string XacNhanMatKhau, string OtpCode, IFormFile? AnhDaiDien)
         {
-            // Truyền các tham số ngoài Model vào ViewBag để giữ lại khi bị reload do lỗi
             ViewBag.XacNhanMatKhau = XacNhanMatKhau;
             ViewBag.OtpCode = OtpCode;
 
@@ -235,7 +304,6 @@ namespace ShoeStore.Controllers
             _db.NguoiDung.Add(model);
             await _db.SaveChangesAsync();
 
-            // Xóa OTP khỏi Cache sau khi đăng ký thành công
             _cache.Remove(cacheKey);
 
             return RedirectToAction("DangNhap");
@@ -247,13 +315,90 @@ namespace ShoeStore.Controllers
         [HttpGet]
         public IActionResult DangXuat()
         {
-            // Xóa Cookie chứa JWT Token
             Response.Cookies.Delete("AuthToken");
             return RedirectToAction("DangNhap");
         }
 
         // ==========================================
-        // HÀM BỔ TRỢ: KÝ SINH JWT TOKEN
+        // 5. QUÊN MẬT KHẨU (FORGOT PASSWORD)
+        // ==========================================
+        [HttpGet]
+        public IActionResult QuenMatKhau()
+        {
+            return View();
+        }
+
+        // API AJAX GỬI OTP QUÊN MẬT KHẨU
+        [HttpPost]
+        public async Task<IActionResult> GuiOTPQuenMatKhau([FromQuery] string email)
+        {
+            if (string.IsNullOrWhiteSpace(email))
+            {
+                return Json(new { success = false, message = "Email không được để trống!" });
+            }
+
+            bool isExist = _db.NguoiDung.Any(u => u.Email == email);
+            if (!isExist)
+            {
+                return Json(new { success = false, message = "Email này chưa được đăng ký tài khoản!" });
+            }
+
+            try
+            {
+                string otpCode = Random.Shared.Next(100000, 999999).ToString();
+                string cacheKey = $"OTP_RESET_{email.Trim().ToLower()}";
+                _cache.Set(cacheKey, otpCode, TimeSpan.FromMinutes(5));
+
+                await _emailService.SendOtpEmailAsync(email, otpCode);
+
+                return Json(new { success = true, message = "Mã OTP đã được gửi về Email của bạn!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = "Lỗi gửi Email: " + ex.Message });
+            }
+        }
+
+        // XỬ LÝ ĐỔI MẬT KHẨU MỚI
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> QuenMatKhau(string Email, string OtpCode, string MatKhauMoi, string XacNhanMatKhau)
+        {
+            ViewBag.Email = Email;
+            ViewBag.OtpCode = OtpCode;
+
+            if (MatKhauMoi != XacNhanMatKhau)
+            {
+                ViewBag.Loi = "Mật khẩu xác nhận không khớp!";
+                return View();
+            }
+
+            string cacheKey = $"OTP_RESET_{Email?.Trim().ToLower()}";
+            if (!_cache.TryGetValue(cacheKey, out string? validOtp) || validOtp != OtpCode)
+            {
+                ViewBag.Loi = "Mã OTP không chính xác hoặc đã hết hạn!";
+                return View();
+            }
+
+            var user = _db.NguoiDung.FirstOrDefault(u => u.Email == Email);
+            if (user == null)
+            {
+                ViewBag.Loi = "Tài khoản không tồn tại!";
+                return View();
+            }
+
+            user.MatKhau = MatKhauMoi;
+            _db.NguoiDung.Update(user);
+            await _db.SaveChangesAsync();
+
+            _cache.Remove(cacheKey);
+
+            TempData["ThongBaoSuccess"] = "Đổi mật khẩu thành công! Vui lòng đăng nhập lại.";
+            return RedirectToAction("DangNhap");
+        }
+
+        // ==========================================
+        // HÀM BỔ TRỢ: SINH JWT TOKEN
         // ==========================================
         private string GenerateJwtToken(NguoiDung user)
         {

@@ -1,0 +1,240 @@
+﻿/* ==========================================
+   BIẾN HỆ THỐNG & RESET CSS
+========================================== */
+:root {
+    --primary-dark: #021156;
+    --primary-blue: #203EDB;
+    --secondary-gold: #FCB90D;
+    --secondary-gold-hover: #e0a300;
+    --bg-white: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+/* ==========================================
+   BREADCRUMB (THANH TIẾN TRÌNH TRONG SUỐT)
+========================================== */
+.site-breadcrumb,
+.custom-breadcrumb {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin: 0 0 20px 0;
+    padding: 0;
+    font-size: 15px;
+    list-style: none !important;
+    background: transparent;
+}
+
+    .site-breadcrumb li,
+    .custom-breadcrumb li {
+        display: flex;
+        align-items: center;
+    }
+
+    /* Link Trang chủ màu xám nhạt */
+    .site-breadcrumb a,
+    .custom-breadcrumb a {
+        color: #64748B;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+        .site-breadcrumb a:hover,
+        .custom-breadcrumb a:hover {
+            color: var(--primary-blue);
+        }
+
+    /* Dấu gạch chéo phân cách */
+    .site-breadcrumb .separator,
+    .custom-breadcrumb li + li::before {
+        content: "/";
+        margin: 0 2px;
+        color: #94A3B8;
+        font-weight: 400;
+    }
+
+    /* Trang hiện tại IN HOA + CHỮ ĐẬM MÀU XANH #021156 */
+    .site-breadcrumb .current-page,
+    .site-breadcrumb .active-page,
+    .custom-breadcrumb span,
+    .custom-breadcrumb .active {
+        color: var(--primary-dark);
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        text-transform: uppercase;
+    }
+
+/* ==========================================
+   CARD THÔNG TIN CÁ NHÂN
+========================================== */
+.profile-card {
+    max-width: 680px;
+    margin: 10px auto 30px;
+    background: var(--bg-white);
+    border-radius: 16px;
+    padding: 35px 30px;
+    box-shadow: 0 10px 30px rgba(2, 17, 86, 0.08);
+}
+
+.profile-title {
+    color: var(--primary-dark);
+    font-weight: 800;
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 25px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* ==========================================
+   AVATAR WRAPPER & ICON CAMERA
+========================================== */
+.profile-avatar-wrapper {
+    text-align: center;
+    margin-bottom: 25px;
+    position: relative;
+    display: inline-block;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.profile-avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid #D0D7FA;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* Icon Nút Sửa Ảnh (Mặc định ẩn, khi bấm SỬA THÔNG TIN sẽ mở flex) */
+.avatar-edit-badge {
+    display: none; /* JS sẽ bật style.display = 'flex' khi bấm nút Sửa */
+    position: absolute;
+    bottom: 2px;
+    right: 2px;
+    background: var(--primary-dark);
+    color: var(--bg-white);
+    border-radius: 50%;
+    width: 36px;
+    height: 36px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s ease;
+    border: 2px solid #ffffff;
+}
+
+    .avatar-edit-badge span {
+        font-size: 20px;
+    }
+
+    .avatar-edit-badge:hover {
+        transform: scale(1.12);
+        background-color: var(--primary-blue);
+    }
+
+/* ==========================================
+   FORM GROUPS & INPUTS
+========================================== */
+.profile-group {
+    margin-bottom: 18px;
+}
+
+    .profile-group label {
+        font-weight: 600;
+        font-size: 13.5px;
+        color: #4A5568;
+        margin-bottom: 6px;
+        display: block;
+    }
+
+.profile-input {
+    width: 100%;
+    padding: 11px 16px;
+    border-radius: 8px;
+    border: 1.5px solid #E2E8F0;
+    background-color: #F8FAFC;
+    font-size: 14px;
+    color: #1E293B;
+    transition: all 0.25s ease;
+    outline: none;
+}
+
+    .profile-input:disabled,
+    .profile-input[readonly] {
+        background-color: #EDF2F7;
+        color: #4A5568;
+        border-color: #E2E8F0;
+        cursor: not-allowed;
+    }
+
+    .profile-input:not(:disabled):not([readonly]) {
+        background-color: var(--bg-white);
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(32, 62, 219, 0.12);
+    }
+
+/* ==========================================
+   NÚT HÀNH ĐỘNG (SỬA / XÁC NHẬN)
+========================================== */
+.btn-profile-action {
+    width: 100%;
+    max-width: 260px;
+    display: block;
+    margin: 30px auto 0;
+    padding: 12px 20px;
+    border-radius: 25px;
+    font-weight: 800;
+    font-size: 14px;
+    text-transform: uppercase;
+    border: none;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-edit-mode {
+    background-color: var(--primary-dark) !important;
+    color: var(--bg-white) !important;
+}
+
+    .btn-edit-mode:hover {
+        background-color: #010a38 !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(2, 17, 86, 0.3);
+    }
+
+.btn-save-mode {
+    background-color: var(--secondary-gold) !important;
+    color: var(--primary-dark) !important;
+}
+
+    .btn-save-mode:hover {
+        background-color: var(--secondary-gold-hover) !important;
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(252, 185, 13, 0.35);
+    }
+
+/* ==========================================
+   BOX THÔNG BÁO THÀNH CÔNG
+========================================== */
+.alert-success-box {
+    background: rgba(16, 185, 129, 0.15);
+    border: 1px solid #10B981;
+    color: #065F46;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-size: 13.5px;
+    text-align: center;
+    margin-bottom: 20px;
+}

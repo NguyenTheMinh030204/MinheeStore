@@ -114,24 +114,32 @@
         });
     }
 
-    // Render HTML Popup gợi ý
+    // Render HTML Popup gợi ý (ĐÃ SỬA CÂU LINK CHUẨN)
     function renderSearchPopup(items, total, keyword) {
         if (totalSearchCount) totalSearchCount.textContent = total;
         if (viewAllSearchLink) viewAllSearchLink.href = `/TimKiem/KetQua?search=${encodeURIComponent(keyword)}`;
 
         let html = '';
         items.forEach(item => {
-            const giaBan = new Intl.NumberFormat('vi-VN').format(item.giaBan) + 'đ';
-            const giaCu = item.giaCu ? new Intl.NumberFormat('vi-VN').format(item.giaCu) + 'đ' : '';
+            // Lấy ID/Mã giày linh hoạt
+            const id = item.id || item.maGiay || item.MaGiay;
+            const ten = item.ten || item.tenGiay || item.TenGiay;
+            const anh = item.anh || item.anhChinh || item.AnhChinh;
+            const giaB = item.giaBan || item.GiaBan || 0;
+            const giaC = item.giaCu || item.GiaCu;
 
+            const giaBan = new Intl.NumberFormat('vi-VN').format(giaB) + ' VNĐ';
+            const giaCu = giaC ? new Intl.NumberFormat('vi-VN').format(giaC) + ' VNĐ' : '';
+
+            // Link đã được sửa thành /Giay/ChiTiet?id=...
             html += `
-                <a href="/ChiTiet/ChiTiet/${item.id}" class="search-item">
-                    <img src="${item.anh}" alt="${item.ten}" class="search-item-img">
+                <a href="/Giay/ChiTiet?id=${id}" class="search-item">
+                    <img src="${anh}" alt="${ten}" class="search-item-img">
                     <div class="search-item-info">
-                        <div class="search-item-name">${item.ten}</div>
+                        <div class="search-item-name">${ten}</div>
                         <div class="search-item-prices">
                             <span class="search-item-price-current">${giaBan}</span>
-                            ${item.giaCu ? `<span class="search-item-price-old">${giaCu}</span>` : ''}
+                            ${giaC ? `<span class="search-item-price-old">${giaCu}</span>` : ''}
                         </div>
                     </div>
                 </a>
@@ -165,7 +173,7 @@
         cartCount++;
         if (cartBadge) cartBadge.textContent = cartCount;
 
-        button.style.backgroundColor = 'var(--semantic-green)';
+        button.style.backgroundColor = 'var(--semantic-green, #10B981)';
         const originalText = button.innerHTML;
         button.innerHTML = `<span class="material-icons-outlined">check</span> Đã thêm`;
 

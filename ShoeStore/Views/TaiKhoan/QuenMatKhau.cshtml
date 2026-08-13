@@ -1,0 +1,99 @@
+﻿@{
+    Layout = null;
+    string otpCode = ViewBag.OtpCode as string ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quên mật khẩu - Minhee Sports</title>
+    <!-- Material Icons -->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <!-- File CSS Auth -->
+    <link rel="stylesheet" href="/css/TaiKhoan.css">
+</head>
+<body class="auth-page">
+
+    <div class="auth-container">
+
+        <!-- Nút Mũi tên quay lại -->
+        <a href="/TaiKhoan/DangNhap" class="btn-back" title="Quay lại Đăng nhập">
+            <span class="material-icons-outlined">arrow_back</span>
+        </a>
+
+        <!-- Vòng tròn Logo -->
+        <div class="logo-wrapper">
+            <div class="logo-circle">
+                <img src="/images/logo.png" alt="Minhee Shop Logo">
+            </div>
+        </div>
+
+        <h2 class="auth-title">QUÊN MẬT KHẨU</h2>
+
+        @if (ViewBag.Loi != null)
+        {
+            <div class="alert-danger-box">@ViewBag.Loi</div>
+        }
+
+        <!-- Tắt tự động lưu/điền form -->
+        <form action="/TaiKhoan/QuenMatKhau" method="post" autocomplete="off">
+            @Html.AntiForgeryToken()
+
+            <!-- E-mail + Nút Lấy OTP -->
+            <div class="form-group">
+                <label>E-mail tài khoản</label>
+                <div class="email-otp-group">
+                    <input type="email" id="resetEmail" name="Email" class="form-control" value="@ViewBag.Email" autocomplete="off" placeholder="Nhập email đã đăng ký..." required>
+                    <button type="button" id="btnSendOtpReset" class="btn-get-otp">Lấy OTP</button>
+                </div>
+            </div>
+
+            <!-- 6 Ô nhập OTP -->
+            <div class="form-group">
+                <label>Mã OTP xác thực:</label>
+                <div class="otp-boxes">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 1 ? otpCode[0].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 2 ? otpCode[1].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 3 ? otpCode[2].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 4 ? otpCode[3].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 5 ? otpCode[4].ToString() : "")">
+                    <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 6 ? otpCode[5].ToString() : "")">
+                </div>
+                <small id="otpStatusMsg" style="display: block; margin-top: 6px; font-weight: 600; font-size: 12px;"></small>
+                <input type="hidden" name="OtpCode" id="fullOtpCode" value="@otpCode">
+            </div>
+
+            <!-- Mật khẩu mới (Không gán value, dùng autocomplete="new-password") -->
+            <div class="form-group">
+                <label>Mật khẩu mới</label>
+                <div class="input-wrapper">
+                    <input type="password" id="newPassword" name="MatKhauMoi" class="form-control" autocomplete="new-password" required placeholder="Nhập mật khẩu mới...">
+                    <span class="material-icons-outlined toggle-password" data-target="newPassword">visibility</span>
+                </div>
+            </div>
+
+            <!-- Xác nhận mật khẩu mới -->
+            <div class="form-group">
+                <label>Nhập lại mật khẩu mới</label>
+                <div class="input-wrapper">
+                    <input type="password" id="confirmNewPassword" name="XacNhanMatKhau" class="form-control" autocomplete="new-password" required placeholder="Xác nhận lại mật khẩu...">
+                    <span class="material-icons-outlined toggle-password" data-target="confirmNewPassword">visibility</span>
+                </div>
+            </div>
+
+            <button type="submit" class="btn-auth-submit">ĐỔI MẬT KHẨU</button>
+
+        </form>
+
+        <div class="auth-footer-link">
+            <span>Đã nhớ mật khẩu? </span>
+            <a href="/TaiKhoan/DangNhap">Đăng nhập ngay</a>
+        </div>
+
+    </div>
+
+    <script src="/js/TaiKhoan.js"></script>
+</body>
+</html>

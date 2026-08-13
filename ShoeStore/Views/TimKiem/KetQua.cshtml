@@ -19,7 +19,7 @@
 
 <!-- Tiêu đề & Thông số tìm kiếm -->
 <div class="search-title-header">
-    <h2>KẾT QUẢ TÌM KIẾM SẢN PHẨM</h2>
+    2. KẾT QUẢ TÌM KIẾM SẢN PHẨM
     <p class="search-meta">Tìm thấy <strong>@ViewBag.TotalItems</strong> sản phẩm phù hợp cho từ khóa "<strong>@ViewBag.TuKhoa</strong>"</p>
 </div>
 
@@ -30,7 +30,7 @@
         <div class="product-grid grid-4">
             @foreach (var item in Model)
             {
-                <div class="product-card">
+                <div class="product-card" onclick="location.href='/Giay/ChiTiet?id=@item.MaGiay'" style="cursor: pointer;">
                     <div class="card-img">
                         <img src="@item.AnhChinh" alt="@item.TenGiay">
                     </div>
@@ -42,7 +42,7 @@
                             <span class="price-old">@item.GiaCu.Value.ToString("N0") VNĐ</span>
                         }
                     </div>
-                    <button class="btn-add-cart" data-id="@item.MaGiay">
+                    <button class="btn-add-cart" data-id="@item.MaGiay" onclick="event.stopPropagation();">
                         <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
                     </button>
                 </div>
