@@ -15,8 +15,8 @@
     var selectedPrices = ViewBag.SelectedPrices as List<string> ?? new List<string>();
     var selectedSizes = ViewBag.SelectedSizes as List<int> ?? new List<int>();
 
-    // Nối tham số id danh mục vào Query String
-    string idQuery = !string.IsNullOrEmpty(currentMaDanhMuc) ? $"id={currentMaDanhMuc}" : "";
+    // Xây dựng Query String sạch sẽ
+    string baseQuery = !string.IsNullOrEmpty(currentMaDanhMuc) ? $"id={currentMaDanhMuc}" : "all=true";
     string priceQueries = string.Join("", selectedPrices.Select(p => $"&price={p}"));
     string sizeQueries = string.Join("", selectedSizes.Select(s => $"&size={s}"));
     string filterQuery = $"{priceQueries}{sizeQueries}";
@@ -55,11 +55,11 @@
     <div class="sort-wrapper">
         <label for="sortSelect" class="sort-label">Sắp xếp theo:</label>
         <select id="sortSelect" class="sort-dropdown" onchange="location = this.value;">
-            <option value="/DanhMuc/DanhSach?@idQuery&page=1@filterQuery" @(currentSort == "" ? "selected" : "")>Mặc định</option>
-            <option value="/DanhMuc/DanhSach?@idQuery&page=1&sort=price-asc@filterQuery" @(currentSort == "price-asc" ? "selected" : "")>Giá tăng dần</option>
-            <option value="/DanhMuc/DanhSach?@idQuery&page=1&sort=price-desc@filterQuery" @(currentSort == "price-desc" ? "selected" : "")>Giá giảm dần</option>
-            <option value="/DanhMuc/DanhSach?@idQuery&page=1&sort=name-asc@filterQuery" @(currentSort == "name-asc" ? "selected" : "")>Tên A-Z</option>
-            <option value="/DanhMuc/DanhSach?@idQuery&page=1&sort=name-desc@filterQuery" @(currentSort == "name-desc" ? "selected" : "")>Tên Z-A</option>
+            <option value="/DanhMuc/DanhSach?@baseQuery&page=1@filterQuery" @(currentSort == "" ? "selected" : "")>Mặc định</option>
+            <option value="/DanhMuc/DanhSach?@baseQuery&page=1&sort=price-asc@filterQuery" @(currentSort == "price-asc" ? "selected" : "")>Giá tăng dần</option>
+            <option value="/DanhMuc/DanhSach?@baseQuery&page=1&sort=price-desc@filterQuery" @(currentSort == "price-desc" ? "selected" : "")>Giá giảm dần</option>
+            <option value="/DanhMuc/DanhSach?@baseQuery&page=1&sort=name-asc@filterQuery" @(currentSort == "name-asc" ? "selected" : "")>Tên A-Z</option>
+            <option value="/DanhMuc/DanhSach?@baseQuery&page=1&sort=name-desc@filterQuery" @(currentSort == "name-desc" ? "selected" : "")>Tên Z-A</option>
         </select>
     </div>
 </div>
@@ -69,7 +69,10 @@
     <!-- Sidebar Bộ Lọc -->
     <aside class="filter-sidebar">
         <form action="/DanhMuc/DanhSach" method="get">
-            <input type="hidden" name="id" value="@currentMaDanhMuc" />
+            @if (!string.IsNullOrEmpty(currentMaDanhMuc))
+            {
+                <input type="hidden" name="id" value="@currentMaDanhMuc" />
+            }
             <input type="hidden" name="sort" value="@currentSort" />
             
             <!-- Lọc Giá -->
@@ -132,12 +135,12 @@
                         <h3 class="product-title">@item.TenGiay</h3>
                         <div class="price-box">
                             <span class="price-current">@item.GiaBan.ToString("N0") VNĐ</span>
-                            @if (item.GiaCu.HasValue)
+                            @if (item.GiaCu.HasValue && item.GiaCu > item.GiaBan)
                             {
                                 <span class="price-old">@item.GiaCu.Value.ToString("N0") VNĐ</span>
                             }
                         </div>
-                        <button class="btn-add-cart" data-id="@item.MaGiay" onclick="event.stopPropagation();">
+                        <button type="button" class="btn-add-cart" onclick="event.stopPropagation(); addToCart('@item.MaGiay');">
                             <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
                         </button>
                     </div>
@@ -152,26 +155,26 @@
         </div>
 
         <!-- Phân Trang Động -->
-        @if (totalPages >= 1)
+        @if (totalPages > 1)
         {
             <div class="pagination-wrapper">
                 <ul class="pagination">
                     <!-- Nút Lùi Trang -->
                     <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
-                        <a href="/DanhMuc/DanhSach?@idQuery&page=@(currentPage - 1)@sortQuery@filterQuery" class="page-link">&laquo;</a>
+                        <a href="/DanhMuc/DanhSach?@baseQuery&page=@(currentPage - 1)@sortQuery@filterQuery" class="page-link">&laquo;</a>
                     </li>
 
                     <!-- Các Nút Số Trang -->
                     @for (int i = 1; i <= totalPages; i++)
                     {
                         <li class="page-item @(i == currentPage ? "active" : "")">
-                            <a href="/DanhMuc/DanhSach?@idQuery&page=@i@sortQuery@filterQuery" class="page-link">@i</a>
+                            <a href="/DanhMuc/DanhSach?@baseQuery&page=@i@sortQuery@filterQuery" class="page-link">@i</a>
                         </li>
                     }
 
                     <!-- Nút Sang Trang -->
                     <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
-                        <a href="/DanhMuc/DanhSach?@idQuery&page=@(currentPage + 1)@sortQuery@filterQuery" class="page-link">&raquo;</a>
+                        <a href="/DanhMuc/DanhSach?@baseQuery&page=@(currentPage + 1)@sortQuery@filterQuery" class="page-link">&raquo;</a>
                     </li>
                 </ul>
             </div>
@@ -180,5 +183,5 @@
 </div>
 
 @section Scripts {
-    <script src="/js/TrangChu.js"></script>
+    <script src="/js/TrangChu.js" asp-append-version="true"></script>
 }

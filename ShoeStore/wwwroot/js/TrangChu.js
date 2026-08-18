@@ -1,18 +1,17 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
-
     // ==========================================
-    // LOGIC BANNER SLIDE TỰ ĐỘNG (CHỈ TRANG CHỦ)
+    // LOGIC BANNER SLIDER MƯỢT MÀ
     // ==========================================
+    const bannerSection = document.querySelector('.hero-banner');
+    const sliderContainer = document.querySelector('.hero-banner .banner-slider');
     const slides = document.querySelectorAll('.hero-banner .slide');
     const dots = document.querySelectorAll('.banner-dots .dot');
-    const bannerSection = document.querySelector('.hero-banner');
 
-    // Nếu trang hiện tại không có Banner Slider thì không chạy code dưới
     if (!bannerSection || slides.length === 0) return;
 
     let currentIndex = 0;
-    let slideInterval;
-    const autoPlayTime = 5000;
+    let slideInterval = null;
+    const autoPlayTime = 4000; // Chuyển slide sau 4 giây
 
     function showSlide(index) {
         if (index >= slides.length) {
@@ -23,13 +22,14 @@
             currentIndex = index;
         }
 
-        slides.forEach(slide => slide.classList.remove('active'));
-        dots.forEach(dot => dot.classList.remove('active'));
+        // Cập nhật class active cho Slide và Dot
+        slides.forEach((slide, idx) => {
+            slide.classList.toggle('active', idx === currentIndex);
+        });
 
-        slides[currentIndex].classList.add('active');
-        if (dots[currentIndex]) {
-            dots[currentIndex].classList.add('active');
-        }
+        dots.forEach((dot, idx) => {
+            dot.classList.toggle('active', idx === currentIndex);
+        });
     }
 
     function nextSlide() {
@@ -37,13 +37,16 @@
     }
 
     function startAutoSlide() {
-        if (slides.length > 1) {
+        if (slides.length > 1 && !slideInterval) {
             slideInterval = setInterval(nextSlide, autoPlayTime);
         }
     }
 
     function stopAutoSlide() {
-        clearInterval(slideInterval);
+        if (slideInterval) {
+            clearInterval(slideInterval);
+            slideInterval = null;
+        }
     }
 
     function resetAutoSlide() {
@@ -51,17 +54,22 @@
         startAutoSlide();
     }
 
+    // Sự kiện click Dot chuyển tab
     dots.forEach(dot => {
         dot.addEventListener('click', (e) => {
-            const index = parseInt(e.target.getAttribute('data-index'));
-            showSlide(index);
-            resetAutoSlide();
+            const targetIndex = parseInt(e.target.getAttribute('data-index')) || 0;
+            if (targetIndex !== currentIndex) {
+                showSlide(targetIndex);
+                resetAutoSlide();
+            }
         });
     });
 
+    // Tạm dừng khi rê chuột vào banner
     bannerSection.addEventListener('mouseenter', stopAutoSlide);
     bannerSection.addEventListener('mouseleave', startAutoSlide);
 
-    // Kích hoạt chạy slider
+    // Kích hoạt
+    showSlide(0);
     startAutoSlide();
 });

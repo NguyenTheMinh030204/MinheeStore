@@ -7,7 +7,7 @@
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <!-- File CSS dùng chung -->
-    <link rel="stylesheet" href="/css/_Layout.css">
+    <link rel="stylesheet" href="~/css/_Layout.css" asp-append-version="true">
     @RenderSection("Styles", required: false)
 </head>
 <body>
@@ -145,8 +145,89 @@
         </div>
     </footer>
 
+    
+    <!-- POPUP QUICK ADD TO CART & MUA NGAY DÙNG CHUNG -->
+    <div id="quickAddToCartModal" class="quick-cart-modal-overlay" onclick="closeQuickCartModal()" style="display: none;">
+        <div class="quick-cart-modal-box" onclick="event.stopPropagation();">
+        
+            <!-- Header -->
+            <div class="quick-cart-header">
+                <div class="quick-cart-title-wrap">
+                    <span class="material-icons-outlined header-icon">tune</span>
+                    <h5>TÙY CHỌN SẢN PHẨM</h5>
+                </div>
+                <button type="button" class="quick-cart-close" onclick="closeQuickCartModal()">&times;</button>
+            </div>
+
+            <!-- Body -->
+            <div class="quick-cart-body">
+                <div class="quick-cart-product-summary">
+                    <div class="quick-cart-img-wrap">
+                        <img id="quickCartImg" src="" alt="Ảnh sản phẩm">
+                    </div>
+                    <div class="quick-cart-meta">
+                        <h4 id="quickCartTitle">Tên giày thể thao</h4>
+                        <div id="quickCartPrice" class="quick-cart-price">0 VNĐ</div>
+                    </div>
+                </div>
+
+                <!-- Chọn Size (Đã thêm link Hướng dẫn chọn size) -->
+                <div class="quick-cart-section">
+                    <div class="section-label-row">
+                        <label class="quick-cart-label">Chọn Size (33 - 41):</label>
+                        <a href="javascript:void(0)" class="size-guide-link" onclick="openSizeModal()">
+                            <span class="material-icons-outlined">straighten</span> Hướng dẫn chọn size
+                        </a>
+                    </div>
+                    <div id="quickCartSizes" class="quick-cart-size-grid"></div>
+                </div>
+
+                <!-- Chọn Số Lượng -->
+                <div class="quick-cart-section">
+                    <label class="quick-cart-label">Số lượng:</label>
+                    <div class="quick-cart-qty-wrapper">
+                        <button type="button" class="btn-qty-modal" onclick="updateQuickQty(-1)">
+                            <span class="material-icons-outlined">remove</span>
+                        </button>
+                        <input type="text" id="quickCartQuantity" value="1" readonly>
+                        <button type="button" class="btn-qty-modal" onclick="updateQuickQty(1)">
+                            <span class="material-icons-outlined">add</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer: 2 NÚT THÊM VÀO GIỎ & MUA NGAY -->
+            <div class="quick-cart-footer">
+                <button type="button" class="btn-quick-add" onclick="confirmAddToCart()">
+                    <span class="material-icons-outlined">add_shopping_cart</span>
+                    <span>Thêm vào giỏ</span>
+                </button>
+                <button type="button" class="btn-quick-buy" onclick="confirmBuyNow()">
+                    <span class="material-icons-outlined">bolt</span>
+                    <span>MUA NGAY</span>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- POPUP MODAL HƯỚNG DẪN CHỌN SIZE GIÀY -->
+    <div id="sizeGuideModal" class="size-guide-modal-overlay" onclick="closeSizeModal()" style="display: none;">
+        <div class="size-guide-modal-box" onclick="event.stopPropagation();">
+            <div class="size-guide-modal-header">
+                <h5>
+                    <span class="material-icons-outlined">straighten</span> BẢNG HƯỚNG DẪN CHỌN SIZE GIÀY
+                </h5>
+                <span class="btn-close-modal" onclick="closeSizeModal()">&times;</span>
+            </div>
+            <div class="size-guide-modal-body">
+                <img src="/images/size.jpg" alt="Bảng hướng dẫn chọn size giày Minhee Sports">
+            </div>
+        </div>
+    </div>
     <!-- File JS dùng chung -->
-    <script src="/js/_Layout.js"></script>
+    <script src="~/js/_Layout.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

@@ -25,5 +25,8 @@ namespace ShoeStore.Models
         public virtual NguoiDung? NguoiDung { get; set; }
 
         public virtual ICollection<ChiTietDonHang>? DanhSachChiTiet { get; set; }
+
+        [NotMapped]
+        public virtual ICollection<ChiTietDonHang>? ChiTietDonHang => DanhSachChiTiet;
     }
 }

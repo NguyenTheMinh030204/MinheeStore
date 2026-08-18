@@ -21,6 +21,17 @@ namespace ShoeStore
             builder.Services.AddMemoryCache();
             builder.Services.AddScoped<EmailService>();
 
+            // =========================================================
+            // BỔ SUNG DỊCH VỤ SESSION (SỬA LỖI 500 SYSTEM.INVALIDOPERATIONEXCEPTION)
+            // =========================================================
+            builder.Services.AddDistributedMemoryCache();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(60); // Thời gian sống của Session (60 phút)
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             // 3. CẤU HÌNH JWT AUTHENTICATION
             var jwtSettings = builder.Configuration.GetSection("Jwt");
             var key = Encoding.UTF8.GetBytes(jwtSettings["Key"] ?? "MinheeShop_Super_Secret_Key_2026_DotNet8_JWT_Authentication");
@@ -88,8 +99,11 @@ namespace ShoeStore
             // 5. CHO PHÉP ĐỌC FILE TĨNH (CSS, JS, Images từ wwwroot)
             app.UseStaticFiles();
 
-            // 6. THỨ TỰ MIDDLEWARE ĐỊNH TUYẾN & XÁC THỰC
+            // 6. THỨ TỰ MIDDLEWARE ĐỊNH TUYẾN, SESSION & XÁC THỰC
             app.UseRouting();
+
+            // BẮT BUỘC: UseSession phải nằm sau UseRouting và trước UseAuthentication
+            app.UseSession();
 
             // BẮT BUỘC: UseAuthentication phải nằm TRƯỚC UseAuthorization
             app.UseAuthentication();

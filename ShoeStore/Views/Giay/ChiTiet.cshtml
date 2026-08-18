@@ -145,6 +145,7 @@
                             var bienThe = Model.BienTheGiay?.FirstOrDefault(b => b.KichCo == sz);
                             bool isAvailable = bienThe != null && bienThe.SoLuongTon > 0;
                             int tonKho = bienThe?.SoLuongTon ?? 0;
+                            int maBienThe = bienThe?.MaBienThe ?? 0;
 
                             string activeClass = "";
                             if (isAvailable && !hasFirstActive)
@@ -156,7 +157,9 @@
                             <button type="button"
                                     class="btn-size @activeClass @(!isAvailable ? "disabled" : "")"
                                     data-size="@sz"
+                                    data-bienthe="@maBienThe"
                                     data-stock="@tonKho"
+                                    onclick="selectDetailSize(this)"
                                 @(!isAvailable ? "disabled='disabled'" : "")>
                                 @sz
                             </button>
@@ -168,16 +171,16 @@
                 <div class="quantity-box">
                     <label>Số lượng:</label>
                     <div class="quantity-counter">
-                        <button type="button" class="btn-qty btn-minus" onclick="updateQty(-1)">-</button>
+                        <button type="button" class="btn-qty btn-minus" onclick="updateDetailQty(-1)">-</button>
                         <input type="text" id="inputQuantity" value="1" readonly>
-                        <button type="button" class="btn-qty btn-plus" onclick="updateQty(1)">+</button>
+                        <button type="button" class="btn-qty btn-plus" onclick="updateDetailQty(1)">+</button>
                     </div>
                 </div>
 
                 <!-- Nút Hành Động Chi Tiết -->
                 <div class="action-buttons">
-                    <button type="button" class="btn-detail-add-cart" onclick="addToCart('@Model.MaGiay')" @(tongTonKho <= 0 ? "disabled" : "")>Thêm vào giỏ hàng</button>
-                    <button type="button" class="btn-buy-now" onclick="buyNow('@Model.MaGiay')" @(tongTonKho <= 0 ? "disabled" : "")>MUA NGAY</button>
+                    <button type="button" class="btn-detail-add-cart" onclick="addCurrentDetailPageToCart()" @(tongTonKho <= 0 ? "disabled" : "")>Thêm vào giỏ hàng</button>
+                    <button type="button" class="btn-buy-now" onclick="buyNowCurrentDetailPage()" @(tongTonKho <= 0 ? "disabled" : "")>MUA NGAY</button>
                 </div>
 
             </div>
@@ -230,7 +233,7 @@
 
 </div>
 
-<!-- POPUP MODAL HƯỚNG DẪN CHỌN SIZE GIÀY (DÙNG /images/size.jpg) -->
+<!-- POPUP MODAL HƯỚNG DẪN CHỌN SIZE GIÀY -->
 <div id="sizeGuideModal" class="size-guide-modal-overlay" onclick="closeSizeModal()">
     <div class="size-guide-modal-box" onclick="event.stopPropagation();">
         <div class="size-guide-modal-header">

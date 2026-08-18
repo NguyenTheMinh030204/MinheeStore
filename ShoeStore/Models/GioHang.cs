@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace ShoeStore.Models
@@ -7,15 +9,16 @@ namespace ShoeStore.Models
     public class GioHang
     {
         [Key]
-        public string MaGioHang { get; set; } // Dạng VARCHAR(20) (Ví dụ: 'GH001')
+        public string MaGioHang { get; set; } = null!;
 
-        public string MaNguoiDung { get; set; } // Khóa ngoại trỏ đến NguoiDung
+        public string MaNguoiDung { get; set; } = null!;
 
         public DateTime NgayTao { get; set; } = DateTime.Now;
 
         [ForeignKey("MaNguoiDung")]
         public virtual NguoiDung? NguoiDung { get; set; }
 
-        public virtual ICollection<ChiTietGioHang>? DanhSachChiTiet { get; set; }
+        // Navigation property chuẩn để EF Core nhận diện trong Include
+        public virtual ICollection<ChiTietGioHang> ChiTietGioHang { get; set; } = new List<ChiTietGioHang>();
     }
 }

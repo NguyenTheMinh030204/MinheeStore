@@ -2,7 +2,7 @@
 
 @{
     Layout = "_Layout";
-    ViewData["Title"] = "Kết quả tìm kiếm";
+    ViewData["Title"] = "Kết quả tìm kiếm - Minhee Sports";
 }
 
 @section Styles {
@@ -19,7 +19,7 @@
 
 <!-- Tiêu đề & Thông số tìm kiếm -->
 <div class="search-title-header">
-    2. KẾT QUẢ TÌM KIẾM SẢN PHẨM
+    <h2 class="search-title-text">KẾT QUẢ TÌM KIẾM SẢN PHẨM</h2>
     <p class="search-meta">Tìm thấy <strong>@ViewBag.TotalItems</strong> sản phẩm phù hợp cho từ khóa "<strong>@ViewBag.TuKhoa</strong>"</p>
 </div>
 
@@ -37,12 +37,12 @@
                     <h3 class="product-title">@item.TenGiay</h3>
                     <div class="price-box">
                         <span class="price-current">@item.GiaBan.ToString("N0") VNĐ</span>
-                        @if (item.GiaCu.HasValue)
+                        @if (item.GiaCu.HasValue && item.GiaCu > item.GiaBan)
                         {
                             <span class="price-old">@item.GiaCu.Value.ToString("N0") VNĐ</span>
                         }
                     </div>
-                    <button class="btn-add-cart" data-id="@item.MaGiay" onclick="event.stopPropagation();">
+                    <button type="button" class="btn-add-cart" onclick="event.stopPropagation(); addToCart('@item.MaGiay');">
                         <span class="material-icons-outlined">add_shopping_cart</span> Thêm vào giỏ hàng
                     </button>
                 </div>
