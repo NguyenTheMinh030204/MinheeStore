@@ -7,14 +7,10 @@ namespace ShoeStore.Models
     public class ChiTietDonHang
     {
         [Key]
-        public int MaChiTiet { get; set; } // Mã tự tăng (IDENTITY)
-
-        public string MaDonHang { get; set; }
-
+        public int MaChiTiet { get; set; }
+        public string MaDonHang { get; set; } = null!;
         public int MaBienThe { get; set; }
-
         public int SoLuong { get; set; }
-
         public decimal DonGia { get; set; }
 
         [ForeignKey("MaDonHang")]

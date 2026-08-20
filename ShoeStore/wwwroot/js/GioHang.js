@@ -22,7 +22,6 @@ function thayDoiSoLuong(maChiTiet, delta, maxStock) {
         return;
     }
 
-    // Gửi Form dữ liệu lên CSDL qua Action CapNhatSoLuong
     const formData = new FormData();
     formData.append('maChiTiet', maChiTiet);
     formData.append('soLuong', newQty);
@@ -40,19 +39,15 @@ function thayDoiSoLuong(maChiTiet, delta, maxStock) {
         })
         .then(res => {
             if (res.success) {
-                // Cập nhật số lượng trên ô input
                 inputEl.value = newQty;
 
-                // Cập nhật thành tiền riêng của dòng đó
                 const rowTotalEl = document.getElementById(`row-total-${maChiTiet}`);
                 if (rowTotalEl) {
                     rowTotalEl.textContent = res.thanhTienMon;
                 }
 
-                // Tính toán lại tổng tiền các món được tích chọn
                 tinhTongTienTamTinh();
 
-                // Cập nhật badge số lượng ở header
                 const cartBadge = document.querySelector('.cart-badge');
                 if (cartBadge) {
                     cartBadge.textContent = res.totalItems;
@@ -96,7 +91,6 @@ function xoaSanPham(maChiTiet) {
                     setTimeout(() => {
                         rowEl.remove();
 
-                        // Nếu đã xóa hết sản phẩm
                         if (res.isEmpty) {
                             const mainContent = document.getElementById('cartMainContent');
                             const emptyState = document.getElementById('cartEmptyState');
@@ -108,7 +102,6 @@ function xoaSanPham(maChiTiet) {
                     }, 200);
                 }
 
-                // Cập nhật badge header
                 const cartBadge = document.querySelector('.cart-badge');
                 if (cartBadge) {
                     cartBadge.textContent = res.totalItems;
@@ -149,7 +142,27 @@ function tinhTongTienTamTinh() {
     if (grandTotalEl) grandTotalEl.textContent = tongTien.toLocaleString('vi-VN') + ' VNĐ';
 }
 
-// 4. TIẾN HÀNH THANH TOÁN
+// 4. TIẾN HÀNH THANH TOÁN (GOM ID CÁC MÓN ĐƯỢC CHECK)
 function tienHanhThanhToan() {
-    window.location.href = '/DonHang/ThanhToan';
+    const checkedBoxes = document.querySelectorAll('.cart-card-item .cart-checkbox:checked');
+    if (checkedBoxes.length === 0) {
+        alert("Vui lòng chọn ít nhất một sản phẩm để thanh toán!");
+        return;
+    }
+
+    const selectedIds = [];
+    checkedBoxes.forEach(cb => {
+        const row = cb.closest('.cart-card-item');
+        if (row) {
+            const id = row.getAttribute('data-id');
+            if (id) selectedIds.push(id);
+        }
+    });
+
+    if (selectedIds.length === 0) {
+        alert("Không tìm thấy thông tin sản phẩm được chọn!");
+        return;
+    }
+
+    window.location.href = `/DonHang/ThanhToan?ids=${selectedIds.join(',')}`;
 }

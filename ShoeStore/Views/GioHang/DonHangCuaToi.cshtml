@@ -1,0 +1,182 @@
+﻿@model List<ShoeStore.Models.DonHang>
+
+@{
+    ViewData["Title"] = "Đơn hàng của tôi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/DonHang.css" asp-append-version="true" />
+}
+
+<div class="orders-breadcrumb-wrapper">
+    <div class="orders-breadcrumb">
+        <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
+        <span class="bc-separator">/</span>
+        <span class="bc-current">ĐƠN HÀNG CỦA TÔI</span>
+    </div>
+</div>
+
+<div class="orders-container">
+    <div class="orders-header-title">
+        <h2>Danh sách đơn hàng của bạn</h2>
+        <span class="orders-total-count">Tổng cộng: @(Model?.Count ?? 0) đơn hàng</span>
+    </div>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="orders-empty-state">
+            <div class="orders-empty-icon">
+                <span class="material-icons-outlined">receipt_long</span>
+            </div>
+            <h3>Bạn chưa có đơn hàng nào!</h3>
+            <p>Hãy khám phá các sản phẩm giày thể thao mới nhất tại Minhee Sports nhé.</p>
+            <a href="/TrangChu/TrangChu" class="btn-shop-now">
+                <span class="material-icons-outlined">shopping_bag</span>
+                MUA SẮM NGAY
+            </a>
+        </div>
+    }
+    else
+    {
+        <div class="orders-list">
+            @foreach (var donHang in Model)
+            {
+                <div class="order-card-item" id="order-card-@donHang.MaDonHang">
+                    <!-- Top: Mã đơn & Trạng thái -->
+                    <div class="order-card-top">
+                        <div class="order-meta-info">
+                            <span class="order-code">#@donHang.MaDonHang</span>
+                            <span class="order-date">
+                                <span class="material-icons-outlined">schedule</span>
+                                @donHang.NgayDat.ToString("dd/MM/yyyy HH:mm")
+                            </span>
+                        </div>
+
+                        @{
+                            string statusClass = "status-processing";
+                            if (donHang.TrangThai == "Đã giao" || donHang.TrangThai == "Giao thành công")
+                            {
+                                statusClass = "status-success";
+                            }
+                            else if (donHang.TrangThai == "Đã hủy")
+                            {
+                                statusClass = "status-cancelled";
+                            }
+                            else if (donHang.TrangThai == "Đang giao")
+                            {
+                                statusClass = "status-shipping";
+                            }
+                            else if (donHang.TrangThai == "Chờ chuyển khoản" || donHang.TrangThai == "Chờ thanh toán online")
+                            {
+                                statusClass = "status-pending-pay";
+                            }
+                        }
+                        <span class="order-status-badge @statusClass" id="status-badge-@donHang.MaDonHang">
+                            @donHang.TrangThai
+                        </span>
+                    </div>
+
+                    <!-- Middle: Danh sách sản phẩm của đơn -->
+                    <div class="order-products-list">
+                        @foreach (var item in donHang.ChiTietDonHang)
+                        {
+                            var giay = item.BienTheGiay?.Giay;
+                            <div class="order-product-row">
+                                <div class="product-thumb">
+                                    <img src="@giay?.AnhChinh" alt="@giay?.TenGiay" />
+                                </div>
+                                <div class="product-info">
+                                    <h4 class="product-name">@giay?.TenGiay</h4>
+                                    <div class="product-meta">
+                                        <span>Size: @item.BienTheGiay?.KichCo</span>
+                                        <span>Số lượng: @item.SoLuong</span>
+                                    </div>
+                                    <div class="product-unit-price">Đơn giá: @item.DonGia.ToString("N0") VNĐ</div>
+                                </div>
+                                <div class="product-subtotal">
+                                    @((item.SoLuong * item.DonGia).ToString("N0")) VNĐ
+                                </div>
+                            </div>
+                        }
+                    </div>
+
+                    <!-- Bottom: Địa chỉ, Tổng tiền & Nút tác vụ -->
+                    <div class="order-card-bottom">
+                        <div class="order-shipping-info">
+                            <div><strong>Người nhận:</strong> @donHang.SoDienThoaiNhan</div>
+                            <div><strong>Địa chỉ:</strong> @donHang.DiaChiGiaoHang</div>
+                        </div>
+
+                        <div class="order-actions-wrap">
+                            <div class="order-grand-total">
+                                <span>Tổng tiền:</span>
+                                <strong>@donHang.TongTien.ToString("N0") VNĐ</strong>
+                            </div>
+
+                            <div class="order-buttons-group" id="btn-group-@donHang.MaDonHang">
+                                @* Nút Thanh toán ngay cho đơn chưa hoàn tất chuyển khoản *@
+                                @if (donHang.TrangThai == "Chờ chuyển khoản" || donHang.TrangThai == "Chờ thanh toán online")
+                                {
+                                    <a href="/DonHang/CongThanhToanOnline?maDonHang=@donHang.MaDonHang" class="btn-pay-now" id="btn-pay-@donHang.MaDonHang">
+                                        <span class="material-icons-outlined">qr_code_scanner</span>
+                                        THANH TOÁN NGAY
+                                    </a>
+                                }
+
+                                @* Nút Hủy đơn *@
+                                @if (donHang.TrangThai == "Đang xử lý" || donHang.TrangThai == "Chờ chuyển khoản" || donHang.TrangThai == "Chờ thanh toán online")
+                                {
+                                    <button type="button" class="btn-cancel-order" id="btn-cancel-@donHang.MaDonHang" onclick="huyDonHang('@donHang.MaDonHang')">
+                                        HỦY ĐƠN HÀNG
+                                    </button>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
+
+@section Scripts {
+    <script>
+        function huyDonHang(maDonHang) {
+            if (!confirm(`Bạn có chắc chắn muốn hủy đơn hàng #${maDonHang}?`)) {
+                return;
+            }
+
+            const formData = new FormData();
+            formData.append('maDonHang', maDonHang);
+
+            fetch('/DonHang/HuyDonHang', {
+                method: 'POST',
+                body: formData
+            })
+            .then(res => res.json())
+            .then(data => {
+                if (data.success) {
+                    alert(data.message);
+                    const badge = document.getElementById(`status-badge-${maDonHang}`);
+                    if (badge) {
+                        badge.className = 'order-status-badge status-cancelled';
+                        badge.textContent = 'Đã hủy';
+                    }
+                    
+                    // Xóa cả cụm nút thao tác (Nút Hủy & Nút Thanh Toán)
+                    const btnGroup = document.getElementById(`btn-group-${maDonHang}`);
+                    if (btnGroup) {
+                        btnGroup.remove();
+                    }
+                } else {
+                    alert(data.message);
+                }
+            })
+            .catch(err => {
+                console.error("Lỗi:", err);
+                alert("Đã xảy ra lỗi khi gửi yêu cầu hủy đơn!");
+            });
+        }
+    </script>
+}

@@ -1,0 +1,287 @@
+﻿@{
+    ViewData["Title"] = "Chính sách bảo mật thông tin";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* BREADCRUMB */
+    .info-breadcrumb-wrapper {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .info-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+        margin-bottom: 25px;
+        font-size: 13.5px;
+    }
+
+        .info-breadcrumb .bc-home {
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+            .info-breadcrumb .bc-home:hover {
+                color: #3B82F6;
+            }
+
+        .info-breadcrumb .bc-separator {
+            color: #3B82F6;
+            font-weight: 600;
+        }
+
+        .info-breadcrumb .bc-current {
+            color: #021156;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+    /* CONTAINER */
+    .info-page-container {
+        max-width: 1100px;
+        margin: 0 auto 70px auto;
+        padding: 0 15px;
+    }
+
+    .info-content-card {
+        background: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        padding: 35px 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .page-main-header {
+        text-align: center;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1.5px solid #F1F5F9;
+    }
+
+        .page-main-header h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: #021156;
+            margin-bottom: 8px;
+        }
+
+        .page-main-header p {
+            font-size: 14px;
+            color: #64748B;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+    /* PILLARS GRID */
+    .security-pillars-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 35px;
+    }
+
+    .pillar-card {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .pillar-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #EFF6FF;
+        color: #2563EB;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+
+    .pillar-card h3 {
+        font-size: 15px;
+        font-weight: 800;
+        color: #021156;
+        margin: 0 0 6px 0;
+    }
+
+    .pillar-card p {
+        font-size: 12.5px;
+        color: #64748B;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    /* SECTIONS */
+    .privacy-section {
+        margin-bottom: 28px;
+    }
+
+        .privacy-section h2 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #021156;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+            .privacy-section h2 .material-icons-outlined {
+                color: #3B82F6;
+                font-size: 22px;
+            }
+
+        .privacy-section p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+
+        .privacy-section ul {
+            margin: 0 0 12px 0;
+            padding-left: 22px;
+            font-size: 13.5px;
+            color: #334155;
+            line-height: 1.7;
+        }
+
+        .privacy-section li {
+            margin-bottom: 6px;
+        }
+
+    /* BOX CAM KẾT */
+    .commitment-box {
+        background: #F0FDF4;
+        border: 1.5px dashed #10B981;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 25px;
+    }
+
+        .commitment-box h4 {
+            margin: 0 0 8px 0;
+            font-size: 15px;
+            font-weight: 800;
+            color: #065F46;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .commitment-box p {
+            margin: 0;
+            font-size: 13.5px;
+            color: #047857;
+            line-height: 1.6;
+        }
+   
+</style>
+
+<!-- Thanh Breadcrumb -->
+<div class="info-breadcrumb-wrapper">
+    <div class="info-breadcrumb">
+        <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
+        <span class="bc-separator">/</span>
+        <span class="bc-current">CHÍNH SÁCH BẢO MẬT</span>
+    </div>
+</div>
+
+<!-- Nội dung Chính sách bảo mật -->
+<div class="info-page-container">
+    <div class="info-content-card">
+
+        <div class="page-main-header">
+            <h1>CHÍNH SÁCH BẢO MẬT THÔNG TIN KHÁCH HÀNG</h1>
+            <p>Minhee Sports tôn trọng và cam kết bảo mật tuyệt đối mọi thông tin cá nhân và dữ liệu giao dịch của khách hàng theo tiêu chuẩn an toàn bảo mật cao nhất.</p>
+        </div>
+
+        <!-- 3 Trụ cột bảo mật -->
+        <div class="security-pillars-grid">
+            <div class="pillar-card">
+                <div class="pillar-icon">
+                    <span class="material-icons-outlined">lock</span>
+                </div>
+                <h3>Mã hóa dữ liệu</h3>
+                <p>Mọi giao dịch và thông tin đặt hàng đều được bảo vệ và mã hóa đầu cuối an toàn.</p>
+            </div>
+
+            <div class="pillar-card">
+                <div class="pillar-icon">
+                    <span class="material-icons-outlined">visibility_off</span>
+                </div>
+                <h3>Bảo mật thông tin</h3>
+                <p>Tuyệt đối không chia sẻ hay kinh doanh thông tin của bạn cho bên thứ ba vì mục đích thương mại.</p>
+            </div>
+
+            <div class="pillar-card">
+                <div class="pillar-icon">
+                    <span class="material-icons-outlined">manage_accounts</span>
+                </div>
+                <h3>Quyền kiểm soát</h3>
+                <p>Khách hàng có toàn quyền tra cứu, cập nhật hoặc xóa bỏ thông tin tài khoản cá nhân.</p>
+            </div>
+        </div>
+
+        <!-- 1. Mục đích thu thập thông tin -->
+        <div class="privacy-section">
+            <h2>
+                <span class="material-icons-outlined">contact_page</span>
+                1. Mục đích thu thập thông tin cá nhân
+            </h2>
+            <p>Chúng tôi chỉ thu thập các thông tin cần thiết phục vụ cho quá trình xử lý đơn hàng, bao gồm:</p>
+            <ul>
+                <li><strong>Họ tên & Số điện thoại:</strong> Dùng để liên hệ xác nhận đơn và phục vụ công tác giao nhận hàng.</li>
+                <li><strong>Địa chỉ nhận hàng:</strong> Cung cấp cho đơn vị vận chuyển đối tác để giao giày đến tận nơi.</li>
+                <li><strong>Địa chỉ Email:</strong> Gửi thông báo tự động về trạng thái đơn hàng, hóa đơn điện tử và các chương trình ưu đãi tri ân.</li>
+            </ul>
+        </div>
+
+        <!-- 2. Phạm vi sử dụng thông tin -->
+        <div class="privacy-section">
+            <h2>
+                <span class="material-icons-outlined">share</span>
+                2. Phạm vi sử dụng & Chia sẻ thông tin
+            </h2>
+            <p>Thông tin của bạn được lưu trữ nội bộ và chỉ được chia sẻ trong các trường hợp sau:</p>
+            <ul>
+                <li><strong>Đối tác vận chuyển:</strong> Chia sẻ tên, số điện thoại và địa chỉ giao hàng cho các hãng chuyển phát (GHTK, GHN, Viettel Post).</li>
+                <li><strong>Cơ quan pháp luật:</strong> Chỉ cung cấp khi có yêu cầu bằng văn bản từ cơ quan chức năng có thẩm quyền theo quy định pháp luật Việt Nam.</li>
+            </ul>
+        </div>
+
+        <!-- 3. Thời gian lưu trữ & Cơ chế an toàn -->
+        <div class="privacy-section">
+            <h2>
+                <span class="material-icons-outlined">security</span>
+                3. Thời gian lưu trữ & Cơ chế an toàn dữ liệu
+            </h2>
+            <p>
+                Dữ liệu khách hàng được lưu trữ an toàn trên hệ thống máy chủ cơ sở dữ liệu của Minhee Sports cho đến khi người dùng có yêu cầu hủy bỏ hoặc tự thực hiện xóa tài khoản. Hệ thống sử dụng các giao thức tường lửa hiện đại nhằm ngăn chặn hành vi truy cập trái phép.
+            </p>
+        </div>
+
+        <!-- Cam kết -->
+        <div class="commitment-box">
+            <h4>
+                <span class="material-icons-outlined">verified</span>
+                Cam kết từ Minhee Sports:
+            </h4>
+            <p>
+                Chúng tôi cam kết sử dụng thông tin cá nhân của bạn một cách minh bạch, có trách nhiệm và chỉ phục vụ mục đích nâng cao chất lượng trải nghiệm mua sắm của bạn tại cửa hàng. Mọi thắc mắc về quyền riêng tư, vui lòng liên hệ trực tiếp với bộ phận Chăm sóc khách hàng.
+            </p>
+        </div>
+
+    </div>
+</div>

@@ -7,26 +7,16 @@ namespace ShoeStore.Models
     public class DonHang
     {
         [Key]
-        public string MaDonHang { get; set; } // Dạng VARCHAR(20) (Ví dụ: 'DH001')
-
-        public string MaNguoiDung { get; set; }
-
+        public string MaDonHang { get; set; } = null!;
+        public string MaNguoiDung { get; set; } = null!;
         public DateTime NgayDat { get; set; } = DateTime.Now;
-
         public decimal TongTien { get; set; }
-
         public string TrangThai { get; set; } = "Đang xử lý";
-
-        public string DiaChiGiaoHang { get; set; }
-
-        public string SoDienThoaiNhan { get; set; }
+        public string DiaChiGiaoHang { get; set; } = null!;
+        public string SoDienThoaiNhan { get; set; } = null!;
 
         [ForeignKey("MaNguoiDung")]
         public virtual NguoiDung? NguoiDung { get; set; }
-
-        public virtual ICollection<ChiTietDonHang>? DanhSachChiTiet { get; set; }
-
-        [NotMapped]
-        public virtual ICollection<ChiTietDonHang>? ChiTietDonHang => DanhSachChiTiet;
+        public virtual ICollection<ChiTietDonHang> ChiTietDonHang { get; set; } = new List<ChiTietDonHang>();
     }
 }

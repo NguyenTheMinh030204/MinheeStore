@@ -1,0 +1,133 @@
+﻿@model ShoeStore.Models.DonHang
+
+@{
+    ViewData["Title"] = "Đặt hàng thành công";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    .order-success-container {
+        max-width: 600px;
+        margin: 40px auto 70px auto;
+        background: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        padding: 40px 30px;
+        text-align: center;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.04);
+    }
+
+    .order-success-icon-wrap {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        background: #ECFDF5;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 20px;
+    }
+
+        .order-success-icon-wrap .material-icons-outlined {
+            font-size: 46px;
+            color: #10B981;
+        }
+
+    .order-success-title {
+        font-size: 20px;
+        font-weight: 800;
+        color: #021156;
+        margin-bottom: 8px;
+    }
+
+    .order-success-desc {
+        font-size: 14px;
+        color: #64748B;
+        margin-bottom: 24px;
+        line-height: 1.5;
+    }
+
+    .order-success-code {
+        color: #021156;
+        font-weight: 800;
+    }
+
+    .order-success-info-box {
+        background: #F8FAFC;
+        border-radius: 10px;
+        padding: 18px 20px;
+        text-align: left;
+        margin-bottom: 24px;
+        font-size: 13.5px;
+        border: 1px solid #E2E8F0;
+        color: #334155;
+    }
+
+    .order-info-line {
+        margin-bottom: 8px;
+    }
+
+        .order-info-line:last-child {
+            margin-bottom: 0;
+        }
+
+        .order-info-line strong {
+            color: #021156;
+        }
+
+    .order-total-price {
+        color: #F59E0B;
+        font-weight: 800;
+    }
+
+    .btn-continue-shopping {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        background: #021156;
+        color: #FFFFFF !important;
+        padding: 12px 28px;
+        border-radius: 8px;
+        font-size: 13.5px;
+        font-weight: 700;
+        text-decoration: none;
+        transition: background 0.2s ease, transform 0.1s ease;
+    }
+
+        .btn-continue-shopping:hover {
+            background: #1D4ED8;
+            transform: translateY(-1px);
+        }
+</style>
+
+<div class="order-success-container">
+    <div class="order-success-icon-wrap">
+        <span class="material-icons-outlined">check_circle</span>
+    </div>
+
+    <h2 class="order-success-title">ĐẶT HÀNG THÀNH CÔNG!</h2>
+    <p class="order-success-desc">
+        Cảm ơn bạn đã mua sắm tại Minhee Sports. Mã đơn hàng của bạn là:
+        <strong class="order-success-code">#@Model.MaDonHang</strong>
+    </p>
+
+    <div class="order-success-info-box">
+        <div class="order-info-line">
+            <strong>Người nhận:</strong> @(Model.NguoiDung?.HoTen ?? Model.SoDienThoaiNhan)
+        </div>
+        <div class="order-info-line">
+            <strong>Số điện thoại:</strong> @Model.SoDienThoaiNhan
+        </div>
+        <div class="order-info-line">
+            <strong>Địa chỉ giao:</strong> @Model.DiaChiGiaoHang
+        </div>
+        <div class="order-info-line">
+            <strong>Tổng thanh toán:</strong>
+            <span class="order-total-price">@Model.TongTien.ToString("N0") VNĐ</span>
+        </div>
+    </div>
+
+    <a href="/TrangChu/TrangChu" class="btn-continue-shopping">
+        TIẾP TỤC MUA SẮM
+    </a>
+</div>

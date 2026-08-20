@@ -1,0 +1,281 @@
+﻿@model ShoeStore.Models.DonHang
+@{
+    ViewData["Title"] = "Chuyển khoản Ngân hàng Vietcombank";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    
+    string gatewayName = "Vietcombank";
+    string brandColor = "#005F36";
+    string logoUrl = "https://inkythuatso.com/uploads/images/2021/11/logo-vietcombank-inkythuatso-01-01-13-16-17.jpg";
+    string stk = "9358187791";
+    string chuTaiKhoan = "NGUYEN THE MINH";
+    string noiDungChuyenKhoan = $"Thanh toan don {Model.MaDonHang}";
+    
+    // Tự động sinh mã VietQR theo chuẩn Napas247 tương thích Vietcombank và mọi App Ngân hàng
+    string qrUrl = $"https://img.vietqr.io/image/VCB-{stk}-compact2.png?amount={Convert.ToInt64(Model.TongTien)}&addInfo={Uri.EscapeDataString(noiDungChuyenKhoan)}&accountName={Uri.EscapeDataString(chuTaiKhoan)}";
+}
+
+<style>
+    .payment-gateway-container {
+        max-width: 620px;
+        margin: 35px auto 70px auto;
+        padding: 0 15px;
+    }
+
+    .payment-gateway-box {
+        background: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+        text-align: center;
+    }
+
+    .gateway-header {
+        background: @brandColor;
+        color: #FFFFFF;
+        padding: 22px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+    }
+
+    .gateway-logo {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        background: #FFFFFF;
+        padding: 3px;
+        object-fit: contain;
+    }
+
+    .gateway-header-text h3 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+    }
+
+    .gateway-header-text span {
+        font-size: 13px;
+        opacity: 0.9;
+    }
+
+    .gateway-body {
+        padding: 26px;
+    }
+
+    .order-brief-card {
+        background: #F8FAFC;
+        border-radius: 12px;
+        padding: 16px 20px;
+        margin-bottom: 20px;
+        border: 1px dashed #CBD5E1;
+    }
+
+    .brief-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 14px;
+        margin-bottom: 8px;
+    }
+
+        .brief-row:last-child {
+            margin-bottom: 0;
+            font-size: 16px;
+            margin-top: 8px;
+            padding-top: 8px;
+            border-top: 1px solid #E2E8F0;
+        }
+
+        .brief-row .label {
+            color: #64748B;
+        }
+
+        .brief-row .val {
+            color: #021156;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .brief-row .val-price {
+            color: #EF4444;
+            font-size: 18px;
+            font-weight: 900;
+        }
+
+    .btn-copy-mini {
+        background: #E2E8F0;
+        color: #334155;
+        border: none;
+        border-radius: 4px;
+        padding: 2px 7px;
+        font-size: 11px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background 0.2s;
+    }
+
+        .btn-copy-mini:hover {
+            background: @brandColor;
+            color: #FFFFFF;
+        }
+
+    .qr-frame {
+        display: inline-block;
+        padding: 12px;
+        border: 2.5px solid @brandColor;
+        border-radius: 18px;
+        background: #FFFFFF;
+        margin: 10px 0;
+    }
+
+        .qr-frame img {
+            width: 250px;
+            height: 250px;
+            object-fit: contain;
+            display: block;
+        }
+
+    .qr-instruction {
+        font-size: 13.5px;
+        color: #475569;
+        margin-bottom: 12px;
+    }
+
+    .qr-note {
+        font-size: 13px;
+        color: #64748B;
+        margin-top: 10px;
+    }
+
+    .btn-finish-payment {
+        background: @brandColor;
+        color: #FFFFFF;
+        border: none;
+        width: 100%;
+        padding: 14px;
+        border-radius: 10px;
+        font-size: 15px;
+        font-weight: 800;
+        cursor: pointer;
+        margin-top: 20px;
+        transition: opacity 0.2s;
+    }
+
+        .btn-finish-payment:hover {
+            opacity: 0.9;
+        }
+
+    .btn-later-link {
+        display: inline-block;
+        margin-top: 14px;
+        color: #64748B;
+        font-size: 13px;
+        text-decoration: none;
+    }
+
+        .btn-later-link:hover {
+            color: #021156;
+            text-decoration: underline;
+        }
+</style>
+
+<div class="payment-gateway-container">
+    <div class="payment-gateway-box">
+        <div class="gateway-header">
+            <img src="@logoUrl" alt="@gatewayName" class="gateway-logo" />
+            <div class="gateway-header-text">
+                <h3>THANH TOÁN QUA @gatewayName.ToUpper()</h3>
+                <span>Giao dịch bảo mật 100% qua Napas & VietQR</span>
+            </div>
+        </div>
+
+        <div class="gateway-body">
+            <div class="order-brief-card">
+                <div class="brief-row">
+                    <span class="label">Mã đơn hàng:</span>
+                    <span class="val">#@Model.MaDonHang</span>
+                </div>
+                <div class="brief-row">
+                    <span class="label">Ngân hàng nhận:</span>
+                    <span class="val">Vietcombank (VCB)</span>
+                </div>
+                <div class="brief-row">
+                    <span class="label">Số tài khoản:</span>
+                    <span class="val">
+                        <strong style="color: @brandColor;">@stk</strong>
+                        <button type="button" class="btn-copy-mini" onclick="copyToClipboard('@stk', 'Đã sao chép STK!')">Copy</button>
+                    </span>
+                </div>
+                <div class="brief-row">
+                    <span class="label">Chủ tài khoản:</span>
+                    <span class="val">@chuTaiKhoan</span>
+                </div>
+                <div class="brief-row">
+                    <span class="label">Số tiền thanh toán:</span>
+                    <span class="val-price">@Model.TongTien.ToString("N0") VNĐ</span>
+                </div>
+            </div>
+
+            <div class="qr-instruction">
+                Mở <strong>VCB Digibank</strong> hoặc <strong>App Ngân Hàng bất kỳ</strong> để quét mã QR:
+            </div>
+
+            <div class="qr-frame">
+                <img src="@qrUrl" alt="VietQR Vietcombank" />
+            </div>
+
+            <div class="qr-note">
+                Nội dung chuyển khoản: <strong style="color: #021156;">@noiDungChuyenKhoan</strong>
+                <button type="button" class="btn-copy-mini" style="margin-left: 6px;" onclick="copyToClipboard('@noiDungChuyenKhoan', 'Đã sao chép nội dung!')">Copy</button>
+            </div>
+
+            <button type="button" class="btn-finish-payment" onclick="xacNhanThanhToan('@Model.MaDonHang')">
+                TÔI ĐÃ HOÀN TẤT CHUYỂN TIỀN
+            </button>
+
+            <div>
+                <a href="/DonHang/DonHangCuaToi" class="btn-later-link">
+                    Thanh toán sau (Về trang Đơn hàng của tôi)
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function copyToClipboard(text, msg) {
+        navigator.clipboard.writeText(text).then(() => {
+            alert(msg);
+        }).catch(() => {
+            prompt("Sao chép nội dung:", text);
+        });
+    }
+
+    function xacNhanThanhToan(maDonHang) {
+        const formData = new FormData();
+        formData.append('maDonHang', maDonHang);
+
+        fetch('/DonHang/XacNhanThanhToanOnline', {
+            method: 'POST',
+            body: formData
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                alert("Xác nhận thanh toán thành công!");
+                window.location.href = data.redirectUrl;
+            } else {
+                alert(data.message || "Lỗi xác nhận thanh toán!");
+            }
+        })
+        .catch(err => {
+            console.error("Lỗi:", err);
+            alert("Đã xảy ra lỗi khi xác nhận giao dịch!");
+        });
+    }
+</script>

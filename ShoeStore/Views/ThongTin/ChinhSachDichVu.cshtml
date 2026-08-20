@@ -1,0 +1,305 @@
+﻿@{
+    ViewData["Title"] = "Chính sách dịch vụ & Điều khoản";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* BREADCRUMB */
+    .info-breadcrumb-wrapper {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .info-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+        margin-bottom: 25px;
+        font-size: 13.5px;
+    }
+
+        .info-breadcrumb .bc-home {
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+            .info-breadcrumb .bc-home:hover {
+                color: #3B82F6;
+            }
+
+        .info-breadcrumb .bc-separator {
+            color: #3B82F6;
+            font-weight: 600;
+        }
+
+        .info-breadcrumb .bc-current {
+            color: #021156;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+    /* CONTAINER */
+    .info-page-container {
+        max-width: 1100px;
+        margin: 0 auto 70px auto;
+        padding: 0 15px;
+    }
+
+    .info-content-card {
+        background: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        padding: 35px 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .page-main-header {
+        text-align: center;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1.5px solid #F1F5F9;
+    }
+
+        .page-main-header h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: #021156;
+            margin-bottom: 8px;
+        }
+
+        .page-main-header p {
+            font-size: 14px;
+            color: #64748B;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+    /* SERVICE COMMITMENT GRID */
+    .service-commit-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 35px;
+    }
+
+    .service-card {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .service-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #EFF6FF;
+        color: #2563EB;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+
+    .service-card h3 {
+        font-size: 15px;
+        font-weight: 800;
+        color: #021156;
+        margin: 0 0 6px 0;
+    }
+
+    .service-card p {
+        font-size: 12.5px;
+        color: #64748B;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    /* SECTIONS */
+    .terms-section {
+        margin-bottom: 28px;
+    }
+
+        .terms-section h2 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #021156;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+            .terms-section h2 .material-icons-outlined {
+                color: #3B82F6;
+                font-size: 22px;
+            }
+
+        .terms-section p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+
+        .terms-section ul {
+            margin: 0 0 12px 0;
+            padding-left: 22px;
+            font-size: 13.5px;
+            color: #334155;
+            line-height: 1.7;
+        }
+
+        .terms-section li {
+            margin-bottom: 6px;
+        }
+
+    /* CONTACT SUPPORT CARD */
+    .support-contact-box {
+        background: #EFF6FF;
+        border: 1.5px solid #BFDBFE;
+        border-radius: 12px;
+        padding: 22px;
+        margin-top: 25px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .support-text h4 {
+        margin: 0 0 4px 0;
+        font-size: 15px;
+        font-weight: 800;
+        color: #1E3A8A;
+    }
+
+    .support-text p {
+        margin: 0;
+        font-size: 13px;
+        color: #3B82F6;
+    }
+
+    .btn-contact-now {
+        background: #021156;
+        color: #FFFFFF !important;
+        padding: 10px 20px;
+        border-radius: 8px;
+        font-size: 13px;
+        font-weight: 700;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        transition: background 0.2s ease;
+    }
+
+        .btn-contact-now:hover {
+            background: #1D4ED8;
+        }
+
+   
+</style>
+
+<!-- Thanh Breadcrumb -->
+<div class="info-breadcrumb-wrapper">
+    <div class="info-breadcrumb">
+        <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
+        <span class="bc-separator">/</span>
+        <span class="bc-current">CHÍNH SÁCH DỊCH VỤ</span>
+    </div>
+</div>
+
+<!-- Nội dung Chính sách dịch vụ -->
+<div class="info-page-container">
+    <div class="info-content-card">
+
+        <div class="page-main-header">
+            <h1>ĐIỀU KHOẢN & TIÊU CHUẨN DỊCH VỤ KHÁCH HÀNG</h1>
+            <p>Minhee Sports đặt sự hài lòng của khách hàng làm trung tâm thông qua các cam kết rõ ràng về chất lượng tư vấn, hỗ trợ sau bán và trải nghiệm mua sắm minh bạch.</p>
+        </div>
+
+        <!-- 3 Cam kết dịch vụ -->
+        <div class="service-commit-grid">
+            <div class="service-card">
+                <div class="service-icon">
+                    <span class="material-icons-outlined">support_agent</span>
+                </div>
+                <h3>Tư vấn chuẩn xác</h3>
+                <p>Đội ngũ chuyên viên tư vấn kích cỡ và phom giày phù hợp với từng nhu cầu vận động.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <span class="material-icons-outlined">sentiment_very_satisfied</span>
+                </div>
+                <h3>Trải nghiệm hài lòng</h3>
+                <p>Tiếp nhận và giải quyết mọi phản ánh của quý khách trong vòng tối đa 24 giờ.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">
+                    <span class="material-icons-outlined">price_check</span>
+                </div>
+                <h3>Giá cả minh bạch</h3>
+                <p>Mọi mức giá, phí vận chuyển và chương trình khuyến mãi đều được niêm yết rõ ràng.</p>
+            </div>
+        </div>
+
+        <!-- 1. Trách nhiệm của Minhee Sports -->
+        <div class="terms-section">
+            <h2>
+                <span class="material-icons-outlined">verified</span>
+                1. Trách nhiệm phục vụ của Minhee Sports
+            </h2>
+            <ul>
+                <li>Cung cấp thông tin sản phẩm trung thực: hình ảnh thực tế, chất liệu, xuất xứ và bảng size chính xác.</li>
+                <li>Đảm bảo sản phẩm được kiểm tra chất lượng kỹ lưỡng trước khi đóng gói và gửi đi.</li>
+                <li>Hỗ trợ khách hàng trong suốt quá trình sử dụng thông qua chính sách bảo hành 6 tháng và đổi size 30 ngày.</li>
+                <li>Bảo mật an toàn tuyệt đối mọi thông tin và dữ liệu cá nhân của người mua hàng.</li>
+            </ul>
+        </div>
+
+        <!-- 2. Quyền lợi và trách nhiệm của khách hàng -->
+        <div class="terms-section">
+            <h2>
+                <span class="material-icons-outlined">person</span>
+                2. Quyền lợi và trách nhiệm của khách hàng
+            </h2>
+            <ul>
+                <li><strong>Quyền lợi:</strong> Được kiểm tra hàng trước khi thanh toán, được yêu cầu hỗ trợ đổi trả nếu sản phẩm không đúng mô tả hoặc lỗi kỹ thuật.</li>
+                <li><strong>Trách nhiệm:</strong> Cung cấp chính xác số điện thoại và địa chỉ nhận hàng; giữ gìn sản phẩm nguyên vẹn trong trường hợp có nhu cầu đổi trả.</li>
+            </ul>
+        </div>
+
+        <!-- 3. Giải quyết khiếu nại -->
+        <div class="terms-section">
+            <h2>
+                <span class="material-icons-outlined">gavel</span>
+                3. Quy trình tiếp nhận & Giải quyết khiếu nại
+            </h2>
+            <p>
+                Mọi ý kiến đóng góp hoặc phản ánh về thái độ phục vụ, chất lượng sản phẩm sẽ được bộ phận Chăm sóc khách hàng tiếp nhận và xử lý theo nguyên tắc tôn trọng quyền lợi chính đáng của người mua.
+            </p>
+        </div>
+
+        <!-- Hộp liên hệ CSKH -->
+        <div class="support-contact-box">
+            <div class="support-text">
+                <h4>BẠN CẦN HỖ TRỢ THÊM VỀ ĐƠN HÀNG HOẶC DỊCH VỤ?</h4>
+                <p>Tổng đài CSKH luôn sẵn sàng lắng nghe và hỗ trợ bạn 24/7.</p>
+            </div>
+            <a href="tel:0335836886" class="btn-contact-now">
+                <span class="material-icons-outlined">phone_in_talk</span>
+                HOTLINE HỖ TRỢ
+            </a>
+        </div>
+
+    </div>
+</div>

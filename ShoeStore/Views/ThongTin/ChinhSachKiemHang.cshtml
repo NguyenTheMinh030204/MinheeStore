@@ -1,0 +1,302 @@
+﻿@{
+    ViewData["Title"] = "Chính sách đồng kiểm hàng hóa";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* BREADCRUMB */
+    .info-breadcrumb-wrapper {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .info-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+        margin-bottom: 25px;
+        font-size: 13.5px;
+    }
+
+    .info-breadcrumb .bc-home {
+        color: #4B5563;
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.2s ease;
+    }
+
+    .info-breadcrumb .bc-home:hover {
+        color: #3B82F6;
+    }
+
+    .info-breadcrumb .bc-separator {
+        color: #3B82F6;
+        font-weight: 600;
+    }
+
+    .info-breadcrumb .bc-current {
+        color: #021156;
+        font-weight: 800;
+        letter-spacing: 0.3px;
+    }
+
+    /* CONTAINER */
+    .info-page-container {
+        max-width: 1100px;
+        margin: 0 auto 70px auto;
+        padding: 0 15px;
+    }
+
+    .info-content-card {
+        background: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        padding: 35px 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .page-main-header {
+        text-align: center;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1.5px solid #F1F5F9;
+    }
+
+    .page-main-header h1 {
+        font-size: 24px;
+        font-weight: 900;
+        color: #021156;
+        margin-bottom: 8px;
+    }
+
+    .page-main-header p {
+        font-size: 14px;
+        color: #64748B;
+        max-width: 700px;
+        margin: 0 auto;
+        line-height: 1.6;
+    }
+
+    /* INSPECTION HIGHLIGHT */
+    .inspection-badge-box {
+        background: #ECFDF5;
+        border: 1.5px solid #10B981;
+        border-radius: 12px;
+        padding: 18px 24px;
+        margin-bottom: 30px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+    }
+
+    .inspection-badge-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #10B981;
+        color: #FFFFFF;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+    .inspection-badge-icon .material-icons-outlined {
+        font-size: 28px;
+    }
+
+    .inspection-badge-text h3 {
+        margin: 0 0 4px 0;
+        font-size: 16px;
+        font-weight: 800;
+        color: #065F46;
+    }
+
+    .inspection-badge-text p {
+        margin: 0;
+        font-size: 13.5px;
+        color: #047857;
+        line-height: 1.5;
+    }
+
+    /* SECTIONS */
+    .inspect-section {
+        margin-bottom: 28px;
+    }
+
+    .inspect-section h2 {
+        font-size: 17px;
+        font-weight: 800;
+        color: #021156;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .inspect-section h2 .material-icons-outlined {
+        color: #3B82F6;
+        font-size: 22px;
+    }
+
+    .inspect-section p {
+        font-size: 14px;
+        line-height: 1.7;
+        color: #334155;
+        margin-bottom: 10px;
+    }
+
+    .inspect-section ul {
+        margin: 0 0 12px 0;
+        padding-left: 22px;
+        font-size: 13.5px;
+        color: #334155;
+        line-height: 1.7;
+    }
+
+    .inspect-section li {
+        margin-bottom: 6px;
+    }
+
+    /* DO & DONT GRID */
+    .do-dont-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+        margin: 20px 0;
+    }
+
+    .do-box, .dont-box {
+        border-radius: 12px;
+        padding: 20px;
+    }
+
+    .do-box {
+        background: #F0FDF4;
+        border: 1px solid #BBF7D0;
+    }
+
+    .do-box h4 {
+        margin: 0 0 10px 0;
+        color: #166534;
+        font-size: 15px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .dont-box {
+        background: #FFF1F2;
+        border: 1px solid #FECDD3;
+    }
+
+    .dont-box h4 {
+        margin: 0 0 10px 0;
+        color: #9F1239;
+        font-size: 15px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+    }
+
+    .do-box ul, .dont-box ul {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 13px;
+        line-height: 1.6;
+    }
+
+    .do-box li { color: #14532D; margin-bottom: 6px; }
+    .dont-box li { color: #881337; margin-bottom: 6px; }
+
+  
+</style>
+
+<!-- Thanh Breadcrumb -->
+<div class="info-breadcrumb-wrapper">
+    <div class="info-breadcrumb">
+        <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
+        <span class="bc-separator">/</span>
+        <span class="bc-current">CHÍNH SÁCH KIỂM HÀNG</span>
+    </div>
+</div>
+
+<!-- Nội dung Chính sách kiểm hàng -->
+<div class="info-page-container">
+    <div class="info-content-card">
+
+        <div class="page-main-header">
+            <h1>CHÍNH SÁCH ĐỒNG KIỂM HÀNG HÓA</h1>
+            <p>Minhee Sports áp dụng chính sách cho phép khách hàng mở hộp kiểm tra sản phẩm trước khi nhận hàng và thanh toán tiền cho nhân viên giao hàng (Shipper).</p>
+        </div>
+
+        <!-- Khung quyền lợi đồng kiểm -->
+        <div class="inspection-badge-box">
+            <div class="inspection-badge-icon">
+                <span class="material-icons-outlined">verified</span>
+            </div>
+            <div class="inspection-badge-text">
+                <h3>100% ĐƠN HÀNG ĐƯỢC ĐỒNG KIỂM TRƯỚC KHI THANH TOÁN</h3>
+                <p>Khách hàng có quyền yêu cầu shipper mở kiện hàng bên ngoài để kiểm tra đúng đôi giày, đúng màu sắc và kích cỡ (Size) đã đặt trước khi ký nhận.</p>
+            </div>
+        </div>
+
+        <!-- Bảng Được phép & Không được phép -->
+        <div class="do-dont-grid">
+            <div class="do-box">
+                <h4>
+                    <span class="material-icons-outlined">check_circle</span>
+                    ĐƯỢC PHÉP KHI ĐỒNG KIỂM:
+                </h4>
+                <ul>
+                    <li>Mở thùng carton bảo vệ để kiểm tra hộp giày và phụ kiện đi kèm.</li>
+                    <li>Kiểm tra ngoại quan: Phom dáng, đường chỉ, màu sắc, tem mác và đế giày.</li>
+                    <li>Đối chiếu số size in trên lưỡi gà/hộp giày với đơn hàng đã đặt.</li>
+                    <li>Xác nhận tình trạng hàng còn mới 100%, không bị ố bẩn hay trầy xước.</li>
+                </ul>
+            </div>
+
+            <div class="dont-box">
+                <h4>
+                    <span class="material-icons-outlined">cancel</span>
+                    KHÔNG ĐƯỢC PHÉP KHI ĐỒNG KIỂM:
+                </h4>
+                <ul>
+                    <li>Không cắt đứt, tháo bỏ tem niêm phong hoặc tag giá của sản phẩm.</li>
+                    <li>Không xỏ chân mang đi lại trên nền đất/sàn nhà làm bẩn bề mặt đế.</li>
+                    <li>Không làm rách hộp đựng giày nguyên bản của thương hiệu.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 1. Xử lý khi hàng không đúng yêu cầu -->
+        <div class="inspect-section">
+            <h2>
+                <span class="material-icons-outlined">report_problem</span>
+                1. Xử lý khi phát sinh sự cố lúc kiểm hàng
+            </h2>
+            <p>Trong quá trình đồng kiểm, nếu phát hiện các trường hợp sau:</p>
+            <ul>
+                <li><strong>Giao sai sản phẩm / sai kích thước:</strong> Bạn có quyền từ chối nhận hàng ngay tại chỗ và không mất bất kỳ chi phí nào.</li>
+                <li><strong>Sản phẩm bị lỗi hoặc móp méo do vận chuyển:</strong> Vui lòng chụp lại ảnh tình trạng kiện hàng cùng shipper và từ chối nhận, Minhee Sports sẽ lập tức gửi lại đôi mới tinh cho bạn.</li>
+            </ul>
+        </div>
+
+        <!-- 2. Hỗ trợ sau khi nhận hàng -->
+        <div class="inspect-section">
+            <h2>
+                <span class="material-icons-outlined">contact_support</span>
+                2. Hỗ trợ sau khi đã nhận và thanh toán
+            </h2>
+            <p>
+                Sau khi shipper rời đi, nếu bạn thử vào chân bị chật hoặc rộng, bạn vẫn hoàn toàn được áp dụng quyền lợi <strong>đổi size tận nơi trong 30 ngày</strong> theo Chính sách Đổi trả hàng của Minhee Sports.
+            </p>
+        </div>
+
+    </div>
+</div>

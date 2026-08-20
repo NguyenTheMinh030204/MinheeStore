@@ -15,26 +15,29 @@ function changeImage(element, src) {
     }
 }
 
-// 2. Chọn Size giày (Tự động kích hoạt cho các nút không bị Disabled)
+// 2. Chọn Size giày (Hỗ trợ gọi qua onclick="selectDetailSize(this)" và qua addEventListener)
+function selectDetailSize(btn) {
+    if (btn.classList.contains('disabled')) return;
+
+    document.querySelectorAll('.size-options .btn-size').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Reset số lượng về 1 khi chọn size khác
+    const inputQty = document.getElementById('inputQuantity');
+    if (inputQty) {
+        inputQty.value = 1;
+    }
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const sizeBtns = document.querySelectorAll('.size-options .btn-size:not(.disabled)');
-
     sizeBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-            sizeBtns.forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-
-            // Reset số lượng về 1 mỗi khi đổi size
-            const inputQty = document.getElementById('inputQuantity');
-            if (inputQty) {
-                inputQty.value = 1;
-            }
-        });
+        btn.addEventListener('click', () => selectDetailSize(btn));
     });
 });
 
-// 3. Tăng / Giảm số lượng mua (Kiểm tra theo tồn kho của Size đang chọn)
-function updateQty(change) {
+// 3. Tăng / Giảm số lượng mua theo tồn kho của Size đang chọn
+function updateDetailQty(change) {
     const input = document.getElementById('inputQuantity');
     const activeSizeBtn = document.querySelector('.size-options .btn-size.active');
 
@@ -57,6 +60,11 @@ function updateQty(change) {
     input.value = currentVal;
 }
 
+// Alias hỗ trợ hàm cũ nếu có gọi updateQty
+function updateQty(change) {
+    updateDetailQty(change);
+}
+
 // 4. Đóng / Mở Popup Modal Bảng Hướng Dẫn Chọn Size
 function openSizeModal() {
     const modal = document.getElementById('sizeGuideModal');
@@ -74,15 +82,14 @@ function closeSizeModal() {
     }
 }
 
-// Lắng nghe phím ESC để đóng Modal nhanh
 document.addEventListener('keydown', function (e) {
     if (e.key === 'Escape') {
         closeSizeModal();
     }
 });
 
-// 5. Thêm sản phẩm vào giỏ hàng (Kết nối trực tiếp API Backend & SQL Server)
-function addToCart(maGiay) {
+// 5. Thêm sản phẩm vào giỏ hàng
+function addCurrentDetailPageToCart() {
     const activeSizeBtn = document.querySelector('.size-options .btn-size.active');
     const quantity = parseInt(document.getElementById('inputQuantity')?.value) || 1;
 
@@ -97,13 +104,13 @@ function addToCart(maGiay) {
         return;
     }
 
+    const formData = new FormData();
+    formData.append('maBienThe', maBienThe);
+    formData.append('soLuong', quantity);
+
     fetch('/GioHang/ThemVaoGioHang', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            MaBienThe: maBienThe,
-            SoLuong: quantity
-        })
+        body: formData
     })
         .then(res => res.json())
         .then(res => {
@@ -114,14 +121,13 @@ function addToCart(maGiay) {
             }
 
             if (res.success) {
-                // Cập nhật số lượng trên icon giỏ hàng ở Header
                 const cartBadge = document.querySelector('.cart-badge');
-                if (cartBadge) {
+                if (cartBadge && res.totalItems !== undefined) {
                     cartBadge.textContent = res.totalItems;
                 }
-                alert(res.message);
+                alert(res.message || "Đã thêm sản phẩm vào giỏ hàng!");
             } else {
-                alert(res.message);
+                alert(res.message || "Không thể thêm vào giỏ hàng!");
             }
         })
         .catch(err => {
@@ -130,8 +136,13 @@ function addToCart(maGiay) {
         });
 }
 
-// 6. Mua ngay (Kiểm tra biến thể và chuyển hướng trực tiếp sang màn hình Thanh Toán)
-function buyNow(maGiay) {
+// Alias hỗ trợ nút bấm gọi addToCart
+function addToCart(maGiay) {
+    addCurrentDetailPageToCart();
+}
+
+// 6. Mua ngay (Chuyển hướng trực tiếp sang màn hình Thanh Toán)
+function buyNowCurrentDetailPage() {
     const activeSizeBtn = document.querySelector('.size-options .btn-size.active');
     const quantity = parseInt(document.getElementById('inputQuantity')?.value) || 1;
 
@@ -146,6 +157,10 @@ function buyNow(maGiay) {
         return;
     }
 
-    // Chuyển hướng trực tiếp sang Action ThanhToan của DonHangController
     window.location.href = `/DonHang/ThanhToan?maBienThe=${maBienThe}&soLuong=${quantity}`;
+}
+
+// Alias hỗ trợ hàm cũ buyNow
+function buyNow(maGiay) {
+    buyNowCurrentDetailPage();
 }

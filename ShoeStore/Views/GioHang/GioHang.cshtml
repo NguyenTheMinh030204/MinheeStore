@@ -29,7 +29,7 @@
     </div>
 </section>
 
-<!-- Breadcrumb đặt cùng độ rộng với banner -->
+<!-- Breadcrumb -->
 <div class="cart-breadcrumb-wrapper">
     <div class="cart-breadcrumb">
         <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
@@ -39,24 +39,20 @@
 </div>
 
 <div class="cart-container-custom">
-  
-
-    @if (danhSachChiTiet.Count == 0)
-    {
-        <!-- Giao diện khi giỏ hàng trống -->
-        <div class="cart-empty-state" id="cartEmptyState">
-            <div class="cart-empty-icon">
-                <span class="material-icons-outlined">remove_shopping_cart</span>
-            </div>
-            <h3>Giỏ hàng của bạn đang trống!</h3>
-            <p>Hãy lựa chọn những đôi giày ưng ý nhất để tiếp tục mua sắm nhé.</p>
-            <a href="/TrangChu/TrangChu" class="btn-continue-shopping">
-                <span class="material-icons-outlined">arrow_back</span>
-                TIẾP TỤC MUA SẮM
-            </a>
+    <!-- Giao diện khi giỏ hàng trống (render từ server hoặc hiển thị qua JS khi xóa hết) -->
+    <div class="cart-empty-state" id="cartEmptyState" style="@(danhSachChiTiet.Count == 0 ? "display: flex;" : "display: none;")">
+        <div class="cart-empty-icon">
+            <span class="material-icons-outlined">remove_shopping_cart</span>
         </div>
-    }
-    else
+        <h3>Giỏ hàng của bạn đang trống!</h3>
+        <p>Hãy lựa chọn những đôi giày ưng ý nhất để tiếp tục mua sắm nhé.</p>
+        <a href="/TrangChu/TrangChu" class="btn-continue-shopping">
+            <span class="material-icons-outlined">arrow_back</span>
+            TIẾP TỤC MUA SẮM
+        </a>
+    </div>
+
+    @if (danhSachChiTiet.Count > 0)
     {
         <div id="cartMainContent">
             <!-- Danh sách từng Card sản phẩm -->
@@ -127,19 +123,6 @@
                     THANH TOÁN NGAY
                 </button>
             </div>
-        </div>
-
-        <!-- Trạng thái giỏ trống khi xóa hết (ẩn mặc định) -->
-        <div class="cart-empty-state" id="cartEmptyState" style="display: none;">
-            <div class="cart-empty-icon">
-                <span class="material-icons-outlined">remove_shopping_cart</span>
-            </div>
-            <h3>Giỏ hàng của bạn đang trống!</h3>
-            <p>Hãy lựa chọn những đôi giày ưng ý nhất để tiếp tục mua sắm nhé.</p>
-            <a href="/TrangChu/TrangChu" class="btn-continue-shopping">
-                <span class="material-icons-outlined">arrow_back</span>
-                TIẾP TỤC MUA SẮM
-            </a>
         </div>
     }
 </div>

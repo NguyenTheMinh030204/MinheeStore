@@ -1,0 +1,318 @@
+﻿@{
+    ViewData["Title"] = "Hướng dẫn thanh toán";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* BREADCRUMB */
+    .info-breadcrumb-wrapper {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .info-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+        margin-bottom: 25px;
+        font-size: 13.5px;
+    }
+
+        .info-breadcrumb .bc-home {
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+            .info-breadcrumb .bc-home:hover {
+                color: #3B82F6;
+            }
+
+        .info-breadcrumb .bc-separator {
+            color: #3B82F6;
+            font-weight: 600;
+        }
+
+        .info-breadcrumb .bc-current {
+            color: #021156;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+    /* CONTAINER */
+    .info-page-container {
+        max-width: 1100px;
+        margin: 0 auto 70px auto;
+        padding: 0 15px;
+    }
+
+    .info-content-card {
+        background: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        padding: 35px 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .page-main-header {
+        text-align: center;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1.5px solid #F1F5F9;
+    }
+
+        .page-main-header h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: #021156;
+            margin-bottom: 8px;
+        }
+
+        .page-main-header p {
+            font-size: 14px;
+            color: #64748B;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+    /* PAYMENT METHOD CARDS */
+    .payment-guide-card {
+        background: #F8FAFC;
+        border: 1.5px solid #E2E8F0;
+        border-radius: 14px;
+        padding: 24px;
+        margin-bottom: 25px;
+        transition: border-color 0.2s ease;
+    }
+
+        .payment-guide-card:hover {
+            border-color: #3B82F6;
+        }
+
+    .guide-card-header {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #E2E8F0;
+    }
+
+    .guide-card-icon {
+        width: 44px;
+        height: 44px;
+        border-radius: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+        .guide-card-icon.cod-icon {
+            background: #EFF6FF;
+            color: #2563EB;
+        }
+
+        .guide-card-icon.bank-icon {
+            background: #F0FDF4;
+            color: #005F36;
+        }
+
+        .guide-card-icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+    .guide-card-title h3 {
+        margin: 0 0 2px 0;
+        font-size: 16px;
+        font-weight: 800;
+        color: #021156;
+    }
+
+    .guide-card-title span {
+        font-size: 12.5px;
+        color: #64748B;
+    }
+
+    /* STEPS IN GUIDE */
+    .guide-steps-list {
+        margin: 0 0 14px 0;
+        padding-left: 20px;
+        font-size: 13.5px;
+        color: #334155;
+        line-height: 1.7;
+    }
+
+        .guide-steps-list li {
+            margin-bottom: 8px;
+        }
+
+            .guide-steps-list li:last-child {
+                margin-bottom: 0;
+            }
+
+    /* BANK ACCOUNT BOX */
+    .bank-info-box {
+        background: #FFFFFF;
+        border: 1.5px dashed #005F36;
+        border-radius: 10px;
+        padding: 16px 20px;
+        margin-top: 14px;
+        font-size: 13.5px;
+    }
+
+    .bank-info-row {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 0;
+        border-bottom: 1px solid #F1F5F9;
+    }
+
+        .bank-info-row:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+        }
+
+        .bank-info-row .label {
+            color: #64748B;
+        }
+
+        .bank-info-row .val {
+            color: #021156;
+            font-weight: 700;
+        }
+
+    /* BOX LƯU Ý */
+    .payment-alert-box {
+        background: #FFFBEB;
+        border: 1px dashed #F59E0B;
+        border-radius: 12px;
+        padding: 18px 20px;
+        margin-top: 25px;
+    }
+
+        .payment-alert-box h4 {
+            margin: 0 0 8px 0;
+            font-size: 14.5px;
+            font-weight: 800;
+            color: #B45309;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .payment-alert-box ul {
+            margin: 0;
+            padding-left: 20px;
+            font-size: 13px;
+            color: #78350F;
+            line-height: 1.6;
+        }
+
+        .payment-alert-box li {
+            margin-bottom: 4px;
+        }
+
+            .payment-alert-box li:last-child {
+                margin-bottom: 0;
+            }
+</style>
+
+<!-- Thanh Breadcrumb -->
+<div class="info-breadcrumb-wrapper">
+    <div class="info-breadcrumb">
+        <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
+        <span class="bc-separator">/</span>
+        <span class="bc-current">HƯỚNG DẪN THANH TOÁN</span>
+    </div>
+</div>
+
+<!-- Nội dung Hướng dẫn thanh toán -->
+<div class="info-page-container">
+    <div class="info-content-card">
+
+        <div class="page-main-header">
+            <h1>HƯỚNG DẪN THANH TOÁN TẠI MINHEE SPORTS</h1>
+            <p>Minhee Sports hỗ trợ 2 phương thức thanh toán an toàn, linh hoạt và tiện lợi nhất cho khách hàng khi đặt mua sản phẩm online.</p>
+        </div>
+
+        <!-- Phương thức 1: COD -->
+        <div class="payment-guide-card">
+            <div class="guide-card-header">
+                <div class="guide-card-icon cod-icon">
+                    <span class="material-icons-outlined" style="font-size: 26px;">local_shipping</span>
+                </div>
+                <div class="guide-card-title">
+                    <h3>1. Thanh toán khi nhận hàng (COD - Cash On Delivery)</h3>
+                    <span>Nhận hàng, kiểm tra sản phẩm trước khi thanh toán tiền mặt</span>
+                </div>
+            </div>
+
+            <ol class="guide-steps-list">
+                <li><strong>Bước 1:</strong> Tại bước Thanh toán đơn hàng, bạn chọn phương thức <strong>"Thanh toán khi nhận hàng (COD)"</strong> và nhấn <em>Xác nhận đặt hàng</em>.</li>
+                <li><strong>Bước 2:</strong> Hệ thống ghi nhận đơn hàng và nhân viên Minhee Sports sẽ đóng gói, bàn giao cho đơn vị vận chuyển (GHTK / GHN / Viettel Post).</li>
+                <li><strong>Bước 3:</strong> Khi nhân viên giao hàng (Shipper) mang giày tới, bạn được quyền mở hộp kiểm tra đúng mẫu, đúng size trước khi gửi tiền mặt cho shipper.</li>
+            </ol>
+        </div>
+
+        <!-- Phương thức 2: Chuyển khoản Vietcombank QR -->
+        <div class="payment-guide-card">
+            <div class="guide-card-header">
+                <div class="guide-card-icon bank-icon">
+                    <img src="https://inkythuatso.com/uploads/images/2021/11/logo-vietcombank-inkythuatso-01-01-13-16-17.jpg" alt="Vietcombank" />
+                </div>
+                <div class="guide-card-title">
+                    <h3>2. Chuyển khoản Ngân hàng qua Vietcombank (Mã VietQR)</h3>
+                    <span>Thanh toán tự động 24/7 qua Napas247 từ bất kỳ App Ngân Hàng nào</span>
+                </div>
+            </div>
+
+            <ol class="guide-steps-list">
+                <li><strong>Bước 1:</strong> Chọn phương thức <strong>"Chuyển khoản Ngân hàng (Vietcombank)"</strong> tại trang thanh toán.</li>
+                <li><strong>Bước 2:</strong> Màn hình sẽ chuyển hướng tới Cổng thanh toán hiển thị mã <strong>VietQR</strong> động đã điền sẵn số tiền và nội dung đơn hàng.</li>
+                <li><strong>Bước 3:</strong> Mở App ngân hàng trên điện thoại (VCB Digibank, MB Bank, Techcombank, VPBank,...) và thực hiện <strong>Quét mã QR</strong> để hoàn tất giao dịch.</li>
+                <li><strong>Bước 4:</strong> Bấm nút <strong>"TÔI ĐÃ HOÀN TẤT CHUYỂN TIỀN"</strong> để hệ thống cập nhật trạng thái đơn hàng.</li>
+            </ol>
+
+            <div class="bank-info-box">
+                <div class="bank-info-row">
+                    <span class="label">Ngân hàng thụ hưởng:</span>
+                    <span class="val">Vietcombank (VCB - Chi nhánh Hà Nội)</span>
+                </div>
+                <div class="bank-info-row">
+                    <span class="label">Số tài khoản:</span>
+                    <span class="val" style="color: #005F36; font-size: 15px;">9358187791</span>
+                </div>
+                <div class="bank-info-row">
+                    <span class="label">Chủ tài khoản:</span>
+                    <span class="val">NGUYEN THE MINH</span>
+                </div>
+                <div class="bank-info-row">
+                    <span class="label">Cú pháp nội dung:</span>
+                    <span class="val" style="color: #EF4444;">Thanh toan don [Mã đơn hàng]</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Box Lưu ý -->
+        <div class="payment-alert-box">
+            <h4>
+                <span class="material-icons-outlined">security</span>
+                Lưu ý an toàn thanh toán:
+            </h4>
+            <ul>
+                <li>Minhee Sports chỉ sử dụng duy nhất một số tài khoản ngân hàng chính thức <strong>9358187791 tại Vietcombank</strong> mang tên <strong>NGUYEN THE MINH</strong>.</li>
+                <li>Khách hàng vui lòng ghi đúng mã đơn hàng trong nội dung chuyển khoản để hệ thống xác nhận tự động nhanh nhất.</li>
+                <li>Đơn hàng chuyển khoản sau khi hoàn tất sẽ được ưu tiên xuất kho trong vòng 2 - 4 giờ làm việc.</li>
+            </ul>
+        </div>
+
+    </div>
+</div>

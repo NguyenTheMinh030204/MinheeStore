@@ -1,0 +1,304 @@
+﻿@{
+    ViewData["Title"] = "Chính sách vận chuyển";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* BREADCRUMB */
+    .info-breadcrumb-wrapper {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .info-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+        margin-bottom: 25px;
+        font-size: 13.5px;
+    }
+
+        .info-breadcrumb .bc-home {
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+            .info-breadcrumb .bc-home:hover {
+                color: #3B82F6;
+            }
+
+        .info-breadcrumb .bc-separator {
+            color: #3B82F6;
+            font-weight: 600;
+        }
+
+        .info-breadcrumb .bc-current {
+            color: #021156;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+    /* CONTAINER */
+    .info-page-container {
+        max-width: 1100px;
+        margin: 0 auto 70px auto;
+        padding: 0 15px;
+    }
+
+    .info-content-card {
+        background: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        padding: 35px 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .page-main-header {
+        text-align: center;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1.5px solid #F1F5F9;
+    }
+
+        .page-main-header h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: #021156;
+            margin-bottom: 8px;
+        }
+
+        .page-main-header p {
+            font-size: 14px;
+            color: #64748B;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+    /* SHIPPING TIME & COST GRID */
+    .shipping-timeline-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 18px;
+        margin-bottom: 35px;
+    }
+
+    .shipping-box {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 22px 18px;
+        text-align: center;
+        transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+        .shipping-box:hover {
+            border-color: #3B82F6;
+            transform: translateY(-2px);
+        }
+
+    .shipping-box-icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 12px;
+        background: #EFF6FF;
+        color: #2563EB;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 12px;
+    }
+
+    .shipping-box h3 {
+        font-size: 15px;
+        font-weight: 800;
+        color: #021156;
+        margin: 0 0 6px 0;
+    }
+
+    .shipping-box .time-badge {
+        display: inline-block;
+        background: #FEF3C7;
+        color: #B45309;
+        font-size: 12px;
+        font-weight: 800;
+        padding: 3px 10px;
+        border-radius: 20px;
+        margin-bottom: 8px;
+    }
+
+    .shipping-box p {
+        font-size: 12.5px;
+        color: #64748B;
+        margin: 0;
+        line-height: 1.5;
+    }
+
+    /* SECTIONS */
+    .shipping-section {
+        margin-bottom: 28px;
+    }
+
+        .shipping-section h2 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #021156;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+            .shipping-section h2 .material-icons-outlined {
+                color: #3B82F6;
+                font-size: 22px;
+            }
+
+        .shipping-section p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+
+        .shipping-section ul {
+            margin: 0 0 12px 0;
+            padding-left: 22px;
+            font-size: 13.5px;
+            color: #334155;
+            line-height: 1.7;
+        }
+
+        .shipping-section li {
+            margin-bottom: 6px;
+        }
+
+    /* PARTNER LOGOS */
+    .partner-banner {
+        background: #FAFAFA;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 20px;
+        text-align: center;
+        margin-top: 20px;
+    }
+
+        .partner-banner h4 {
+            margin: 0 0 10px 0;
+            font-size: 14px;
+            font-weight: 800;
+            color: #021156;
+        }
+
+    .partner-list {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+        flex-wrap: wrap;
+        font-size: 13.5px;
+        font-weight: 700;
+        color: #475569;
+    }
+
+    .partner-tag {
+        background: #FFFFFF;
+        border: 1px solid #CBD5E1;
+        border-radius: 6px;
+        padding: 6px 14px;
+    }
+
+   
+</style>
+
+<!-- Thanh Breadcrumb -->
+<div class="info-breadcrumb-wrapper">
+    <div class="info-breadcrumb">
+        <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
+        <span class="bc-separator">/</span>
+        <span class="bc-current">CHÍNH SÁCH VẬN CHUYỂN</span>
+    </div>
+</div>
+
+<!-- Nội dung Chính sách vận chuyển -->
+<div class="info-page-container">
+    <div class="info-content-card">
+
+        <div class="page-main-header">
+            <h1>CHÍNH SÁCH GIAO HÀNG & VẬN CHUYỂN</h1>
+            <p>Minhee Sports hợp tác cùng các đơn vị chuyển phát hàng đầu nhằm đảm bảo giày được đóng gói 2 lớp hộp cẩn thận và giao tận tay bạn nhanh chóng nhất.</p>
+        </div>
+
+        <!-- 3 Khu vực giao hàng -->
+        <div class="shipping-timeline-grid">
+            <div class="shipping-box">
+                <div class="shipping-box-icon">
+                    <span class="material-icons-outlined">rocket_launch</span>
+                </div>
+                <h3>Khu vực Nội thành Hà Nội</h3>
+                <span class="time-badge">1 - 2 Ngày</span>
+                <p>Giao hỏa tốc hoặc giao tiêu chuẩn qua GHTK / Ahamove.</p>
+            </div>
+
+            <div class="shipping-box">
+                <div class="shipping-box-icon">
+                    <span class="material-icons-outlined">location_city</span>
+                </div>
+                <h3>Các Tỉnh & Thành phố lớn</h3>
+                <span class="time-badge">2 - 3 Ngày</span>
+                <p>Đà Nẵng, TP. Hồ Chí Minh, Hải Phòng, Cần Thơ,...</p>
+            </div>
+
+            <div class="shipping-box">
+                <div class="shipping-box-icon">
+                    <span class="material-icons-outlined">holiday_village</span>
+                </div>
+                <h3>Khu vực Huyện & Xã vùng xa</h3>
+                <span class="time-badge">3 - 4 Ngày</span>
+                <p>Giao tận nhà qua mạng lưới Viettel Post & Bưu điện.</p>
+            </div>
+        </div>
+
+        <!-- 1. Biểu phí vận chuyển -->
+        <div class="shipping-section">
+            <h2>
+                <span class="material-icons-outlined">payments</span>
+                1. Quy định về cước phí vận chuyển
+            </h2>
+            <ul>
+                <li><strong>Cước phí tiêu chuẩn:</strong> Đồng giá <strong>30.000 VNĐ</strong> cho tất cả các đơn hàng trên toàn quốc.</li>
+                <li><strong>Đóng gói tiêu chuẩn bảo vệ:</strong> Giày được đặt trong hộp nguyên bản, kèm túi hút ẩm và bọc thêm thùng carton bên ngoài để không bị móp méo hộp trong lúc vận chuyển.</li>
+            </ul>
+        </div>
+
+        <!-- 2. Quy trình xử lý và giao hàng -->
+        <div class="shipping-section">
+            <h2>
+                <span class="material-icons-outlined">local_shipping</span>
+                2. Quy trình xử lý đơn hàng
+            </h2>
+            <ul>
+                <li><strong>Thời gian đóng gói:</strong> Các đơn hàng đặt trước 16h00 hàng ngày sẽ được kiểm tra ngoại quan và bàn giao cho bưu tá xuất kho trong ngày.</li>
+                <li><strong>Theo dõi đơn hàng:</strong> Quý khách có thể dễ dàng theo dõi trạng thái đơn tại mục <em>"Đơn hàng của tôi"</em> trên website.</li>
+                <li><strong>Số lần giao hàng:</strong> Shipper sẽ liên hệ tối đa 03 lần trước khi hoàn đơn về kho nếu khách hàng bận chưa nhận được.</li>
+            </ul>
+        </div>
+
+        <!-- Đối tác giao hàng -->
+        <div class="partner-banner">
+            <h4>ĐỐI TÁC VẬN CHUYỂN CHÍNH THỨC CỦA MINHEE SPORTS</h4>
+            <div class="partner-list">
+                <span class="partner-tag">Giao Hàng Tiết Kiệm (GHTK)</span>
+                <span class="partner-tag">Giao Hàng Nhanh (GHN)</span>
+                <span class="partner-tag">Viettel Post</span>
+                <span class="partner-tag">J&T Express</span>
+            </div>
+        </div>
+
+    </div>
+</div>

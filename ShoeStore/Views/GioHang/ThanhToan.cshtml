@@ -1,0 +1,186 @@
+﻿@model ShoeStore.Models.ViewModels.ThanhToanVM
+
+@{
+    ViewData["Title"] = "Thanh toán đơn hàng";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/ThanhToan.css" asp-append-version="true" />
+}
+
+<div class="checkout-breadcrumb-wrapper">
+    <div class="checkout-breadcrumb">
+        <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
+        <span class="bc-separator">/</span>
+        <span class="bc-current">THANH TOÁN ĐƠN HÀNG</span>
+    </div>
+</div>
+
+<div class="checkout-container">
+    <div class="checkout-layout-grid">
+        <div class="checkout-left-col">
+            <!-- Khung 1: Thông tin người nhận -->
+            <div class="checkout-card">
+                <div class="card-header-icon">
+                    <span class="material-icons-outlined">location_on</span>
+                    <h3>1. Thông tin người nhận hàng</h3>
+                </div>
+                <div class="form-grid-2">
+                    <div class="form-group">
+                        <label>Họ và tên <span class="required">*</span></label>
+                        <input type="text" id="txtHoTen" class="form-input" value="@Model.HoTenNguoiNhan" placeholder="Nhập họ và tên..." />
+                    </div>
+                    <div class="form-group">
+                        <label>Số điện thoại nhận hàng <span class="required">*</span></label>
+                        <input type="text" id="txtSDT" class="form-input" value="@Model.SoDienThoaiNhan" placeholder="Nhập số điện thoại..." />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Địa chỉ Email</label>
+                    <input type="email" id="txtEmail" class="form-input" value="@Model.EmailNguoiNhan" placeholder="Nhập email..." />
+                </div>
+                <div class="form-group">
+                    <label>Địa chỉ giao hàng chi tiết <span class="required">*</span></label>
+                    <textarea id="txtDiaChi" class="form-textarea" rows="2" placeholder="Số nhà, tên đường, phường/xã, quận/huyện...">@Model.DiaChiGiaoHang</textarea>
+                </div>
+            </div>
+
+            <!-- Khung 2: Sản phẩm trong đơn hàng -->
+            <div class="checkout-card">
+                <div class="card-header-icon">
+                    <span class="material-icons-outlined">inventory_2</span>
+                    <h3>2. Sản phẩm trong đơn hàng (@Model.DanhSachItem.Count món)</h3>
+                </div>
+                <div class="checkout-items-list">
+                    @foreach (var item in Model.DanhSachItem)
+                    {
+                        <div class="checkout-item-row">
+                            <div class="item-thumb">
+                                <img src="@item.AnhChinh" alt="@item.TenGiay" />
+                            </div>
+                            <div class="item-info">
+                                <h4 class="item-name">@item.TenGiay</h4>
+                                <div class="item-meta">
+                                    <span class="item-size">Size: @item.KichCo</span>
+                                    <span class="item-qty">Số lượng: @item.SoLuong</span>
+                                </div>
+                                <div class="item-unit-price">Đơn giá: @item.DonGia.ToString("N0") VNĐ</div>
+                            </div>
+                            <div class="item-total-col">
+                                <span class="item-line-total">@item.ThanhTien.ToString("N0") VNĐ</span>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Khung 4: Phương thức thanh toán -->
+            <div class="checkout-card">
+                <div class="card-header-icon">
+                    <span class="material-icons-outlined">payments</span>
+                    <h3>4. Phương thức thanh toán</h3>
+                </div>
+                <div class="payment-methods-list">
+                    <label class="payment-option active">
+                        <input type="radio" name="paymentMethod" value="COD" checked onchange="chonPhuongThucThanhToan(this)" />
+                        <div class="payment-content">
+                            <span class="material-icons-outlined payment-icon">local_shipping</span>
+                            <div class="payment-text">
+                                <strong>Thanh toán khi nhận hàng (COD)</strong>
+                                <span>Thanh toán tiền mặt cho shipper khi nhận hàng</span>
+                            </div>
+                        </div>
+                    </label>
+
+                    <label class="payment-option">
+                        <input type="radio" name="paymentMethod" value="BANKING" onchange="chonPhuongThucThanhToan(this)" />
+                        <div class="payment-content">
+                            <img src="https://upload.wikimedia.org/wikipedia/vi/thumb/9/9d/Vietcombank_Logo.svg/3840px-Vietcombank_Logo.svg.png?utm_source=vi.wikipedia.org&utm_campaign=index&utm_content=thumbnail" alt="Vietcombank" class="payment-logo-img" />
+                            <div class="payment-text">
+                                <strong>Chuyển khoản Ngân hàng (Vietcombank)</strong>
+                                <span>Quét mã QR tự động ở bước tiếp theo</span>
+                            </div>
+                        </div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="checkout-right-col">
+            <!-- Khung 3: Khuyến mãi - Ưu đãi từ bảng Giày trong CSDL -->
+            <div class="checkout-card">
+                <div class="card-header-icon">
+                    <span class="material-icons-outlined">card_giftcard</span>
+                    <h3>3. Khuyến mãi & Ưu đãi áp dụng</h3>
+                </div>
+                <div class="product-promo-list">
+                    @{
+                        var dsKhuyenMai = Model.DanhSachItem
+                            .Where(x => !string.IsNullOrWhiteSpace(x.KhuyenMaiUuDai))
+                            .ToList();
+                    }
+
+                    @if (dsKhuyenMai.Any())
+                    {
+                        @foreach (var p in dsKhuyenMai)
+                        {
+                            <div class="product-promo-item">
+                                <div class="promo-title">
+                                    <span class="material-icons-outlined">loyalty</span>
+                                    <strong>@p.TenGiay</strong>
+                                </div>
+                                <div class="promo-content-text">
+                                    @p.KhuyenMaiUuDai
+                                </div>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="no-promo-text">
+                            <span class="material-icons-outlined">info</span>
+                            <span>Không có chương trình quà tặng hoặc ưu đãi kèm theo cho các sản phẩm này.</span>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <!-- Khung 5: Tổng tiền -->
+            <div class="checkout-card summary-card">
+                <div class="card-header-icon">
+                    <span class="material-icons-outlined">receipt_long</span>
+                    <h3>5. Chi tiết thanh toán</h3>
+                </div>
+
+                <div class="summary-line">
+                    <span>Tổng tiền hàng:</span>
+                    <strong id="lblTienHang">@Model.TongTienHang.ToString("N0") VNĐ</strong>
+                </div>
+
+                <div class="summary-line">
+                    <span>Phí vận chuyển:</span>
+                    <strong id="lblPhiShip">@Model.PhiVanChuyen.ToString("N0") VNĐ</strong>
+                </div>
+
+                <div class="summary-divider"></div>
+
+                <div class="summary-line total-final">
+                    <span>TỔNG THANH TOÁN:</span>
+                    <strong id="lblTongCuoi">@Model.TongTienThanhToan.ToString("N0") VNĐ</strong>
+                </div>
+
+                <div class="vat-tag">(Đã bao gồm VAT & Phí vận chuyển)</div>
+
+                <button type="button" class="btn-confirm-order" onclick="thucHienDatHang()">
+                    <span class="material-icons-outlined">lock</span>
+                    XÁC NHẬN ĐẶT HÀNG
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/ThanhToan.js" asp-append-version="true"></script>
+}

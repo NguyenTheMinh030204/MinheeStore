@@ -1,0 +1,304 @@
+﻿@{
+    ViewData["Title"] = "Chính sách đổi trả hàng & Bảo hành";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    /* BREADCRUMB */
+    .info-breadcrumb-wrapper {
+        width: 100%;
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0 15px;
+    }
+
+    .info-breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+        margin-bottom: 25px;
+        font-size: 13.5px;
+    }
+
+        .info-breadcrumb .bc-home {
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+            .info-breadcrumb .bc-home:hover {
+                color: #3B82F6;
+            }
+
+        .info-breadcrumb .bc-separator {
+            color: #3B82F6;
+            font-weight: 600;
+        }
+
+        .info-breadcrumb .bc-current {
+            color: #021156;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+
+    /* CONTAINER */
+    .info-page-container {
+        max-width: 1100px;
+        margin: 0 auto 70px auto;
+        padding: 0 15px;
+    }
+
+    .info-content-card {
+        background: #FFFFFF;
+        border-radius: 16px;
+        border: 1px solid #E2E8F0;
+        padding: 35px 30px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .page-main-header {
+        text-align: center;
+        padding-bottom: 25px;
+        margin-bottom: 30px;
+        border-bottom: 1.5px solid #F1F5F9;
+    }
+
+        .page-main-header h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: #021156;
+            margin-bottom: 8px;
+        }
+
+        .page-main-header p {
+            font-size: 14px;
+            color: #64748B;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+    /* HIGHLIGHT STATS */
+    .policy-highlight-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 16px;
+        margin-bottom: 35px;
+    }
+
+    .policy-highlight-item {
+        background: #F8FAFC;
+        border: 1px solid #E2E8F0;
+        border-radius: 12px;
+        padding: 20px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+    }
+
+    .policy-highlight-icon {
+        width: 46px;
+        height: 46px;
+        border-radius: 10px;
+        background: #EFF6FF;
+        color: #2563EB;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+    }
+
+        .policy-highlight-icon .material-icons-outlined {
+            font-size: 26px;
+        }
+
+    .policy-highlight-text h4 {
+        margin: 0 0 3px 0;
+        font-size: 15px;
+        font-weight: 800;
+        color: #021156;
+    }
+
+    .policy-highlight-text p {
+        margin: 0;
+        font-size: 12.5px;
+        color: #64748B;
+    }
+
+    /* POLICY SECTIONS */
+    .policy-section {
+        margin-bottom: 28px;
+    }
+
+        .policy-section h2 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #021156;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+            .policy-section h2 .material-icons-outlined {
+                color: #3B82F6;
+                font-size: 22px;
+            }
+
+        .policy-section p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #334155;
+            margin-bottom: 10px;
+        }
+
+        .policy-section ul {
+            margin: 0 0 12px 0;
+            padding-left: 22px;
+            font-size: 13.5px;
+            color: #334155;
+            line-height: 1.7;
+        }
+
+        .policy-section li {
+            margin-bottom: 6px;
+        }
+
+    /* BOX LƯU Ý */
+    .policy-alert-box {
+        background: #FFFBEB;
+        border: 1px dashed #F59E0B;
+        border-radius: 12px;
+        padding: 18px 20px;
+        margin-top: 20px;
+    }
+
+        .policy-alert-box h4 {
+            margin: 0 0 8px 0;
+            font-size: 14.5px;
+            font-weight: 800;
+            color: #B45309;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .policy-alert-box p {
+            margin: 0;
+            font-size: 13px;
+            color: #78350F;
+            line-height: 1.6;
+        }
+
+  
+</style>
+
+<!-- Thanh Breadcrumb -->
+<div class="info-breadcrumb-wrapper">
+    <div class="info-breadcrumb">
+        <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
+        <span class="bc-separator">/</span>
+        <span class="bc-current">CHÍNH SÁCH ĐỔI TRẢ & BẢO HÀNH</span>
+    </div>
+</div>
+
+<!-- Nội dung chính -->
+<div class="info-page-container">
+    <div class="info-content-card">
+
+        <!-- Header -->
+        <div class="page-main-header">
+            <h1>CHÍNH SÁCH ĐỔI TRẢ HÀNG & BẢO HÀNH</h1>
+            <p>Minhee Sports cam kết mang đến trải nghiệm mua sắm an tâm tuyệt đối với chính sách hỗ trợ đổi size, đổi mẫu và bảo hành sản phẩm chuyên nghiệp, nhanh chóng.</p>
+        </div>
+
+        <!-- 3 Điểm nổi bật -->
+        <div class="policy-highlight-grid">
+            <div class="policy-highlight-item">
+                <div class="policy-highlight-icon">
+                    <span class="material-icons-outlined">published_with_changes</span>
+                </div>
+                <div class="policy-highlight-text">
+                    <h4>Đổi hàng 30 ngày</h4>
+                    <p>Hỗ trợ đổi size/mẫu trong 30 ngày</p>
+                </div>
+            </div>
+
+            <div class="policy-highlight-item">
+                <div class="policy-highlight-icon">
+                    <span class="material-icons-outlined">verified</span>
+                </div>
+                <div class="policy-highlight-text">
+                    <h4>Bảo hành 6 tháng</h4>
+                    <p>Bảo hành keo, đế và chỉ may</p>
+                </div>
+            </div>
+
+            <div class="policy-highlight-item">
+                <div class="policy-highlight-icon">
+                    <span class="material-icons-outlined">local_shipping</span>
+                </div>
+                <div class="policy-highlight-text">
+                    <h4>Hỗ trợ tận nơi</h4>
+                    <p>Shipper giao đôi mới & thu hồi tận nhà</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 1. Điều kiện đổi trả -->
+        <div class="policy-section">
+            <h2>
+                <span class="material-icons-outlined">fact_check</span>
+                1. Điều kiện áp dụng đổi trả
+            </h2>
+            <p>Khách hàng được hỗ trợ đổi size hoặc đổi sang mẫu khác khi thỏa mãn các điều kiện sau:</p>
+            <ul>
+                <li>Sản phẩm còn nguyên tem mác, hộp đựng nguyên vẹn, chưa qua sử dụng hay giặt tẩy.</li>
+                <li>Đế giày không bị bẩn, trầy xước hoặc có dấu hiệu mang vận động ngoài trời.</li>
+                <li>Thời gian yêu cầu đổi trả không quá <strong>30 ngày</strong> kể từ ngày nhận hàng thành công.</li>
+                <li>Sản phẩm phát sinh lỗi từ nhà sản xuất (bung keo, rách vải, gãy phom) khi vừa nhận hàng.</li>
+            </ul>
+        </div>
+
+        <!-- 2. Quy trình đổi hàng -->
+        <div class="policy-section">
+            <h2>
+                <span class="material-icons-outlined">autorenew</span>
+                2. Quy trình đổi hàng tận nơi
+            </h2>
+            <ul>
+                <li><strong>Bước 1:</strong> Liên hệ hotline/zalo CSKH hoặc nhắn tin qua trang liên hệ để cung cấp mã đơn hàng <code>#DHxxx</code> và size cần đổi.</li>
+                <li><strong>Bước 2:</strong> Minhee Sports đóng gói đôi giày mới và gửi shipper giao đến tận địa chỉ của bạn.</li>
+                <li><strong>Bước 3:</strong> Khi shipper tới, bạn chỉ cần đưa lại đôi giày cũ (kèm hộp) cho shipper và nhận ngay đôi mới mà không cần phải mang ra bưu cục.</li>
+            </ul>
+        </div>
+
+        <!-- 3. Chính sách bảo hành -->
+        <div class="policy-section">
+            <h2>
+                <span class="material-icons-outlined">shield</span>
+                3. Chính sách bảo hành sản phẩm (6 tháng)
+            </h2>
+            <p>Tất cả các sản phẩm giày thể thao tại Minhee Sports được bảo hành chính hãng trong vòng <strong>06 tháng</strong>:</p>
+            <ul>
+                <li><strong>Phạm vi bảo hành:</strong> Lỗi bong tróc keo đế, bung đường chỉ may chịu lực, đứt dây xỏ hoặc lỗi bung khóa tiện ích do lỗi gia công.</li>
+                <li><strong>Trường hợp từ chối bảo hành:</strong> Giày bị rách/hỏng do vật sắc nhọn tác động, ngâm hóa chất tẩy rửa mạnh, hoặc hao mòn tự nhiên do ma sát thi đấu cường độ cao.</li>
+            </ul>
+        </div>
+
+        <!-- Box Lưu ý -->
+        <div class="policy-alert-box">
+            <h4>
+                <span class="material-icons-outlined">info</span>
+                Lưu ý về chi phí vận chuyển đổi hàng:
+            </h4>
+            <p>
+                - <strong>Miễn phí 100% phí vận chuyển:</strong> Áp dụng nếu lỗi thuộc về shop (gửi sai size, sai mẫu hoặc sản phẩm có lỗi sản xuất).<br />
+                - Khách hàng có nhu cầu đổi size theo sở thích cá nhân chỉ cần hỗ trợ phí ship 1 chiều chuyển hoàn (đồng giá 30.000 VNĐ).
+            </p>
+        </div>
+
+    </div>
+</div>
