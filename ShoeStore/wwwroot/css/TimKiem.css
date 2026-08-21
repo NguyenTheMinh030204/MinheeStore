@@ -1,18 +1,17 @@
-﻿/* Layout chung trang tìm kiếm - dãn khoảng cách trên dưới */
-/* 1. Tăng khoảng cách phía trên của toàn bộ khung nội dung trang tìm kiếm */
+﻿
+
 .search-page-container {
-    padding-top: 30px; /* Tăng từ 15px lên 30px (hoặc 35px) để đẩy cách xa menu */
+    padding-top: 30px; 
     padding-bottom: 60px;
 }
 
-/* 2. Tinh chỉnh riêng khoảng cách phía trên của thanh Breadcrumb */
 .breadcrumb-bar {
     display: flex;
     align-items: center;
     gap: 10px;
     font-size: 14.5px;
     color: var(--bg-gray);
-    margin-top: 10px; /* Thêm khoảng lùi top để đẩy chữ xuống xa hơn nữa */
+    margin-top: 10px; 
     margin-bottom: 22px;
 }
 
@@ -37,7 +36,6 @@
         font-weight: 500;
     }
 
-/* Khối Tiêu đề & Thông số - Đặt trong Card nền trắng thoáng đãng */
 .search-title-header {
     background-color: var(--bg-white);
     padding: 24px 28px;
@@ -53,7 +51,7 @@
         color: var(--primary-dark);
         text-transform: uppercase;
         letter-spacing: 0.8px;
-        margin-bottom: 10px; /* Dãn cách với dòng thông số bên dưới */
+        margin-bottom: 10px; 
         line-height: 1.3;
     }
 
@@ -68,7 +66,6 @@
             font-weight: 700;
         }
 
-/* Phân trang - Căn lề & Bo góc đẹp mắt */
 .pagination {
     display: flex;
     gap: 8px;
@@ -106,7 +103,6 @@
         box-shadow: 0 4px 10px rgba(2, 17, 86, 0.2);
     }
 
-/* Màn hình trống khi không tìm thấy kết quả */
 .no-data-box {
     text-align: center;
     padding: 70px 20px;
@@ -152,3 +148,4 @@
         box-shadow: 0 4px 12px rgba(32, 62, 219, 0.25);
         transform: translateY(-2px);
     }
+

@@ -16,7 +16,6 @@ namespace ShoeStore.Controllers
             _db = db;
         }
 
-        // GET: /Giay/ChiTiet?id=G03022004-001
         [HttpGet]
         public async Task<IActionResult> ChiTiet(string id)
         {
@@ -25,11 +24,10 @@ namespace ShoeStore.Controllers
                 return RedirectToAction("TrangChu", "TrangChu");
             }
 
-            // Query Chi tiết Giày + Join DanhMuc + Join Thư viện Ảnh + Join Biến thể Size/Tồn kho
             var giay = await _db.Giay
                 .Include(g => g.DanhMuc)
-                .Include(g => g.AnhGiay)       // Bảng AnhGiay (Ảnh phụ)
-                .Include(g => g.BienTheGiay)   // Bảng BienTheGiay (KichCo, SoLuongTon)
+                .Include(g => g.AnhGiay)       
+                .Include(g => g.BienTheGiay)   
                 .FirstOrDefaultAsync(g => g.MaGiay == id);
 
             if (giay == null)
@@ -37,7 +35,6 @@ namespace ShoeStore.Controllers
                 return NotFound();
             }
 
-            // Lấy 4 sản phẩm liên quan cùng Danh mục (trừ sản phẩm hiện tại)
             var dsLienQuan = await _db.Giay
                 .Where(g => g.MaDanhMuc == giay.MaDanhMuc && g.MaGiay != giay.MaGiay)
                 .Take(4)

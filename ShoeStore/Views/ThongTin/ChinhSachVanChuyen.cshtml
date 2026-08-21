@@ -4,7 +4,6 @@
 }
 
 <style>
-    /* BREADCRUMB */
     .info-breadcrumb-wrapper {
         width: 100%;
         max-width: 1100px;
@@ -43,7 +42,6 @@
             letter-spacing: 0.3px;
         }
 
-    /* CONTAINER */
     .info-page-container {
         max-width: 1100px;
         margin: 0 auto 70px auto;
@@ -70,6 +68,7 @@
             font-weight: 900;
             color: #021156;
             margin-bottom: 8px;
+            line-height: 1.35;
         }
 
         .page-main-header p {
@@ -80,7 +79,6 @@
             line-height: 1.6;
         }
 
-    /* SHIPPING TIME & COST GRID */
     .shipping-timeline-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -139,7 +137,6 @@
         line-height: 1.5;
     }
 
-    /* SECTIONS */
     .shipping-section {
         margin-bottom: 28px;
     }
@@ -152,11 +149,13 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 12px;
+            line-height: 1.4;
         }
 
             .shipping-section h2 .material-icons-outlined {
                 color: #3B82F6;
                 font-size: 22px;
+                flex-shrink: 0;
             }
 
         .shipping-section p {
@@ -178,7 +177,6 @@
             margin-bottom: 6px;
         }
 
-    /* PARTNER LOGOS */
     .partner-banner {
         background: #FAFAFA;
         border: 1px solid #E2E8F0;
@@ -199,7 +197,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        gap: 20px;
+        gap: 12px;
         flex-wrap: wrap;
         font-size: 13.5px;
         font-weight: 700;
@@ -213,10 +211,95 @@
         padding: 6px 14px;
     }
 
-   
+    @@media (max-width: 992px) {
+        .info-content-card {
+            padding: 28px 22px;
+        }
+
+        .shipping-timeline-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .info-page-container {
+            margin-bottom: 45px;
+        }
+
+        .info-content-card {
+            padding: 22px 16px;
+            border-radius: 12px;
+        }
+
+        .page-main-header {
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+        }
+
+            .page-main-header h1 {
+                font-size: 20px;
+            }
+
+            .page-main-header p {
+                font-size: 13px;
+            }
+
+        .shipping-timeline-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .shipping-box {
+            padding: 18px 14px;
+        }
+
+        .shipping-section h2 {
+            font-size: 15.5px;
+            align-items: flex-start;
+        }
+
+        .shipping-section p,
+        .shipping-section ul {
+            font-size: 13px;
+        }
+
+        .shipping-section ul {
+            padding-left: 18px;
+        }
+
+        .partner-list {
+            gap: 8px;
+        }
+
+        .partner-tag {
+            font-size: 12.5px;
+            padding: 5px 10px;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .info-breadcrumb {
+            margin-top: 10px;
+            margin-bottom: 16px;
+            font-size: 12.5px;
+        }
+
+        .page-main-header h1 {
+            font-size: 18px;
+        }
+
+        .partner-banner {
+            padding: 16px 12px;
+        }
+
+            .partner-banner h4 {
+                font-size: 13px;
+            }
+    }
 </style>
 
-<!-- Thanh Breadcrumb -->
 <div class="info-breadcrumb-wrapper">
     <div class="info-breadcrumb">
         <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
@@ -225,7 +308,6 @@
     </div>
 </div>
 
-<!-- Nội dung Chính sách vận chuyển -->
 <div class="info-page-container">
     <div class="info-content-card">
 
@@ -234,7 +316,6 @@
             <p>Minhee Sports hợp tác cùng các đơn vị chuyển phát hàng đầu nhằm đảm bảo giày được đóng gói 2 lớp hộp cẩn thận và giao tận tay bạn nhanh chóng nhất.</p>
         </div>
 
-        <!-- 3 Khu vực giao hàng -->
         <div class="shipping-timeline-grid">
             <div class="shipping-box">
                 <div class="shipping-box-icon">
@@ -264,7 +345,6 @@
             </div>
         </div>
 
-        <!-- 1. Biểu phí vận chuyển -->
         <div class="shipping-section">
             <h2>
                 <span class="material-icons-outlined">payments</span>
@@ -276,7 +356,6 @@
             </ul>
         </div>
 
-        <!-- 2. Quy trình xử lý và giao hàng -->
         <div class="shipping-section">
             <h2>
                 <span class="material-icons-outlined">local_shipping</span>
@@ -289,7 +368,6 @@
             </ul>
         </div>
 
-        <!-- Đối tác giao hàng -->
         <div class="partner-banner">
             <h4>ĐỐI TÁC VẬN CHUYỂN CHÍNH THỨC CỦA MINHEE SPORTS</h4>
             <div class="partner-list">

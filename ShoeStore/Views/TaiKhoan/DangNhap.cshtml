@@ -8,16 +8,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng nhập - Minhee Sports</title>
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <!-- File CSS Auth -->
+    
+    <link href="https:
+    
     <link rel="stylesheet" href="/css/TaiKhoan.css">
 </head>
 <body class="auth-page">
 
     <div class="auth-container">
-        
-        <!-- Vòng tròn Logo Trắng -->
+
         <div class="logo-wrapper">
             <div class="logo-circle">
                 <img src="/images/logo.png" alt="Minhee Shop Logo">
@@ -26,7 +25,6 @@
 
         <h2 class="auth-title">ĐĂNG NHẬP</h2>
 
-        <!-- Thông báo Đổi mật khẩu thành công -->
         @if (TempData["ThongBaoSuccess"] != null)
         {
             <div style="background: rgba(16, 185, 129, 0.2); border: 1px solid #10B981; color: #10B981; padding: 10px 16px; border-radius: 20px; font-size: 13px; text-align: center; margin-bottom: 15px;">
@@ -34,13 +32,11 @@
             </div>
         }
 
-        <!-- Thông báo lỗi đăng nhập nếu có -->
         @if (ViewBag.Loi != null)
         {
             <div class="alert-danger-box">@ViewBag.Loi</div>
         }
 
-        <!-- Thêm autocomplete="off" để ngăn trình duyệt tự điền tài khoản cũ -->
         <form action="/TaiKhoan/DangNhap" method="post" autocomplete="off">
             @Html.AntiForgeryToken()
 
@@ -54,13 +50,12 @@
             <div class="form-group">
                 <label for="password">Mật khẩu</label>
                 <div class="input-wrapper">
-                    <!-- Tuyệt đối không để value ở ô password và dùng autocomplete="current-password" hoặc "new-password" -->
+                    
                     <input type="password" id="password" name="MatKhau" class="form-control" autocomplete="new-password" required placeholder="Nhập mật khẩu...">
                     <span class="material-icons-outlined toggle-password" data-target="password">visibility</span>
                 </div>
             </div>
 
-            <!-- Nút Quên mật khẩu nằm góc phải -->
             <div style="text-align: right; margin-top: -8px; margin-bottom: 18px;">
                 <a href="/TaiKhoan/QuenMatKhau" style="color: var(--secondary-gold); text-decoration: none; font-size: 13px; font-weight: 600;">Quên mật khẩu?</a>
             </div>
@@ -75,7 +70,6 @@
 
     </div>
 
-    <!-- File JS Auth -->
     <script src="/js/TaiKhoan.js"></script>
 </body>
 </html>

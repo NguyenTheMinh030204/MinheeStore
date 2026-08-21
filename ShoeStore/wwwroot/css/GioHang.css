@@ -1,10 +1,5 @@
-﻿/* ====================================================
-   MINHEE SPORTS - GIO HANG GIAO DIỆN CHUẨN CARD
-==================================================== */
+﻿
 
-/* ==========================================
-   1. BREADCRUMB CĂN THEO BANNER
-========================================== */
 .cart-breadcrumb-wrapper {
     width: 100%;
     max-width: 1200px;
@@ -45,18 +40,12 @@
         letter-spacing: 0.3px;
     }
 
-/* ==========================================
-   2. KHUNG GIỎ HÀNG CHÍNH
-========================================== */
 .cart-container-custom {
     max-width: 860px;
     margin: 0 auto 50px auto;
     padding: 0 15px;
 }
 
-/* ==========================================
-   3. DANH SÁCH CARD SẢN PHẨM
-========================================== */
 .cart-cards-list {
     display: flex;
     flex-direction: column;
@@ -75,7 +64,6 @@
     transition: all 0.25s ease;
 }
 
-/* Checkbox */
 .card-checkbox-wrap {
     display: flex;
     align-items: center;
@@ -88,7 +76,6 @@
     cursor: pointer;
 }
 
-/* Khung ảnh giày */
 .card-thumb-wrap {
     width: 120px;
     height: 100px;
@@ -107,7 +94,6 @@
     object-fit: contain;
 }
 
-/* Thông tin chi tiết */
 .card-info-wrap {
     flex: 1;
     display: flex;
@@ -134,7 +120,6 @@
         color: #3B82F6;
     }
 
-/* Nút xóa thùng rác */
 .btn-trash-delete {
     background: transparent;
     border: none;
@@ -157,7 +142,6 @@
         background-color: #FEE2E2;
     }
 
-/* Size và đơn giá */
 .card-meta-line {
     display: flex;
     align-items: center;
@@ -175,7 +159,6 @@
     font-weight: 700;
 }
 
-/* Bộ nút số lượng */
 .card-qty-control {
     display: inline-flex;
     align-items: center;
@@ -215,23 +198,18 @@
     background: transparent;
 }
 
-/* Thành tiền mỗi dòng */
 .card-item-total-price {
     font-size: 16px;
     font-weight: 800;
     color: #F59E0B;
 }
 
-/* Đường phân cách */
 .cart-section-divider {
     height: 1.5px;
     background-color: #CBD5E1;
     margin: 30px 0 20px 0;
 }
 
-/* ==========================================
-   4. TÓM TẮT & THANH TOÁN
-========================================== */
 .cart-bottom-summary {
     background: #FFFFFF;
     border-radius: 12px;
@@ -266,7 +244,6 @@
     font-size: 15px;
 }
 
-/* Nút thanh toán */
 .btn-submit-checkout {
     margin-top: 10px;
     width: 220px;
@@ -289,9 +266,6 @@
         box-shadow: 0 4px 12px rgba(2, 17, 86, 0.2);
     }
 
-/* ==========================================
-   5. TRẠNG THÁI GIỎ HÀNG TRỐNG
-========================================== */
 .cart-empty-state {
     display: flex;
     flex-direction: column;
@@ -337,3 +311,4 @@
     .btn-continue-shopping:hover {
         background: #1D4ED8;
     }
+

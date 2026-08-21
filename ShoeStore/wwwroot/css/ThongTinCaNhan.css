@@ -1,6 +1,4 @@
-﻿/* ==========================================
-   BIẾN HỆ THỐNG & RESET CSS
-========================================== */
+﻿
 :root {
     --primary-dark: #021156;
     --primary-blue: #203EDB;
@@ -16,9 +14,6 @@
     font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
 }
 
-/* ==========================================
-   BREADCRUMB (THANH TIẾN TRÌNH TRONG SUỐT)
-========================================== */
 .site-breadcrumb,
 .custom-breadcrumb {
     display: flex;
@@ -38,7 +33,6 @@
         align-items: center;
     }
 
-    /* Link Trang chủ màu xám nhạt */
     .site-breadcrumb a,
     .custom-breadcrumb a {
         color: #64748B;
@@ -52,7 +46,6 @@
             color: var(--primary-blue);
         }
 
-    /* Dấu gạch chéo phân cách */
     .site-breadcrumb .separator,
     .custom-breadcrumb li + li::before {
         content: "/";
@@ -61,7 +54,6 @@
         font-weight: 400;
     }
 
-    /* Trang hiện tại IN HOA + CHỮ ĐẬM MÀU XANH #021156 */
     .site-breadcrumb .current-page,
     .site-breadcrumb .active-page,
     .custom-breadcrumb span,
@@ -72,9 +64,6 @@
         text-transform: uppercase;
     }
 
-/* ==========================================
-   CARD THÔNG TIN CÁ NHÂN
-========================================== */
 .profile-card {
     max-width: 680px;
     margin: 10px auto 30px;
@@ -94,9 +83,6 @@
     letter-spacing: 0.5px;
 }
 
-/* ==========================================
-   AVATAR WRAPPER & ICON CAMERA
-========================================== */
 .profile-avatar-wrapper {
     text-align: center;
     margin-bottom: 25px;
@@ -115,9 +101,8 @@
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
 }
 
-/* Icon Nút Sửa Ảnh (Mặc định ẩn, khi bấm SỬA THÔNG TIN sẽ mở flex) */
 .avatar-edit-badge {
-    display: none; /* JS sẽ bật style.display = 'flex' khi bấm nút Sửa */
+    display: none; 
     position: absolute;
     bottom: 2px;
     right: 2px;
@@ -143,9 +128,6 @@
         background-color: var(--primary-blue);
     }
 
-/* ==========================================
-   FORM GROUPS & INPUTS
-========================================== */
 .profile-group {
     margin-bottom: 18px;
 }
@@ -184,9 +166,6 @@
         box-shadow: 0 0 0 3px rgba(32, 62, 219, 0.12);
     }
 
-/* ==========================================
-   NÚT HÀNH ĐỘNG (SỬA / XÁC NHẬN)
-========================================== */
 .btn-profile-action {
     width: 100%;
     max-width: 260px;
@@ -225,9 +204,6 @@
         box-shadow: 0 6px 16px rgba(252, 185, 13, 0.35);
     }
 
-/* ==========================================
-   BOX THÔNG BÁO THÀNH CÔNG
-========================================== */
 .alert-success-box {
     background: rgba(16, 185, 129, 0.15);
     border: 1px solid #10B981;
@@ -238,3 +214,4 @@
     text-align: center;
     margin-bottom: 20px;
 }
+

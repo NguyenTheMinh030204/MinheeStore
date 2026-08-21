@@ -7,15 +7,14 @@ namespace ShoeStore.Models
     public class BienTheGiay
     {
         [Key]
-        public int MaBienThe { get; set; }        // Mã biến thể tự tăng (IDENTITY)
+        public int MaBienThe { get; set; }        
 
-        public string MaGiay { get; set; }        // Khớp với MaGiay dạng VARCHAR(30) (Ví dụ: 'G03022004-001')
+        public string MaGiay { get; set; }        
 
-        public int KichCo { get; set; }           // Size giày (Ví dụ: 28, 29, 30)
+        public int KichCo { get; set; }           
 
-        public int SoLuongTon { get; set; }       // Số lượng hàng còn trong kho
+        public int SoLuongTon { get; set; }       
 
-        // Khóa ngoại liên kết ngược lại bảng Giay
         [ForeignKey("MaGiay")]
         public virtual Giay? Giay { get; set; }
     }

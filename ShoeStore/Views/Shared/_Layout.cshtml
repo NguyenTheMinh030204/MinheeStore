@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewData["Title"] - Minhee Sports</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="~/images/logo.png" asp-append-version="true" />
+    <link rel="shortcut icon" type="image/png" href="~/images/logo.png" asp-append-version="true" />
+    <link rel="apple-touch-icon" href="~/images/logo.png" asp-append-version="true" />
+
     <!-- Google Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <!-- File CSS dùng chung -->
@@ -15,6 +21,11 @@
     <!-- Header Section -->
     <header class="header">
         <div class="header-top container">
+            <!-- Nút 3 gạch Hamburger cho Mobile -->
+            <button type="button" class="mobile-menu-toggle" id="mobileMenuBtn" aria-label="Toggle Menu">
+                <span class="material-icons-outlined">menu</span>
+            </button>
+
             <!-- Logo -->
             <div class="logo">
                 <a href="/TrangChu/TrangChu">
@@ -88,7 +99,7 @@
         </div>
 
         <!-- Main Navigation Menu -->
-        <nav class="main-nav">
+        <nav class="main-nav" id="mainNav">
             <div class="container nav-list">
                 <a href="/TrangChu/TrangChu" class="nav-item">Trang chủ</a>
                 <a href="/DanhMuc/DanhSach?id=HotSale" class="nav-item highlight">
@@ -102,7 +113,7 @@
         </nav>
     </header>
 
-    <!-- Nội dung thay đổi của từng View sẽ nhúng vào đây -->
+    <!-- Nội dung thay đổi của từng View -->
     <main class="main-content container">
         @RenderBody()
     </main>
@@ -148,12 +159,9 @@
         </div>
     </footer>
 
-    
     <!-- POPUP QUICK ADD TO CART & MUA NGAY DÙNG CHUNG -->
     <div id="quickAddToCartModal" class="quick-cart-modal-overlay" onclick="closeQuickCartModal()" style="display: none;">
         <div class="quick-cart-modal-box" onclick="event.stopPropagation();">
-        
-            <!-- Header -->
             <div class="quick-cart-header">
                 <div class="quick-cart-title-wrap">
                     <span class="material-icons-outlined header-icon">tune</span>
@@ -162,7 +170,6 @@
                 <button type="button" class="quick-cart-close" onclick="closeQuickCartModal()">&times;</button>
             </div>
 
-            <!-- Body -->
             <div class="quick-cart-body">
                 <div class="quick-cart-product-summary">
                     <div class="quick-cart-img-wrap">
@@ -174,7 +181,6 @@
                     </div>
                 </div>
 
-                <!-- Chọn Size (Đã thêm link Hướng dẫn chọn size) -->
                 <div class="quick-cart-section">
                     <div class="section-label-row">
                         <label class="quick-cart-label">Chọn Size (33 - 41):</label>
@@ -185,7 +191,6 @@
                     <div id="quickCartSizes" class="quick-cart-size-grid"></div>
                 </div>
 
-                <!-- Chọn Số Lượng -->
                 <div class="quick-cart-section">
                     <label class="quick-cart-label">Số lượng:</label>
                     <div class="quick-cart-qty-wrapper">
@@ -200,7 +205,6 @@
                 </div>
             </div>
 
-            <!-- Footer: 2 NÚT THÊM VÀO GIỎ & MUA NGAY -->
             <div class="quick-cart-footer">
                 <button type="button" class="btn-quick-add" onclick="confirmAddToCart()">
                     <span class="material-icons-outlined">add_shopping_cart</span>
@@ -211,7 +215,6 @@
                     <span>MUA NGAY</span>
                 </button>
             </div>
-
         </div>
     </div>
 
@@ -229,6 +232,7 @@
             </div>
         </div>
     </div>
+
     <!-- File JS dùng chung -->
     <script src="~/js/_Layout.js" asp-append-version="true"></script>
     @RenderSection("Scripts", required: false)

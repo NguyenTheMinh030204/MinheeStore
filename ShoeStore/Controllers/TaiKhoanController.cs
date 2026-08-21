@@ -37,14 +37,11 @@ namespace ShoeStore.Controllers
             _cache = cache;
         }
 
-        // ==========================================
-        // 1. TRANG THÔNG TIN CÁ NHÂN (PROFILE)
-        // ==========================================
         [Authorize]
         [HttpGet]
         public IActionResult ThongTinCaNhan()
         {
-            // Lấy Email người dùng đã lưu trong JWT Claims
+            
             string? email = User.FindFirst(ClaimTypes.Email)?.Value;
             var user = _db.NguoiDung.FirstOrDefault(u => u.Email == email);
 
@@ -53,10 +50,9 @@ namespace ShoeStore.Controllers
                 return RedirectToAction("DangNhap");
             }
 
-            return View(user); // Trả về Views/TaiKhoan/ThongTinCaNhan.cshtml
+            return View(user); 
         }
 
-        // API CẬP NHẬT THÔNG TIN CÁ NHÂN
         [Authorize]
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -70,13 +66,11 @@ namespace ShoeStore.Controllers
                 return RedirectToAction("DangNhap");
             }
 
-            // Cập nhật thông tin được phép sửa
             user.HoTen = model.HoTen;
             user.SoDienThoai = model.SoDienThoai;
             user.NgaySinh = model.NgaySinh;
             user.DiaChi = model.DiaChi;
 
-            // Xử lý upload Avatar mới (nếu chọn)
             if (AnhDaiDienMoi != null && AnhDaiDienMoi.Length > 0)
             {
                 string uploadsFolder = Path.Combine(_env.WebRootPath, "images", "avatars");
@@ -103,13 +97,10 @@ namespace ShoeStore.Controllers
             return RedirectToAction("ThongTinCaNhan");
         }
 
-        // ==========================================
-        // 2. ĐĂNG NHẬP (DANG NHAP)
-        // ==========================================
         [HttpGet]
         public IActionResult DangNhap()
         {
-            // Nếu người dùng đã đăng nhập rồi thì chuyển thẳng về Trang chủ
+            
             if (User.Identity != null && User.Identity.IsAuthenticated)
             {
                 return RedirectToAction("TrangChu", "TrangChu");
@@ -121,7 +112,7 @@ namespace ShoeStore.Controllers
         [ValidateAntiForgeryToken]
         public IActionResult DangNhap(string Email, string MatKhau)
         {
-            // Giữ lại Email để hiển thị lại trên View nếu có lỗi
+            
             ViewBag.Email = Email;
 
             if (string.IsNullOrWhiteSpace(Email) || string.IsNullOrWhiteSpace(MatKhau))
@@ -130,14 +121,12 @@ namespace ShoeStore.Controllers
                 return View();
             }
 
-            // Kiểm tra thông tin tài khoản trong CSDL SQL Server
             var user = _db.NguoiDung.FirstOrDefault(u => u.Email == Email && u.MatKhau == MatKhau);
             if (user != null)
             {
-                // 1. Sinh JWT Token bằng Secret Key
+                
                 string token = GenerateJwtToken(user);
 
-                // 2. Lưu JWT Token vào HttpOnly Cookie an toàn
                 Response.Cookies.Append("AuthToken", token, new CookieOptions
                 {
                     HttpOnly = true,
@@ -153,16 +142,12 @@ namespace ShoeStore.Controllers
             return View();
         }
 
-        // ==========================================
-        // 3. ĐĂNG KÝ (DANG KY) & AJAX GỬI OTP THẬT
-        // ==========================================
         [HttpGet]
         public IActionResult DangKy()
         {
             return View();
         }
 
-        // API AJAX GỬI OTP VỀ EMAIL THẬT (TRANG ĐĂNG KÝ)
         [HttpPost]
         public async Task<IActionResult> GuiOTP([FromQuery] string email)
         {
@@ -179,14 +164,12 @@ namespace ShoeStore.Controllers
 
             try
             {
-                // 1. Sinh ngẫu nhiên mã OTP 6 chữ số
+                
                 string otpCode = Random.Shared.Next(100000, 999999).ToString();
 
-                // 2. Lưu OTP vào IMemoryCache trong vòng 5 phút (Key = OTP_email)
                 string cacheKey = $"OTP_{email.Trim().ToLower()}";
                 _cache.Set(cacheKey, otpCode, TimeSpan.FromMinutes(5));
 
-                // 3. Gửi Email thật bằng SmtpClient
                 await _emailService.SendOtpEmailAsync(email, otpCode);
 
                 return Json(new { success = true, message = "Mã OTP đã được gửi về Email của bạn!" });
@@ -197,7 +180,6 @@ namespace ShoeStore.Controllers
             }
         }
 
-        // API AJAX Check nhanh OTP trực tiếp khi vừa gõ xong 6 số (Dùng chung cho Đăng ký & Quên mật khẩu)
         [HttpPost]
         public IActionResult KiemTraOTP([FromQuery] string email, [FromQuery] string otpCode)
         {
@@ -210,7 +192,6 @@ namespace ShoeStore.Controllers
             string keyReg = $"OTP_{cleanEmail}";
             string keyReset = $"OTP_RESET_{cleanEmail}";
 
-            // Lấy OTP đang lưu trong MemoryCache ra so sánh (Hỗ trợ cả Đăng ký và Quên mật khẩu)
             if ((_cache.TryGetValue(keyReg, out string? validOtpReg) && validOtpReg == otpCode) ||
                 (_cache.TryGetValue(keyReset, out string? validOtpReset) && validOtpReset == otpCode))
             {
@@ -227,14 +208,12 @@ namespace ShoeStore.Controllers
             ViewBag.XacNhanMatKhau = XacNhanMatKhau;
             ViewBag.OtpCode = OtpCode;
 
-            // 1. Kiểm tra mật khẩu xác nhận
             if (model.MatKhau != XacNhanMatKhau)
             {
                 ViewBag.Loi = "Mật khẩu xác nhận không khớp!";
                 return View(model);
             }
 
-            // 2. Xác thực mã OTP từ Memory Cache
             string cacheKey = $"OTP_{model.Email?.Trim().ToLower()}";
             if (!_cache.TryGetValue(cacheKey, out string? validOtp) || validOtp != OtpCode)
             {
@@ -242,7 +221,6 @@ namespace ShoeStore.Controllers
                 return View(model);
             }
 
-            // 3. Kiểm tra Email đã tồn tại chưa
             bool isExist = _db.NguoiDung.Any(u => u.Email == model.Email);
             if (isExist)
             {
@@ -250,9 +228,6 @@ namespace ShoeStore.Controllers
                 return View(model);
             }
 
-            // --------------------------------------------------
-            // A. TỰ ĐỘNG SINH MÃ NGƯỜI DÙNG: ND03022004_xxx
-            // --------------------------------------------------
             string prefix = "ND03022004_";
 
             var maxUserCode = _db.NguoiDung
@@ -274,9 +249,6 @@ namespace ShoeStore.Controllers
 
             model.MaNguoiDung = $"{prefix}{nextNumber:D3}";
 
-            // --------------------------------------------------
-            // B. GÁN VAI TRÒ MẶC ĐỊNH & XỬ LÝ UPLOAD ANH AVATAR
-            // --------------------------------------------------
             model.VaiTro = "Khách hàng";
 
             if (AnhDaiDien != null && AnhDaiDien.Length > 0)
@@ -298,9 +270,6 @@ namespace ShoeStore.Controllers
                 model.AnhDaiDien = "/images/avatars/" + uniqueFileName;
             }
 
-            // --------------------------------------------------
-            // C. LƯU VÀO CSDL VÀ XÓA OTP CACHE
-            // --------------------------------------------------
             _db.NguoiDung.Add(model);
             await _db.SaveChangesAsync();
 
@@ -309,9 +278,6 @@ namespace ShoeStore.Controllers
             return RedirectToAction("DangNhap");
         }
 
-        // ==========================================
-        // 4. ĐĂNG XUẤT (LOGOUT)
-        // ==========================================
         [HttpGet]
         public IActionResult DangXuat()
         {
@@ -319,16 +285,12 @@ namespace ShoeStore.Controllers
             return RedirectToAction("DangNhap");
         }
 
-        // ==========================================
-        // 5. QUÊN MẬT KHẨU (FORGOT PASSWORD)
-        // ==========================================
         [HttpGet]
         public IActionResult QuenMatKhau()
         {
             return View();
         }
 
-        // API AJAX GỬI OTP QUÊN MẬT KHẨU
         [HttpPost]
         public async Task<IActionResult> GuiOTPQuenMatKhau([FromQuery] string email)
         {
@@ -359,7 +321,6 @@ namespace ShoeStore.Controllers
             }
         }
 
-        // XỬ LÝ ĐỔI MẬT KHẨU MỚI
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> QuenMatKhau(string Email, string OtpCode, string MatKhauMoi, string XacNhanMatKhau)
@@ -397,9 +358,6 @@ namespace ShoeStore.Controllers
             return RedirectToAction("DangNhap");
         }
 
-        // ==========================================
-        // HÀM BỔ TRỢ: SINH JWT TOKEN
-        // ==========================================
         private string GenerateJwtToken(NguoiDung user)
         {
             var jwtSettings = _config.GetSection("Jwt");

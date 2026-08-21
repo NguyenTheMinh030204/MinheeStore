@@ -15,7 +15,6 @@
     var selectedPrices = ViewBag.SelectedPrices as List<string> ?? new List<string>();
     var selectedSizes = ViewBag.SelectedSizes as List<int> ?? new List<int>();
 
-    // Xây dựng Query String sạch sẽ
     string baseQuery = !string.IsNullOrEmpty(currentMaDanhMuc) ? $"id={currentMaDanhMuc}" : "all=true";
     string priceQueries = string.Join("", selectedPrices.Select(p => $"&price={p}"));
     string sizeQueries = string.Join("", selectedSizes.Select(s => $"&size={s}"));
@@ -28,7 +27,6 @@
     <link rel="stylesheet" href="/css/DanhMuc.css">
 }
 
-<!-- Hero Banner Section -->
 <section class="hero-banner">
     <div class="banner-slider">
         <div class="slide active">
@@ -44,7 +42,6 @@
     </div>
 </section>
 
-<!-- Top Bar: Breadcrumb & Sort Dropdown -->
 <div class="page-top-bar">
     <nav class="breadcrumb">
         <a href="/TrangChu/TrangChu">Trang chủ</a>
@@ -66,7 +63,6 @@
 
 <div class="hotsale-layout-grid">
 
-    <!-- Sidebar Bộ Lọc -->
     <aside class="filter-sidebar">
         <form action="/DanhMuc/DanhSach" method="get">
             @if (!string.IsNullOrEmpty(currentMaDanhMuc))
@@ -74,8 +70,7 @@
                 <input type="hidden" name="id" value="@currentMaDanhMuc" />
             }
             <input type="hidden" name="sort" value="@currentSort" />
-            
-            <!-- Lọc Giá -->
+
             <div class="filter-box">
                 <h3 class="filter-title">
                     <span class="material-icons-outlined">filter_alt</span> LỌC THEO GIÁ
@@ -100,7 +95,6 @@
                 </div>
             </div>
 
-            <!-- Lọc Size (33 -> 41) -->
             <div class="filter-box">
                 <h3 class="filter-title">
                     <span class="material-icons-outlined">straighten</span> LỌC THEO SIZE GIÀY
@@ -121,7 +115,6 @@
         </form>
     </aside>
 
-    <!-- Lưới Sản Phẩm -->
     <section class="products-container">
         <div class="product-grid hotsale-3col-grid">
             @if (Model != null && Model.Any())
@@ -154,17 +147,15 @@
             }
         </div>
 
-        <!-- Phân Trang Động -->
         @if (totalPages > 1)
         {
             <div class="pagination-wrapper">
                 <ul class="pagination">
-                    <!-- Nút Lùi Trang -->
+                    
                     <li class="page-item @(currentPage <= 1 ? "disabled" : "")">
                         <a href="/DanhMuc/DanhSach?@baseQuery&page=@(currentPage - 1)@sortQuery@filterQuery" class="page-link">&laquo;</a>
                     </li>
 
-                    <!-- Các Nút Số Trang -->
                     @for (int i = 1; i <= totalPages; i++)
                     {
                         <li class="page-item @(i == currentPage ? "active" : "")">
@@ -172,7 +163,6 @@
                         </li>
                     }
 
-                    <!-- Nút Sang Trang -->
                     <li class="page-item @(currentPage >= totalPages ? "disabled" : "")">
                         <a href="/DanhMuc/DanhSach?@baseQuery&page=@(currentPage + 1)@sortQuery@filterQuery" class="page-link">&raquo;</a>
                     </li>

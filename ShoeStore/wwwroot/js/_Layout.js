@@ -1,12 +1,32 @@
-﻿/* ====================================================
-   MINHEE SPORTS - LAYOUT JS (GLOBAL)
-==================================================== */
+﻿
+document.addEventListener('DOMContentLoaded', function () {
+    
+    const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+    const mainNav = document.getElementById('mainNav');
+
+    if (mobileMenuBtn && mainNav) {
+        mobileMenuBtn.addEventListener('click', function (e) {
+            e.stopPropagation();
+            mainNav.classList.toggle('active');
+
+            const icon = mobileMenuBtn.querySelector('.material-icons-outlined');
+            if (icon) {
+                icon.textContent = mainNav.classList.contains('active') ? 'close' : 'menu';
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (!mainNav.contains(e.target) && !mobileMenuBtn.contains(e.target)) {
+                mainNav.classList.remove('active');
+                const icon = mobileMenuBtn.querySelector('.material-icons-outlined');
+                if (icon) icon.textContent = 'menu';
+            }
+        });
+    }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // ==========================================
-    // 1. TỰ ĐỘNG ACTIVE MENU NAV (CHUẨN 100%)
-    // ==========================================
     const currentPath = window.location.pathname.toLowerCase();
     const currentParams = new URLSearchParams(window.location.search);
     const currentId = (currentParams.get('id') || currentParams.get('maloai') || '').toLowerCase();
@@ -16,7 +36,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let isMatched = false;
 
-    // 1. Khớp trang Danh mục có Query String (?id=BeTrai, ?id=HotSale,...)
     if (currentId) {
         navItems.forEach(item => {
             const href = (item.getAttribute('href') || '').toLowerCase();
@@ -27,7 +46,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // 2. Khớp Trang Chủ (URL là '/', '/trangchu', '/trangchu/trangchu')
     if (!isMatched && (currentPath === '/' || currentPath === '' || currentPath.includes('/trangchu'))) {
         navItems.forEach(item => {
             const href = (item.getAttribute('href') || '').toLowerCase();
@@ -38,9 +56,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ==========================================
-    // 2. TÍNH NĂNG TÌM KIẾM DÙNG CHUNG (LIVE SEARCH)
-    // ==========================================
     const searchInput = document.getElementById('searchInput');
     const searchResultsPopup = document.getElementById('searchResultsPopup');
     const searchItemsList = document.getElementById('searchItemsList');
@@ -140,15 +155,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (searchResultsPopup) searchResultsPopup.style.display = 'block';
     }
 
-    // ==========================================
-    // 3. TẢI TỔNG SỐ LƯỢNG GIỎ HÀNG (BADGE)
-    // ==========================================
     window.loadCartBadge();
 });
 
-// ====================================================
-// 4. LOGIC POPUP CHỌN SIZE & THÊM GIỎ / MUA NGAY (GLOBAL)
-// ====================================================
 let currentSelectedBienThe = 0;
 let currentMaxStock = 0;
 
@@ -264,9 +273,6 @@ window.updateQuickQty = function (delta) {
     input.value = qty;
 };
 
-// ====================================================
-// ĐOẠN ĐÃ ĐƯỢC BỔ SUNG TRUY VẾT LỖI CHÍNH XÁC
-// ====================================================
 window.confirmAddToCart = function () {
     if (currentSelectedBienThe <= 0) {
         alert('Vui lòng chọn Size giày còn hàng!');
@@ -275,7 +281,6 @@ window.confirmAddToCart = function () {
 
     const qty = parseInt(document.getElementById('quickCartQuantity')?.value) || 1;
 
-    // Gửi dữ liệu dạng FormData (khớp chuẩn với action ThemVaoGioHang(int maBienThe, int soLuong))
     const formData = new FormData();
     formData.append('maBienThe', currentSelectedBienThe);
     formData.append('soLuong', qty);
@@ -285,13 +290,12 @@ window.confirmAddToCart = function () {
         body: formData
     })
         .then(async res => {
-            // Kiểm tra xem phản hồi có thành công (Status 200-299) không
+            
             if (!res.ok) {
                 const rawErrorText = await res.text();
                 throw new Error(`[Mã phản hồi HTTP ${res.status}] ${rawErrorText}`);
             }
 
-            // Kiểm tra định dạng có phải JSON hay bị trả về trang HTML Đăng Nhập
             const contentType = res.headers.get("content-type");
             if (!contentType || !contentType.includes("application/json")) {
                 const htmlText = await res.text();
@@ -316,12 +320,12 @@ window.confirmAddToCart = function () {
                     cartBadge.textContent = res.totalItems;
                 }
             } else {
-                // In thông báo lỗi logic từ Controller gửi về (Ví dụ: hết hàng, dữ liệu không hợp lệ...)
+                
                 alert("Thông báo từ hệ thống: " + (res.message || "Không thể thêm vào giỏ."));
             }
         })
         .catch(err => {
-            // In đầy đủ chi tiết lỗi kỹ thuật
+            
             console.error("Chi tiết lỗi thêm giỏ hàng:", err);
             alert("CHI TIẾT LỖI GẶP PHẢI:\n" + err.message);
         });
@@ -344,9 +348,6 @@ window.closeQuickCartModal = function () {
     }
 };
 
-// ====================================================
-// 5. LOGIC POPUP HƯỚNG DẪN CHỌN SIZE GIÀY (GLOBAL)
-// ====================================================
 window.openSizeModal = function () {
     const modal = document.getElementById('sizeGuideModal');
     if (modal) {

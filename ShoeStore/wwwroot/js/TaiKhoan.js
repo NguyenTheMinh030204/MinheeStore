@@ -1,8 +1,5 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
 
-    // ==========================================
-    // 1. TÍNH NĂNG ẨN / HIỆN MẬT KHẨU
-    // ==========================================
     const toggleButtons = document.querySelectorAll('.toggle-password');
 
     toggleButtons.forEach(btn => {
@@ -22,9 +19,6 @@
         });
     });
 
-    // ==========================================
-    // 2. TỰ ĐỘNG NHẢY 6 Ô OTP & CHECK LIVE TỰ ĐỘNG (DÙNG CHUNG)
-    // ==========================================
     const otpInputs = document.querySelectorAll('.otp-input');
     const fullOtpInput = document.getElementById('fullOtpCode');
     const otpStatusMsg = document.getElementById('otpStatusMsg');
@@ -113,9 +107,6 @@
         }
     }
 
-    // ==========================================
-    // 3. XỬ LÝ NÚT LẤY OTP TRANG ĐĂNG KÝ
-    // ==========================================
     const btnSendOtp = document.getElementById('btnSendOtp');
     const regEmailInput = document.getElementById('regEmail');
 
@@ -167,9 +158,6 @@
         });
     }
 
-    // ==========================================
-    // 4. PREVIEW ANH DAI DIEN TRANG DANG KY
-    // ==========================================
     const avatarFile = document.getElementById('avatarFile');
     const avatarLabel = document.getElementById('avatarPreviewLabel');
 
@@ -186,9 +174,6 @@
         });
     }
 
-    // ==========================================
-    // 5. XỬ LÝ NÚT LẤY OTP TRANG QUÊN MẬT KHẨU
-    // ==========================================
     const btnSendOtpReset = document.getElementById('btnSendOtpReset');
     const resetEmailInput = document.getElementById('resetEmail');
 
@@ -240,9 +225,6 @@
         });
     }
 
-    // ==========================================
-    // 6. XỬ LÝ TRANG THÔNG TIN CÁ NHÂN (PROFILE)
-    // ==========================================
     const btnToggleProfile = document.getElementById('btnToggleProfile');
     const editableFields = document.querySelectorAll('.editable-field');
     const inputAvatar = document.getElementById('inputAvatar');
@@ -251,31 +233,29 @@
     const avatarPreview = document.getElementById('avatarPreview');
 
     if (btnToggleProfile) {
-        let isEditing = false; // Trạng thái chỉnh sửa
+        let isEditing = false; 
 
         btnToggleProfile.addEventListener('click', () => {
             if (!isEditing) {
-                // MỞ KHÓA CÁC TRƯỜNG DỮ LIỆU
+                
                 isEditing = true;
 
                 editableFields.forEach(field => field.disabled = false);
                 if (inputAvatar) inputAvatar.disabled = false;
                 if (avatarEditBadge) avatarEditBadge.style.display = 'flex';
 
-                // ĐỔI NÚT SỬA -> XÁC NHẬN CẬP NHẬT
                 btnToggleProfile.textContent = 'XÁC NHẬN CẬP NHẬT';
                 btnToggleProfile.classList.remove('btn-edit-mode');
                 btnToggleProfile.classList.add('btn-save-mode');
 
                 if (editableFields.length > 0) editableFields[0].focus();
             } else {
-                // XÁC NHẬN -> SUBMIT FORM VỀ SERVER
+                
                 if (profileForm) profileForm.submit();
             }
         });
     }
 
-    // Preview Avatar mới trên trang Thông tin cá nhân
     if (inputAvatar && avatarPreview) {
         inputAvatar.addEventListener('change', (e) => {
             const file = e.target.files[0];

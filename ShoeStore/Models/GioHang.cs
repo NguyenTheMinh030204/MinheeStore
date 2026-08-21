@@ -18,7 +18,6 @@ namespace ShoeStore.Models
         [ForeignKey("MaNguoiDung")]
         public virtual NguoiDung? NguoiDung { get; set; }
 
-        // Navigation property chuẩn để EF Core nhận diện trong Include
         public virtual ICollection<ChiTietGioHang> ChiTietGioHang { get; set; } = new List<ChiTietGioHang>();
     }
 }

@@ -6,13 +6,12 @@
     int tongTonKho = Model.BienTheGiay?.Sum(b => b.SoLuongTon) ?? 0;
 }
 
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+<link href="https:
 <link rel="stylesheet" href="/css/ChiTietSanPham.css">
 <link rel="stylesheet" href="/css/TrangChu.css" />
 
 <div class="detail-page-container">
 
-    <!-- Hero Banner Section -->
     <section class="hero-banner">
         <div class="banner-slider">
             <div class="slide active">
@@ -28,7 +27,6 @@
         </div>
     </section>
 
-    <!-- Thanh tiến trình (Breadcrumb) -->
     <div class="site-breadcrumb">
         <a href="javascript:history.back()" class="btn-back-link" title="Quay lại">
             <span class="material-icons-outlined">chevron_left</span>
@@ -40,17 +38,14 @@
         <span class="current-page">@Model.TenGiay</span>
     </div>
 
-    <!-- KHUNG CHI TIẾT SẢN PHẨM CHÍNH -->
     <div class="product-detail-card">
         <div class="detail-grid-layout">
 
-            <!-- CỘT TRÁI: BỘ ẢNH SẢN PHẨM -->
             <div class="detail-left-col">
                 <div class="main-image-box">
                     <img id="mainImage" src="@Model.AnhChinh" alt="@Model.TenGiay">
                 </div>
 
-                <!-- Thumbnail Ảnh Phụ -->
                 <div class="thumbnail-strip">
                     <div class="thumb-item active" onclick="changeImage(this, '@Model.AnhChinh')">
                         <img src="@Model.AnhChinh" alt="Main Thumb">
@@ -68,11 +63,9 @@
                 </div>
             </div>
 
-            <!-- CỘT PHẢI: THÔNG TIN SẢN PHẨM -->
             <div class="detail-right-col">
                 <h2 class="detail-product-title">@Model.TenGiay</h2>
 
-                <!-- Status Badge -->
                 <div class="status-badge-wrapper">
                     @if (tongTonKho > 0)
                     {
@@ -89,13 +82,11 @@
                     }
                 </div>
 
-                <!-- Meta Info -->
                 <div class="product-meta">
                     <p><span>Loại:</span> <strong>@(Model.DanhMuc?.TenDanhMuc ?? Model.MaDanhMuc)</strong></p>
                     <p><span>MSP:</span> <strong>@Model.MaGiay</strong></p>
                 </div>
 
-                <!-- Giá -->
                 <div class="product-price-box">
                     <span class="current-price">@Model.GiaBan.ToString("N0") VNĐ</span>
                     @if (Model.GiaCu.HasValue && Model.GiaCu > Model.GiaBan)
@@ -104,7 +95,6 @@
                     }
                 </div>
 
-                <!-- Box Khuyến Mãi -->
                 <div class="promo-box">
                     <div class="promo-header">
                         <span class="material-icons-outlined text-primary">card_giftcard</span>
@@ -126,7 +116,6 @@
                     }
                 </div>
 
-                <!-- CHỌN SIZE (Chạy từ 33 đến 41) -->
                 <div class="size-selection-box">
                     <div class="size-header">
                         <label>Chọn size:</label>
@@ -167,7 +156,6 @@
                     </div>
                 </div>
 
-                <!-- Chọn Số Lượng -->
                 <div class="quantity-box">
                     <label>Số lượng:</label>
                     <div class="quantity-counter">
@@ -177,7 +165,6 @@
                     </div>
                 </div>
 
-                <!-- Nút Hành Động Chi Tiết -->
                 <div class="action-buttons">
                     <button type="button" class="btn-detail-add-cart" onclick="addCurrentDetailPageToCart()" @(tongTonKho <= 0 ? "disabled" : "")>Thêm vào giỏ hàng</button>
                     <button type="button" class="btn-buy-now" onclick="buyNowCurrentDetailPage()" @(tongTonKho <= 0 ? "disabled" : "")>MUA NGAY</button>
@@ -187,7 +174,6 @@
         </div>
     </div>
 
-    <!-- MÔ TẢ SẢN PHẨM -->
     <div class="description-card">
         <h4 class="description-title">MÔ TẢ SẢN PHẨM</h4>
         <div class="description-content">
@@ -202,7 +188,6 @@
         </div>
     </div>
 
-    <!-- SẢN PHẨM LIÊN QUAN -->
     @if (dsLienQuan.Any())
     {
         <div class="related-products-section">
@@ -233,7 +218,6 @@
 
 </div>
 
-<!-- POPUP MODAL HƯỚNG DẪN CHỌN SIZE GIÀY -->
 <div id="sizeGuideModal" class="size-guide-modal-overlay" onclick="closeSizeModal()">
     <div class="size-guide-modal-box" onclick="event.stopPropagation();">
         <div class="size-guide-modal-header">

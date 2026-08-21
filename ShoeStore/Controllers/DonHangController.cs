@@ -28,9 +28,6 @@ namespace ShoeStore.Controllers
                 ?? HttpContext.Session.GetString("MaNguoiDung");
         }
 
-        // =========================================================================
-        // 1. MÀN HÌNH THANH TOÁN (MUA NGAY & GIỎ HÀNG NHIỀU MÓN)
-        // =========================================================================
         [HttpGet]
         [Route("DonHang/ThanhToan")]
         [Route("GioHang/ThanhToan")]
@@ -54,7 +51,6 @@ namespace ShoeStore.Controllers
                 PhiVanChuyen = 30000
             };
 
-            // Mua ngay 1 sản phẩm
             if (maBienThe.HasValue && maBienThe > 0 && soLuong.HasValue && soLuong > 0)
             {
                 var bienThe = await _context.BienTheGiay
@@ -78,7 +74,7 @@ namespace ShoeStore.Controllers
                     KhuyenMaiUuDai = bienThe.Giay?.KhuyenMaiUuDai
                 });
             }
-            // Thanh toán từ giỏ hàng (N món / N biến thể)
+            
             else
             {
                 vm.IsMuaNgay = false;
@@ -131,9 +127,6 @@ namespace ShoeStore.Controllers
             return View("~/Views/GioHang/ThanhToan.cshtml", vm);
         }
 
-        // =========================================================================
-        // 2. XÁC NHẬN TẠO ĐƠN HÀNG VÀO CSDL (TRỪ TỒN KHO & ĐIỀU HƯỚNG COD/BANKING)
-        // =========================================================================
         [HttpPost]
         public async Task<IActionResult> XacNhanDatHang([FromBody] DatHangRequest req)
         {
@@ -242,7 +235,6 @@ namespace ShoeStore.Controllers
                 await _context.SaveChangesAsync();
                 await transaction.CommitAsync();
 
-                // Chuyển hướng: BANKING sang màn hình QR Vietcombank, COD sang Đặt hàng thành công
                 string redirectUrl = req.PhuongThucThanhToan == "BANKING"
                     ? $"/DonHang/CongThanhToanOnline?maDonHang={maDH}"
                     : $"/DonHang/DatHangThanhCong?maDonHang={maDH}";
@@ -262,9 +254,6 @@ namespace ShoeStore.Controllers
             }
         }
 
-        // =========================================================================
-        // 3. MÀN HÌNH CỔNG THANH TOÁN ONLINE (VIETCOMBANK QR CODE)
-        // =========================================================================
         [HttpGet]
         [Route("DonHang/CongThanhToanOnline")]
         [Route("GioHang/CongThanhToanOnline")]
@@ -281,9 +270,6 @@ namespace ShoeStore.Controllers
             return View("~/Views/GioHang/CongThanhToanOnline.cshtml", donHang);
         }
 
-        // =========================================================================
-        // 4. XÁC NHẬN ĐÃ CHUYỂN KHOẢN ONLINE THÀNH CÔNG
-        // =========================================================================
         [HttpPost]
         public async Task<IActionResult> XacNhanThanhToanOnline(string maDonHang)
         {
@@ -303,9 +289,6 @@ namespace ShoeStore.Controllers
             });
         }
 
-        // =========================================================================
-        // 5. MÀN HÌNH ĐẶT HÀNG THÀNH CÔNG
-        // =========================================================================
         [HttpGet]
         public async Task<IActionResult> DatHangThanhCong(string maDonHang)
         {
@@ -321,9 +304,6 @@ namespace ShoeStore.Controllers
             return View("~/Views/GioHang/DatHangThanhCong.cshtml", donHang);
         }
 
-        // =========================================================================
-        // 6. DANH SÁCH ĐƠN HÀNG CỦA TÔI
-        // =========================================================================
         [HttpGet]
         [Route("DonHang/DonHangCuaToi")]
         [Route("GioHang/DonHangCuaToi")]
@@ -347,9 +327,6 @@ namespace ShoeStore.Controllers
             return View("~/Views/GioHang/DonHangCuaToi.cshtml", danhSachDonHang);
         }
 
-        // =========================================================================
-        // 7. HỦY ĐƠN HÀNG (HOÀN TRẢ TỒN KHO)
-        // =========================================================================
         [HttpPost]
         public async Task<IActionResult> HuyDonHang(string maDonHang)
         {

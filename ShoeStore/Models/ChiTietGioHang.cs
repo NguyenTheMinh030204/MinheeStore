@@ -7,7 +7,7 @@ namespace ShoeStore.Models
     public class ChiTietGioHang
     {
         [Key]
-        public int MaChiTietGioHang { get; set; } // Mã tự tăng (IDENTITY)
+        public int MaChiTietGioHang { get; set; } 
 
         public string MaGioHang { get; set; }
 

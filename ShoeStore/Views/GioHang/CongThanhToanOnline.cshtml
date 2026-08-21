@@ -10,7 +10,6 @@
     string chuTaiKhoan = "NGUYEN THE MINH";
     string noiDungChuyenKhoan = $"Thanh toan don {Model.MaDonHang}";
     
-    // Tự động sinh mã VietQR theo chuẩn Napas247 tương thích Vietcombank và mọi App Ngân hàng
     string qrUrl = $"https://img.vietqr.io/image/VCB-{stk}-compact2.png?amount={Convert.ToInt64(Model.TongTien)}&addInfo={Uri.EscapeDataString(noiDungChuyenKhoan)}&accountName={Uri.EscapeDataString(chuTaiKhoan)}";
 }
 

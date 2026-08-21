@@ -1,8 +1,5 @@
-﻿/* ====================================================
-   MINHEE SPORTS - LOGIC GIỎ HÀNG CARD & CẬP NHẬT CSDL
-==================================================== */
+﻿
 
-// 1. TĂNG / GIẢM SỐ LƯỢNG SẢN PHẨM TRONG CSDL
 function thayDoiSoLuong(maChiTiet, delta, maxStock) {
     const inputEl = document.getElementById(`qty-input-${maChiTiet}`);
     if (!inputEl) return;
@@ -62,7 +59,6 @@ function thayDoiSoLuong(maChiTiet, delta, maxStock) {
         });
 }
 
-// 2. XÓA SẢN PHẨM KHỎI CSDL
 function xoaSanPham(maChiTiet) {
     if (!confirm("Bạn có chắc chắn muốn xóa sản phẩm này khỏi giỏ hàng?")) {
         return;
@@ -116,7 +112,6 @@ function xoaSanPham(maChiTiet) {
         });
 }
 
-// 3. TÍNH LẠI TỔNG TIỀN THEO CHECKBOX ĐƯỢC CHỌN
 function tinhTongTienTamTinh() {
     let tongTien = 0;
     let tongSoLuong = 0;
@@ -142,7 +137,6 @@ function tinhTongTienTamTinh() {
     if (grandTotalEl) grandTotalEl.textContent = tongTien.toLocaleString('vi-VN') + ' VNĐ';
 }
 
-// 4. TIẾN HÀNH THANH TOÁN (GOM ID CÁC MÓN ĐƯỢC CHECK)
 function tienHanhThanhToan() {
     const checkedBoxes = document.querySelectorAll('.cart-card-item .cart-checkbox:checked');
     if (checkedBoxes.length === 0) {

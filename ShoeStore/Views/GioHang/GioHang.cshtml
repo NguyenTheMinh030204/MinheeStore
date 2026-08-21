@@ -13,7 +13,6 @@
     <link rel="stylesheet" href="~/css/TrangChu.css" asp-append-version="true" />
 }
 
-<!-- Hero Banner Section -->
 <section class="hero-banner">
     <div class="banner-slider">
         <div class="slide active">
@@ -29,7 +28,6 @@
     </div>
 </section>
 
-<!-- Breadcrumb -->
 <div class="cart-breadcrumb-wrapper">
     <div class="cart-breadcrumb">
         <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
@@ -39,7 +37,7 @@
 </div>
 
 <div class="cart-container-custom">
-    <!-- Giao diện khi giỏ hàng trống (render từ server hoặc hiển thị qua JS khi xóa hết) -->
+    
     <div class="cart-empty-state" id="cartEmptyState" style="@(danhSachChiTiet.Count == 0 ? "display: flex;" : "display: none;")">
         <div class="cart-empty-icon">
             <span class="material-icons-outlined">remove_shopping_cart</span>
@@ -55,7 +53,7 @@
     @if (danhSachChiTiet.Count > 0)
     {
         <div id="cartMainContent">
-            <!-- Danh sách từng Card sản phẩm -->
+            
             <div class="cart-cards-list" id="cartCardsList">
                 @foreach (var item in danhSachChiTiet)
                 {
@@ -65,17 +63,15 @@
                     var tonKho = item.BienTheGiay?.SoLuongTon ?? 0;
 
                     <div class="cart-card-item" id="cart-item-@item.MaChiTietGioHang" data-id="@item.MaChiTietGioHang">
-                        <!-- Checkbox chọn món -->
+                        
                         <div class="card-checkbox-wrap">
                             <input type="checkbox" class="cart-checkbox" checked onchange="tinhTongTienTamTinh()" />
                         </div>
 
-                        <!-- Ảnh sản phẩm -->
                         <div class="card-thumb-wrap">
                             <img src="@giay?.AnhChinh" alt="@giay?.TenGiay" class="card-thumb-img" />
                         </div>
 
-                        <!-- Nội dung chi tiết -->
                         <div class="card-info-wrap">
                             <div class="card-info-top">
                                 <a href="/Giay/ChiTiet?id=@giay?.MaGiay" class="card-product-name">@giay?.TenGiay</a>
@@ -84,20 +80,17 @@
                                 </button>
                             </div>
 
-                            <!-- Size và Đơn giá -->
                             <div class="card-meta-line">
                                 <span class="meta-size">Size: @item.BienTheGiay?.KichCo</span>
                                 <span class="meta-unit-price">@giaBan.ToString("N0") VNĐ</span>
                             </div>
 
-                            <!-- Bộ nút tăng giảm số lượng -->
                             <div class="card-qty-control">
                                 <button type="button" class="btn-qty-action" onclick="thayDoiSoLuong(@item.MaChiTietGioHang, -1, @tonKho)">-</button>
                                 <input type="text" id="qty-input-@item.MaChiTietGioHang" class="input-qty-value" value="@item.SoLuong" readonly />
                                 <button type="button" class="btn-qty-action" onclick="thayDoiSoLuong(@item.MaChiTietGioHang, 1, @tonKho)">+</button>
                             </div>
 
-                            <!-- Thành tiền dòng -->
                             <div class="card-item-total-price" id="row-total-@item.MaChiTietGioHang" data-price="@giaBan">
                                 @thanhTien.ToString("N0") VNĐ
                             </div>
@@ -106,10 +99,8 @@
                 }
             </div>
 
-            <!-- Đường kẻ phân cách -->
             <div class="cart-section-divider"></div>
 
-            <!-- Box tóm tắt và Thanh toán ở đáy -->
             <div class="cart-bottom-summary">
                 <div class="summary-info-line">
                     <span class="summary-label">Số lượng mặt hàng:</span>

@@ -266,7 +266,6 @@
         color: #64748B;
     }
 
-/* KHUNG 3: KHUYẾN MÃI TỪ BẢNG GIAY */
 .product-promo-list {
     display: flex;
     flex-direction: column;
@@ -315,7 +314,6 @@
         font-size: 18px;
     }
 
-/* KHUNG 5: TỔNG TIỀN */
 .summary-line {
     display: flex;
     justify-content: space-between;
@@ -387,3 +385,4 @@
         grid-template-columns: 1fr;
     }
 }
+

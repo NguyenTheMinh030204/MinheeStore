@@ -10,7 +10,7 @@ namespace ShoeStore.Models.ViewModels
         public int KichCo { get; set; }
         public int SoLuong { get; set; }
         public decimal DonGia { get; set; }
-        public string? KhuyenMaiUuDai { get; set; } // Lấy từ bảng Giay
+        public string? KhuyenMaiUuDai { get; set; } 
         public decimal ThanhTien => SoLuong * DonGia;
     }
 

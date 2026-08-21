@@ -10,21 +10,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Đăng ký tài khoản - Minhee Sports</title>
-    <!-- Material Icons -->
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
-    <!-- File CSS Auth -->
+    
+    <link href="https:
+    
     <link rel="stylesheet" href="/css/TaiKhoan.css">
 </head>
 <body class="auth-page">
 
     <div class="auth-container register-container">
 
-        <!-- Nút Mũi tên quay lại -->
         <a href="/TaiKhoan/DangNhap" class="btn-back" title="Quay lại Đăng nhập">
             <span class="material-icons-outlined">arrow_back</span>
         </a>
 
-        <!-- Vòng tròn Logo -->
         <div class="logo-wrapper">
             <div class="logo-circle">
                 <img src="/images/logo.png" alt="Minhee Shop Logo">
@@ -33,7 +31,6 @@
 
         <h2 class="auth-title">ĐĂNG KÝ</h2>
 
-        <!-- Thông báo lỗi nếu có từ Server -->
         @if (ViewBag.Loi != null)
         {
             <div class="alert-danger-box">@ViewBag.Loi</div>
@@ -42,7 +39,6 @@
         <form action="/TaiKhoan/DangKy" method="post" enctype="multipart/form-data">
             @Html.AntiForgeryToken()
 
-            <!-- Tải ảnh Đại diện (Avatar Placeholder) -->
             <div class="avatar-picker">
                 <input type="file" id="avatarFile" name="AnhDaiDien" accept="image/*" hidden>
                 <label for="avatarFile" class="avatar-circle-btn" id="avatarPreviewLabel">
@@ -57,13 +53,11 @@
                 </label>
             </div>
 
-            <!-- Họ và tên -->
             <div class="form-group">
                 <label>Họ và tên</label>
                 <input type="text" name="HoTen" class="form-control" value="@Model?.HoTen" placeholder="Nguyễn Văn A" required>
             </div>
 
-            <!-- E-mail + Nút Lấy OTP -->
             <div class="form-group">
                 <label>E-mail</label>
                 <div class="email-otp-group">
@@ -72,7 +66,6 @@
                 </div>
             </div>
 
-            <!-- 6 Ô nhập OTP -->
             <div class="form-group">
                 <label>OTP:</label>
                 <div class="otp-boxes">
@@ -84,32 +77,26 @@
                     <input type="text" class="otp-input" maxlength="1" pattern="\d*" value="@(otpCode.Length >= 6 ? otpCode[5].ToString() : "")">
                 </div>
 
-                <!-- Thẻ hiển thị dòng trạng thái OTP Live (Đúng/Sai) từ JS -->
                 <small id="otpStatusMsg" style="display: block; margin-top: 6px; font-weight: 600; font-size: 12px;"></small>
 
-                <!-- Input ẩn lưu chuỗi OTP hoàn chỉnh submit về Controller -->
                 <input type="hidden" name="OtpCode" id="fullOtpCode" value="@otpCode">
             </div>
 
-            <!-- Số điện thoại -->
             <div class="form-group">
                 <label>Số điện thoại</label>
                 <input type="tel" name="SoDienThoai" class="form-control" value="@Model?.SoDienThoai" placeholder="0123456789" required>
             </div>
 
-            <!-- Ngày sinh -->
             <div class="form-group">
                 <label>Ngày sinh</label>
                 <input type="date" name="NgaySinh" class="form-control" value="@(Model?.NgaySinh?.ToString("yyyy-MM-dd"))" required>
             </div>
 
-            <!-- Địa chỉ -->
             <div class="form-group">
                 <label>Địa chỉ</label>
                 <input type="text" name="DiaChi" class="form-control" value="@Model?.DiaChi" placeholder="Số nhà (nếu có), thôn/đường phố, xã, tỉnh/thành phố" required>
             </div>
 
-            <!-- Mật khẩu -->
             <div class="form-group">
                 <label>Mật khẩu</label>
                 <div class="input-wrapper">
@@ -118,7 +105,6 @@
                 </div>
             </div>
 
-            <!-- Nhập lại mật khẩu -->
             <div class="form-group">
                 <label>Nhập lại mật khẩu</label>
                 <div class="input-wrapper">
@@ -133,7 +119,6 @@
 
     </div>
 
-    <!-- File JS Auth -->
     <script src="/js/TaiKhoan.js"></script>
 </body>
 </html>

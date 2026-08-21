@@ -1,7 +1,5 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
-    // ==========================================
-    // LOGIC BANNER SLIDER MƯỢT MÀ
-    // ==========================================
+
     const bannerSection = document.querySelector('.hero-banner');
     const sliderContainer = document.querySelector('.hero-banner .banner-slider');
     const slides = document.querySelectorAll('.hero-banner .slide');
@@ -11,7 +9,7 @@
 
     let currentIndex = 0;
     let slideInterval = null;
-    const autoPlayTime = 4000; // Chuyển slide sau 4 giây
+    const autoPlayTime = 4000; 
 
     function showSlide(index) {
         if (index >= slides.length) {
@@ -22,7 +20,6 @@
             currentIndex = index;
         }
 
-        // Cập nhật class active cho Slide và Dot
         slides.forEach((slide, idx) => {
             slide.classList.toggle('active', idx === currentIndex);
         });
@@ -54,7 +51,6 @@
         startAutoSlide();
     }
 
-    // Sự kiện click Dot chuyển tab
     dots.forEach(dot => {
         dot.addEventListener('click', (e) => {
             const targetIndex = parseInt(e.target.getAttribute('data-index')) || 0;
@@ -65,11 +61,9 @@
         });
     });
 
-    // Tạm dừng khi rê chuột vào banner
     bannerSection.addEventListener('mouseenter', stopAutoSlide);
     bannerSection.addEventListener('mouseleave', startAutoSlide);
 
-    // Kích hoạt
     showSlide(0);
     startAutoSlide();
 });

@@ -5,7 +5,7 @@ namespace ShoeStore.Models
 {
     public class NguoiDung
     {
-        [Key] // Giữ lại thẻ này để EF Core biết MaNguoiDung là Khóa chính
+        [Key] 
         public string MaNguoiDung { get; set; } = null!;
 
         public string? AnhDaiDien { get; set; }

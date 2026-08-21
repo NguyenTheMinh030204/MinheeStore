@@ -4,7 +4,6 @@
 }
 
 <style>
-    /* BREADCRUMB */
     .info-breadcrumb-wrapper {
         width: 100%;
         max-width: 1100px;
@@ -43,7 +42,6 @@
             letter-spacing: 0.3px;
         }
 
-    /* CONTAINER */
     .info-page-container {
         max-width: 1100px;
         margin: 0 auto 70px auto;
@@ -70,6 +68,7 @@
             font-weight: 900;
             color: #021156;
             margin-bottom: 8px;
+            line-height: 1.35;
         }
 
         .page-main-header p {
@@ -80,7 +79,6 @@
             line-height: 1.6;
         }
 
-    /* SERVICE COMMITMENT GRID */
     .service-commit-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -122,7 +120,6 @@
         line-height: 1.5;
     }
 
-    /* SECTIONS */
     .terms-section {
         margin-bottom: 28px;
     }
@@ -135,11 +132,13 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 12px;
+            line-height: 1.4;
         }
 
             .terms-section h2 .material-icons-outlined {
                 color: #3B82F6;
                 font-size: 22px;
+                flex-shrink: 0;
             }
 
         .terms-section p {
@@ -161,7 +160,6 @@
             margin-bottom: 6px;
         }
 
-    /* CONTACT SUPPORT CARD */
     .support-contact-box {
         background: #EFF6FF;
         border: 1.5px solid #BFDBFE;
@@ -171,6 +169,7 @@
         display: flex;
         justify-content: space-between;
         align-items: center;
+        gap: 16px;
     }
 
     .support-text h4 {
@@ -197,6 +196,7 @@
         display: inline-flex;
         align-items: center;
         gap: 6px;
+        white-space: nowrap;
         transition: background 0.2s ease;
     }
 
@@ -204,10 +204,98 @@
             background: #1D4ED8;
         }
 
-   
+    @@media (max-width: 992px) {
+        .info-content-card {
+            padding: 28px 22px;
+        }
+
+        .service-commit-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .info-page-container {
+            margin-bottom: 45px;
+        }
+
+        .info-content-card {
+            padding: 22px 16px;
+            border-radius: 12px;
+        }
+
+        .page-main-header {
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+        }
+
+            .page-main-header h1 {
+                font-size: 20px;
+            }
+
+            .page-main-header p {
+                font-size: 13px;
+            }
+
+        .service-commit-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .service-card {
+            padding: 16px;
+        }
+
+        .terms-section h2 {
+            font-size: 15.5px;
+            align-items: flex-start;
+        }
+
+        .terms-section p,
+        .terms-section ul {
+            font-size: 13px;
+        }
+
+        .terms-section ul {
+            padding-left: 18px;
+        }
+
+        .support-contact-box {
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 18px 16px;
+            gap: 14px;
+        }
+
+        .btn-contact-now {
+            width: 100%;
+            justify-content: center;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .info-breadcrumb {
+            margin-top: 10px;
+            margin-bottom: 16px;
+            font-size: 12.5px;
+        }
+
+        .page-main-header h1 {
+            font-size: 18px;
+        }
+
+        .support-text h4 {
+            font-size: 14px;
+        }
+
+        .support-text p {
+            font-size: 12px;
+        }
+    }
 </style>
 
-<!-- Thanh Breadcrumb -->
 <div class="info-breadcrumb-wrapper">
     <div class="info-breadcrumb">
         <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
@@ -216,7 +304,6 @@
     </div>
 </div>
 
-<!-- Nội dung Chính sách dịch vụ -->
 <div class="info-page-container">
     <div class="info-content-card">
 
@@ -225,7 +312,6 @@
             <p>Minhee Sports đặt sự hài lòng của khách hàng làm trung tâm thông qua các cam kết rõ ràng về chất lượng tư vấn, hỗ trợ sau bán và trải nghiệm mua sắm minh bạch.</p>
         </div>
 
-        <!-- 3 Cam kết dịch vụ -->
         <div class="service-commit-grid">
             <div class="service-card">
                 <div class="service-icon">
@@ -252,7 +338,6 @@
             </div>
         </div>
 
-        <!-- 1. Trách nhiệm của Minhee Sports -->
         <div class="terms-section">
             <h2>
                 <span class="material-icons-outlined">verified</span>
@@ -266,7 +351,6 @@
             </ul>
         </div>
 
-        <!-- 2. Quyền lợi và trách nhiệm của khách hàng -->
         <div class="terms-section">
             <h2>
                 <span class="material-icons-outlined">person</span>
@@ -278,7 +362,6 @@
             </ul>
         </div>
 
-        <!-- 3. Giải quyết khiếu nại -->
         <div class="terms-section">
             <h2>
                 <span class="material-icons-outlined">gavel</span>
@@ -289,13 +372,12 @@
             </p>
         </div>
 
-        <!-- Hộp liên hệ CSKH -->
         <div class="support-contact-box">
             <div class="support-text">
                 <h4>BẠN CẦN HỖ TRỢ THÊM VỀ ĐƠN HÀNG HOẶC DỊCH VỤ?</h4>
                 <p>Tổng đài CSKH luôn sẵn sàng lắng nghe và hỗ trợ bạn 24/7.</p>
             </div>
-            <a href="tel:0335836886" class="btn-contact-now">
+            <a href="tel:0358187791" class="btn-contact-now">
                 <span class="material-icons-outlined">phone_in_talk</span>
                 HOTLINE HỖ TRỢ
             </a>

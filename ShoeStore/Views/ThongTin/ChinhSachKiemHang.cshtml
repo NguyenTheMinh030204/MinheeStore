@@ -4,7 +4,6 @@
 }
 
 <style>
-    /* BREADCRUMB */
     .info-breadcrumb-wrapper {
         width: 100%;
         max-width: 1100px;
@@ -21,29 +20,28 @@
         font-size: 13.5px;
     }
 
-    .info-breadcrumb .bc-home {
-        color: #4B5563;
-        text-decoration: none;
-        font-weight: 500;
-        transition: color 0.2s ease;
-    }
+        .info-breadcrumb .bc-home {
+            color: #4B5563;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
 
-    .info-breadcrumb .bc-home:hover {
-        color: #3B82F6;
-    }
+            .info-breadcrumb .bc-home:hover {
+                color: #3B82F6;
+            }
 
-    .info-breadcrumb .bc-separator {
-        color: #3B82F6;
-        font-weight: 600;
-    }
+        .info-breadcrumb .bc-separator {
+            color: #3B82F6;
+            font-weight: 600;
+        }
 
-    .info-breadcrumb .bc-current {
-        color: #021156;
-        font-weight: 800;
-        letter-spacing: 0.3px;
-    }
+        .info-breadcrumb .bc-current {
+            color: #021156;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
 
-    /* CONTAINER */
     .info-page-container {
         max-width: 1100px;
         margin: 0 auto 70px auto;
@@ -65,22 +63,22 @@
         border-bottom: 1.5px solid #F1F5F9;
     }
 
-    .page-main-header h1 {
-        font-size: 24px;
-        font-weight: 900;
-        color: #021156;
-        margin-bottom: 8px;
-    }
+        .page-main-header h1 {
+            font-size: 24px;
+            font-weight: 900;
+            color: #021156;
+            margin-bottom: 8px;
+            line-height: 1.35;
+        }
 
-    .page-main-header p {
-        font-size: 14px;
-        color: #64748B;
-        max-width: 700px;
-        margin: 0 auto;
-        line-height: 1.6;
-    }
+        .page-main-header p {
+            font-size: 14px;
+            color: #64748B;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
 
-    /* INSPECTION HIGHLIGHT */
     .inspection-badge-box {
         background: #ECFDF5;
         border: 1.5px solid #10B981;
@@ -104,9 +102,9 @@
         flex-shrink: 0;
     }
 
-    .inspection-badge-icon .material-icons-outlined {
-        font-size: 28px;
-    }
+        .inspection-badge-icon .material-icons-outlined {
+            font-size: 28px;
+        }
 
     .inspection-badge-text h3 {
         margin: 0 0 4px 0;
@@ -122,54 +120,55 @@
         line-height: 1.5;
     }
 
-    /* SECTIONS */
     .inspect-section {
         margin-bottom: 28px;
     }
 
-    .inspect-section h2 {
-        font-size: 17px;
-        font-weight: 800;
-        color: #021156;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        margin-bottom: 12px;
-    }
+        .inspect-section h2 {
+            font-size: 17px;
+            font-weight: 800;
+            color: #021156;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            line-height: 1.4;
+        }
 
-    .inspect-section h2 .material-icons-outlined {
-        color: #3B82F6;
-        font-size: 22px;
-    }
+            .inspect-section h2 .material-icons-outlined {
+                color: #3B82F6;
+                font-size: 22px;
+                flex-shrink: 0;
+            }
 
-    .inspect-section p {
-        font-size: 14px;
-        line-height: 1.7;
-        color: #334155;
-        margin-bottom: 10px;
-    }
+        .inspect-section p {
+            font-size: 14px;
+            line-height: 1.7;
+            color: #334155;
+            margin-bottom: 10px;
+        }
 
-    .inspect-section ul {
-        margin: 0 0 12px 0;
-        padding-left: 22px;
-        font-size: 13.5px;
-        color: #334155;
-        line-height: 1.7;
-    }
+        .inspect-section ul {
+            margin: 0 0 12px 0;
+            padding-left: 22px;
+            font-size: 13.5px;
+            color: #334155;
+            line-height: 1.7;
+        }
 
-    .inspect-section li {
-        margin-bottom: 6px;
-    }
+        .inspect-section li {
+            margin-bottom: 6px;
+        }
 
-    /* DO & DONT GRID */
     .do-dont-grid {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 20px;
-        margin: 20px 0;
+        margin: 20px 0 28px 0;
     }
 
-    .do-box, .dont-box {
+    .do-box,
+    .dont-box {
         border-radius: 12px;
         padding: 20px;
     }
@@ -179,45 +178,136 @@
         border: 1px solid #BBF7D0;
     }
 
-    .do-box h4 {
-        margin: 0 0 10px 0;
-        color: #166534;
-        font-size: 15px;
-        font-weight: 800;
-        display: flex;
-        align-items: center;
-        gap: 6px;
-    }
+        .do-box h4 {
+            margin: 0 0 10px 0;
+            color: #166534;
+            font-size: 15px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
 
     .dont-box {
         background: #FFF1F2;
         border: 1px solid #FECDD3;
     }
 
-    .dont-box h4 {
-        margin: 0 0 10px 0;
-        color: #9F1239;
-        font-size: 15px;
-        font-weight: 800;
-        display: flex;
-        align-items: center;
-        gap: 6px;
+        .dont-box h4 {
+            margin: 0 0 10px 0;
+            color: #9F1239;
+            font-size: 15px;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .do-box ul,
+        .dont-box ul {
+            margin: 0;
+            padding-left: 18px;
+            font-size: 13px;
+            line-height: 1.6;
+        }
+
+    .do-box li {
+        color: #14532D;
+        margin-bottom: 6px;
     }
 
-    .do-box ul, .dont-box ul {
-        margin: 0;
-        padding-left: 18px;
-        font-size: 13px;
-        line-height: 1.6;
+    .dont-box li {
+        color: #881337;
+        margin-bottom: 6px;
     }
 
-    .do-box li { color: #14532D; margin-bottom: 6px; }
-    .dont-box li { color: #881337; margin-bottom: 6px; }
+    @@media (max-width: 992px) {
+        .info-content-card {
+            padding: 28px 22px;
+        }
 
-  
+        .do-dont-grid {
+            gap: 16px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .info-page-container {
+            margin-bottom: 45px;
+        }
+
+        .info-content-card {
+            padding: 22px 16px;
+            border-radius: 12px;
+        }
+
+        .page-main-header {
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+        }
+
+            .page-main-header h1 {
+                font-size: 20px;
+            }
+
+            .page-main-header p {
+                font-size: 13px;
+            }
+
+        .inspection-badge-box {
+            flex-direction: column;
+            text-align: center;
+            padding: 18px 16px;
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+
+        .do-dont-grid {
+            grid-template-columns: 1fr;
+            gap: 14px;
+        }
+
+        .do-box,
+        .dont-box {
+            padding: 16px;
+        }
+
+        .inspect-section h2 {
+            font-size: 15.5px;
+            align-items: flex-start;
+        }
+
+        .inspect-section p,
+        .inspect-section ul {
+            font-size: 13px;
+        }
+
+        .inspect-section ul {
+            padding-left: 18px;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .info-breadcrumb {
+            margin-top: 10px;
+            margin-bottom: 16px;
+            font-size: 12.5px;
+        }
+
+        .page-main-header h1 {
+            font-size: 18px;
+        }
+
+        .inspection-badge-text h3 {
+            font-size: 14.5px;
+        }
+
+        .inspection-badge-text p {
+            font-size: 12.5px;
+        }
+    }
 </style>
 
-<!-- Thanh Breadcrumb -->
 <div class="info-breadcrumb-wrapper">
     <div class="info-breadcrumb">
         <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
@@ -226,7 +316,6 @@
     </div>
 </div>
 
-<!-- Nội dung Chính sách kiểm hàng -->
 <div class="info-page-container">
     <div class="info-content-card">
 
@@ -235,7 +324,6 @@
             <p>Minhee Sports áp dụng chính sách cho phép khách hàng mở hộp kiểm tra sản phẩm trước khi nhận hàng và thanh toán tiền cho nhân viên giao hàng (Shipper).</p>
         </div>
 
-        <!-- Khung quyền lợi đồng kiểm -->
         <div class="inspection-badge-box">
             <div class="inspection-badge-icon">
                 <span class="material-icons-outlined">verified</span>
@@ -246,7 +334,6 @@
             </div>
         </div>
 
-        <!-- Bảng Được phép & Không được phép -->
         <div class="do-dont-grid">
             <div class="do-box">
                 <h4>
@@ -274,7 +361,6 @@
             </div>
         </div>
 
-        <!-- 1. Xử lý khi hàng không đúng yêu cầu -->
         <div class="inspect-section">
             <h2>
                 <span class="material-icons-outlined">report_problem</span>
@@ -287,7 +373,6 @@
             </ul>
         </div>
 
-        <!-- 2. Hỗ trợ sau khi nhận hàng -->
         <div class="inspect-section">
             <h2>
                 <span class="material-icons-outlined">contact_support</span>

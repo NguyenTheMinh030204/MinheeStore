@@ -4,7 +4,6 @@
 }
 
 <style>
-    /* BREADCRUMB */
     .info-breadcrumb-wrapper {
         width: 100%;
         max-width: 1100px;
@@ -43,7 +42,6 @@
             letter-spacing: 0.3px;
         }
 
-    /* CONTAINER */
     .info-page-container {
         max-width: 1100px;
         margin: 0 auto 70px auto;
@@ -70,6 +68,7 @@
             font-weight: 900;
             color: #021156;
             margin-bottom: 8px;
+            line-height: 1.35;
         }
 
         .page-main-header p {
@@ -80,7 +79,6 @@
             line-height: 1.6;
         }
 
-    /* PILLARS GRID */
     .security-pillars-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
@@ -122,7 +120,6 @@
         line-height: 1.5;
     }
 
-    /* SECTIONS */
     .privacy-section {
         margin-bottom: 28px;
     }
@@ -135,11 +132,13 @@
             align-items: center;
             gap: 8px;
             margin-bottom: 12px;
+            line-height: 1.4;
         }
 
             .privacy-section h2 .material-icons-outlined {
                 color: #3B82F6;
                 font-size: 22px;
+                flex-shrink: 0;
             }
 
         .privacy-section p {
@@ -161,7 +160,6 @@
             margin-bottom: 6px;
         }
 
-    /* BOX CAM KẾT */
     .commitment-box {
         background: #F0FDF4;
         border: 1.5px dashed #10B981;
@@ -180,16 +178,102 @@
             gap: 6px;
         }
 
+            .commitment-box h4 .material-icons-outlined {
+                font-size: 20px;
+                flex-shrink: 0;
+            }
+
         .commitment-box p {
             margin: 0;
             font-size: 13.5px;
             color: #047857;
             line-height: 1.6;
         }
-   
+
+    @@media (max-width: 992px) {
+        .info-content-card {
+            padding: 28px 22px;
+        }
+
+        .security-pillars-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 14px;
+        }
+    }
+
+    @@media (max-width: 768px) {
+        .info-page-container {
+            margin-bottom: 45px;
+        }
+
+        .info-content-card {
+            padding: 22px 16px;
+            border-radius: 12px;
+        }
+
+        .page-main-header {
+            padding-bottom: 18px;
+            margin-bottom: 22px;
+        }
+
+            .page-main-header h1 {
+                font-size: 20px;
+            }
+
+            .page-main-header p {
+                font-size: 13px;
+            }
+
+        .security-pillars-grid {
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .pillar-card {
+            padding: 16px;
+        }
+
+        .privacy-section h2 {
+            font-size: 15.5px;
+            align-items: flex-start;
+        }
+
+        .privacy-section p,
+        .privacy-section ul {
+            font-size: 13px;
+        }
+
+        .privacy-section ul {
+            padding-left: 18px;
+        }
+    }
+
+    @@media (max-width: 480px) {
+        .info-breadcrumb {
+            margin-top: 10px;
+            margin-bottom: 16px;
+            font-size: 12.5px;
+        }
+
+        .page-main-header h1 {
+            font-size: 18px;
+        }
+
+        .commitment-box {
+            padding: 15px;
+        }
+
+            .commitment-box h4 {
+                font-size: 14px;
+            }
+
+            .commitment-box p {
+                font-size: 12.5px;
+            }
+    }
 </style>
 
-<!-- Thanh Breadcrumb -->
 <div class="info-breadcrumb-wrapper">
     <div class="info-breadcrumb">
         <a href="/TrangChu/TrangChu" class="bc-home">Trang chủ</a>
@@ -198,7 +282,6 @@
     </div>
 </div>
 
-<!-- Nội dung Chính sách bảo mật -->
 <div class="info-page-container">
     <div class="info-content-card">
 
@@ -207,7 +290,6 @@
             <p>Minhee Sports tôn trọng và cam kết bảo mật tuyệt đối mọi thông tin cá nhân và dữ liệu giao dịch của khách hàng theo tiêu chuẩn an toàn bảo mật cao nhất.</p>
         </div>
 
-        <!-- 3 Trụ cột bảo mật -->
         <div class="security-pillars-grid">
             <div class="pillar-card">
                 <div class="pillar-icon">
@@ -234,7 +316,6 @@
             </div>
         </div>
 
-        <!-- 1. Mục đích thu thập thông tin -->
         <div class="privacy-section">
             <h2>
                 <span class="material-icons-outlined">contact_page</span>
@@ -248,7 +329,6 @@
             </ul>
         </div>
 
-        <!-- 2. Phạm vi sử dụng thông tin -->
         <div class="privacy-section">
             <h2>
                 <span class="material-icons-outlined">share</span>
@@ -261,7 +341,6 @@
             </ul>
         </div>
 
-        <!-- 3. Thời gian lưu trữ & Cơ chế an toàn -->
         <div class="privacy-section">
             <h2>
                 <span class="material-icons-outlined">security</span>
@@ -272,7 +351,6 @@
             </p>
         </div>
 
-        <!-- Cam kết -->
         <div class="commitment-box">
             <h4>
                 <span class="material-icons-outlined">verified</span>

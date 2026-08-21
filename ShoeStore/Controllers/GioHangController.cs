@@ -20,9 +20,6 @@ namespace ShoeStore.Controllers
             _context = context;
         }
 
-        // =========================================================
-        // HÀM PHỤ TRỢ: LẤY MÃ NGƯỜI DÙNG TỪ JWT CLAIMS HOẶC SESSION
-        // =========================================================
         private string LayMaNguoiDungHienTai()
         {
             return User.FindFirst("MaNguoiDung")?.Value
@@ -30,9 +27,6 @@ namespace ShoeStore.Controllers
                 ?? HttpContext.Session.GetString("MaNguoiDung");
         }
 
-        // =========================================================
-        // 1. MÀN HÌNH XEM GIỎ HÀNG 
-        // =========================================================
         [HttpGet]
         [Route("GioHang")]
         [Route("GioHang/GioHang")]
@@ -51,13 +45,9 @@ namespace ShoeStore.Controllers
                         .ThenInclude(b => b.Giay)
                 .FirstOrDefaultAsync(g => g.MaNguoiDung == maNguoiDung);
 
-            // Trả về đúng tên file View: GioHang.cshtml
             return View("GioHang", gioHang);
         }
 
-        // =========================================================
-        // 2. LẤY THÔNG TIN NHANH ĐỂ HIỂN THỊ LÊN POPUP
-        // =========================================================
         [HttpGet]
         public async Task<IActionResult> LayThongTinNhanh(string maGiay)
         {
@@ -107,9 +97,6 @@ namespace ShoeStore.Controllers
             });
         }
 
-        // =========================================================
-        // 3. THÊM SẢN PHẨM VÀO GIỎ HÀNG
-        // =========================================================
         [HttpPost]
         public async Task<IActionResult> ThemVaoGioHang(int maBienThe, int soLuong)
         {
@@ -207,9 +194,6 @@ namespace ShoeStore.Controllers
             });
         }
 
-        // =========================================================
-        // 4. LẤY TỔNG SỐ LƯỢNG CHO BADGE TRÊN HEADER
-        // =========================================================
         [HttpGet]
         public async Task<IActionResult> LayTongSoLuongGioHang()
         {
@@ -235,9 +219,6 @@ namespace ShoeStore.Controllers
             return Json(new { totalItems = tongMon });
         }
 
-        // =========================================================
-        // 5. CẬP NHẬT SỐ LƯỢNG KHI TĂNG/GIẢM TRÊN TRANG GIOHANG
-        // =========================================================
         [HttpPost]
         public async Task<IActionResult> CapNhatSoLuong(int maChiTiet, int soLuong)
         {
@@ -288,9 +269,6 @@ namespace ShoeStore.Controllers
             });
         }
 
-        // =========================================================
-        // 6. XÓA SẢN PHẨM KHỎI GIỎ HÀNG
-        // =========================================================
         [HttpPost]
         public async Task<IActionResult> XoaKhoiGioHang(int maChiTiet)
         {

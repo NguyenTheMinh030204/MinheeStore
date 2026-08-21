@@ -1,8 +1,5 @@
-﻿/* ==========================================
-   CHI TIẾT SẢN PHẨM JS (MINHEE SPORTS)
-========================================== */
+﻿
 
-// 1. Đổi ảnh chính khi click vào ảnh Thumbnail nhỏ
 function changeImage(element, src) {
     const mainImg = document.getElementById('mainImage');
     if (mainImg) {
@@ -15,14 +12,12 @@ function changeImage(element, src) {
     }
 }
 
-// 2. Chọn Size giày (Hỗ trợ gọi qua onclick="selectDetailSize(this)" và qua addEventListener)
 function selectDetailSize(btn) {
     if (btn.classList.contains('disabled')) return;
 
     document.querySelectorAll('.size-options .btn-size').forEach(b => b.classList.remove('active'));
     btn.classList.add('active');
 
-    // Reset số lượng về 1 khi chọn size khác
     const inputQty = document.getElementById('inputQuantity');
     if (inputQty) {
         inputQty.value = 1;
@@ -36,7 +31,6 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// 3. Tăng / Giảm số lượng mua theo tồn kho của Size đang chọn
 function updateDetailQty(change) {
     const input = document.getElementById('inputQuantity');
     const activeSizeBtn = document.querySelector('.size-options .btn-size.active');
@@ -60,12 +54,10 @@ function updateDetailQty(change) {
     input.value = currentVal;
 }
 
-// Alias hỗ trợ hàm cũ nếu có gọi updateQty
 function updateQty(change) {
     updateDetailQty(change);
 }
 
-// 4. Đóng / Mở Popup Modal Bảng Hướng Dẫn Chọn Size
 function openSizeModal() {
     const modal = document.getElementById('sizeGuideModal');
     if (modal) {
@@ -88,7 +80,6 @@ document.addEventListener('keydown', function (e) {
     }
 });
 
-// 5. Thêm sản phẩm vào giỏ hàng
 function addCurrentDetailPageToCart() {
     const activeSizeBtn = document.querySelector('.size-options .btn-size.active');
     const quantity = parseInt(document.getElementById('inputQuantity')?.value) || 1;
@@ -136,12 +127,10 @@ function addCurrentDetailPageToCart() {
         });
 }
 
-// Alias hỗ trợ nút bấm gọi addToCart
 function addToCart(maGiay) {
     addCurrentDetailPageToCart();
 }
 
-// 6. Mua ngay (Chuyển hướng trực tiếp sang màn hình Thanh Toán)
 function buyNowCurrentDetailPage() {
     const activeSizeBtn = document.querySelector('.size-options .btn-size.active');
     const quantity = parseInt(document.getElementById('inputQuantity')?.value) || 1;
@@ -160,7 +149,6 @@ function buyNowCurrentDetailPage() {
     window.location.href = `/DonHang/ThanhToan?maBienThe=${maBienThe}&soLuong=${quantity}`;
 }
 
-// Alias hỗ trợ hàm cũ buyNow
 function buyNow(maGiay) {
     buyNowCurrentDetailPage();
 }

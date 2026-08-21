@@ -43,7 +43,7 @@
             @foreach (var donHang in Model)
             {
                 <div class="order-card-item" id="order-card-@donHang.MaDonHang">
-                    <!-- Top: Mã đơn & Trạng thái -->
+                    
                     <div class="order-card-top">
                         <div class="order-meta-info">
                             <span class="order-code">#@donHang.MaDonHang</span>
@@ -77,7 +77,6 @@
                         </span>
                     </div>
 
-                    <!-- Middle: Danh sách sản phẩm của đơn -->
                     <div class="order-products-list">
                         @foreach (var item in donHang.ChiTietDonHang)
                         {
@@ -101,7 +100,6 @@
                         }
                     </div>
 
-                    <!-- Bottom: Địa chỉ, Tổng tiền & Nút tác vụ -->
                     <div class="order-card-bottom">
                         <div class="order-shipping-info">
                             <div><strong>Người nhận:</strong> @donHang.SoDienThoaiNhan</div>
@@ -163,8 +161,7 @@
                         badge.className = 'order-status-badge status-cancelled';
                         badge.textContent = 'Đã hủy';
                     }
-                    
-                    // Xóa cả cụm nút thao tác (Nút Hủy & Nút Thanh Toán)
+
                     const btnGroup = document.getElementById(`btn-group-${maDonHang}`);
                     if (btnGroup) {
                         btnGroup.remove();

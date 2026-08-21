@@ -7,13 +7,12 @@ namespace ShoeStore.Models
     public class AnhGiay
     {
         [Key]
-        public int MaAnh { get; set; }           // Mã ảnh tự tăng (IDENTITY)
+        public int MaAnh { get; set; }           
 
-        public string MaGiay { get; set; }       // Khớp với MaGiay dạng VARCHAR(30) (Ví dụ: 'G03022004-001')
+        public string MaGiay { get; set; }       
 
-        public string DuongDanAnh { get; set; }   // Đường dẫn đến ảnh phụ
+        public string DuongDanAnh { get; set; }   
 
-        // Khóa ngoại liên kết ngược lại bảng Giay
         [ForeignKey("MaGiay")]
         public virtual Giay? Giay { get; set; }
     }

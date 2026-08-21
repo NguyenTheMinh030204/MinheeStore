@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using ShoeStore.Data; // Thư mục chứa ApplicationDbContext
+using ShoeStore.Data; 
 
 namespace ShoeStore.Controllers
 {
@@ -7,7 +7,6 @@ namespace ShoeStore.Controllers
     {
         private readonly ApplicationDbContext _db;
 
-        // Tiêm (Inject) DbContext vào Controller
         public TrangChuController(ApplicationDbContext db)
         {
             _db = db;
@@ -15,10 +14,9 @@ namespace ShoeStore.Controllers
 
         public IActionResult TrangChu()
         {
-            // Lấy trực tiếp toàn bộ danh sách giày từ bảng Giay trong SQL Server
+            
             var danhSachGiay = _db.Giay.ToList();
 
-            // Trả về View cùng danh sách dữ liệu thật từ Database
             return View("~/Views/TrangChu/TrangChu.cshtml", danhSachGiay);
         }
     }

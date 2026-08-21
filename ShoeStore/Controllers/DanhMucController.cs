@@ -26,7 +26,6 @@ namespace ShoeStore.Controllers
 
             var query = _db.Giay.AsQueryable();
 
-            // 1. XỬ LÝ LỌC THEO DANH MỤC HOẶC HOT SALE
             if (id == "HotSale")
             {
                 query = query.Where(p => p.LaHotSale);
@@ -43,7 +42,6 @@ namespace ShoeStore.Controllers
                 ViewBag.TenDanhMuc = "TẤT CẢ SẢN PHẨM";
             }
 
-            // 2. Lọc theo Khoảng Giá
             if (price.Count > 0)
             {
                 query = query.Where(p =>
@@ -54,13 +52,11 @@ namespace ShoeStore.Controllers
                 );
             }
 
-            // 3. Lọc theo Size Giày
             if (size.Count > 0)
             {
                 query = query.Where(p => _db.BienTheGiay.Any(bt => bt.MaGiay == p.MaGiay && size.Contains(bt.KichCo)));
             }
 
-            // 4. Sắp xếp
             switch (sort)
             {
                 case "price-asc":
@@ -80,7 +76,6 @@ namespace ShoeStore.Controllers
                     break;
             }
 
-            // 5. Phân trang
             int totalItems = query.Count();
             int totalPages = (int)Math.Ceiling((double)totalItems / pageSize);
             if (totalPages < 1) totalPages = 1;
@@ -93,7 +88,6 @@ namespace ShoeStore.Controllers
                 .Take(pageSize)
                 .ToList();
 
-            // 6. Trút dữ liệu sang View
             ViewBag.CurrentMaDanhMuc = id;
             ViewBag.CurrentPage = page;
             ViewBag.TotalPages = totalPages;
